@@ -1,0 +1,36 @@
+services:
+  usuarios-db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: usuarios-db
+    environment:
+      SA_PASSWORD: "usuarios123!"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
+    volumes:
+      - usuarios_data:/var/opt/mssql
+    networks:
+      - usuarios-net
+
+  usuarios-api:
+    build:
+      context: ./Usuarios
+      dockerfile: Dockerfile
+    container_name: usuarios-api
+    depends_on:
+      - usuarios-db
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__DefaultConnection: Server=usuarios-db;Database=UsuariosDb;User Id=sa;Password=usuarios123!;TrustServerCertificate=True;Encrypt=True;
+    ports:
+      - "5000:8080"
+    volumes:
+      - ./Usuarios:/app
+    networks:
+      - usuarios-net
+
+volumes:
+  usuarios_data:
+
+networks:
+  usuarios-net:
