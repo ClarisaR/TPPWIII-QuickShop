@@ -25,7 +25,6 @@ namespace Usuarios.Data
 
         private static string HashPassword(string password)
         {
-            // Solo para fines de prueba. No usar en producción.
             return Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(password));
         }
 
