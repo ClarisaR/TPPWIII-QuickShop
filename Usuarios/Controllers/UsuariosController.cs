@@ -4,6 +4,7 @@ using System;
 using Usuarios.Models;
 using Usuarios.Data;
 using Usuarios.Models.DTO;
+using Microsoft.AspNetCore.Identity;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -18,6 +19,33 @@ namespace Usuarios.Controllers
         public UsuariosController(UsuarioDbContext context)
         {
             _context = context;
+        }
+
+        //GET: /api/Usuarios?email={email}
+        [HttpGet("por-email")]
+        public async Task<IActionResult> GetUsuarioPorEmail([FromQuery] string email)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+                return BadRequest("El email es obligatorio.");
+
+                var usuario = await _context.Usuarios
+                    .FirstOrDefaultAsync(u => u.Email == email);
+
+             if (usuario == null)
+                return NotFound($"No se encontró un usuario con el email '{email}'.");
+
+            // Si no querés devolver toda la entidad (por seguridad), podés crear un DTO
+            var usuarioDto = new
+            {
+                usuario.Nombre,
+                usuario.Apellido,
+                usuario.Email,
+                usuario.Contrasenia,
+                usuario.Telefono,
+                usuario.Direccion
+            };
+
+            return Ok(usuarioDto);
         }
 
         // GET: api/Usuarios
@@ -49,7 +77,7 @@ namespace Usuarios.Controllers
                 Nombre = crearUsuarioDto.Nombre,
                 Apellido = crearUsuarioDto.Apellido,
                 Email = crearUsuarioDto.Email,
-                Contrasenia = crearUsuarioDto.Contrasenia,
+                Contrasenia = HashPassword(crearUsuarioDto.Contrasenia),
                 Telefono = crearUsuarioDto.Telefono,
                 Direccion = crearUsuarioDto.Direccion ?? string.Empty
             };
@@ -57,6 +85,11 @@ namespace Usuarios.Controllers
             await _context.SaveChangesAsync();
 
             return CreatedAtAction(nameof(GetUsuario), new { id = usuario.Id }, usuario);
+        }
+
+        private static string HashPassword(string password)
+        {
+            return Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(password));
         }
 
         // PUT: api/Usuarios/5

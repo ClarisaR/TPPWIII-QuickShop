@@ -29,6 +29,20 @@ services:
     networks:
       - usuarios-net
 
+  autenticacion-api:
+    build:
+      context: ./Autenticacion
+      dockerfile: Dockerfile
+    container_name: autenticacion-api
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+    ports:
+      - "5001:8080"
+    volumes:
+      - ./Autenticacion:/app
+    networks:
+      - usuarios-net
+
 volumes:
   usuarios_data:
 
