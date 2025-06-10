@@ -77,7 +77,7 @@ namespace Usuarios.Controllers
                 Nombre = crearUsuarioDto.Nombre,
                 Apellido = crearUsuarioDto.Apellido,
                 Email = crearUsuarioDto.Email,
-                Contrasenia = crearUsuarioDto.Contrasenia,
+                Contrasenia = HashPassword(crearUsuarioDto.Contrasenia),
                 Telefono = crearUsuarioDto.Telefono,
                 Direccion = crearUsuarioDto.Direccion ?? string.Empty
             };
@@ -85,6 +85,11 @@ namespace Usuarios.Controllers
             await _context.SaveChangesAsync();
 
             return CreatedAtAction(nameof(GetUsuario), new { id = usuario.Id }, usuario);
+        }
+
+        private static string HashPassword(string password)
+        {
+            return Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(password));
         }
 
         // PUT: api/Usuarios/5
