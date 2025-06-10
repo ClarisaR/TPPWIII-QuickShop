@@ -29,6 +29,22 @@ services:
     networks:
       - usuarios-net
 
+  quickshop-mvc:
+    build:
+      context: ./Quickshop.MVC
+      dockerfile: Dockerfile
+    container_name: quickshop-mvc
+    depends_on:
+      - usuarios-api
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+    ports:
+      - "5002:7257"
+    volumes:
+      - ./Quickshop.MVC:/app
+    networks:
+      - usuarios-net
+
 volumes:
   usuarios_data:
 
