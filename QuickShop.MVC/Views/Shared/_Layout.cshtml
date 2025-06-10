@@ -1,0 +1,164 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"] - QuickShop</title>
+    <link rel="stylesheet" href="~/css/styles.css" asp-append-version="true" />
+    <link rel="icon" type="image/png" href="/img/shopping-bag.png" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lemonada:wght@400;600;700&display=swap" rel="stylesheet">
+
+</head>
+<body>
+    <header>
+        <div class="top-bar">
+            <div class="top-left">
+                <a asp-controller="Home" asp-action="Index" class="logo-container">
+                    <img src="~/img/shopping-bag.png" alt="Logo de QuickShop" class="logo-icon" />
+                </a>
+                <a asp-controller="Home" asp-action="Index" class="logo-container">
+                    <div class="logo">Quick<span>Shop</span></div>
+                </a>
+            </div>
+
+            <div class="search-container">
+                <input type="text" placeholder="Buscar tienda o producto" />
+                <div class="search-icon">
+                    <a href="/buscar">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="top-right">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <div class="buttons-container">
+                    <button id="openLoginModal" class="btn-login">Iniciar sesión</button>
+                    <button id="openRegisterModal" class="btn-register">Registrarse</button>
+                </div>
+            </div>
+
+        </div>
+    </header>
+
+    <nav class="nav-categories">
+        <a href="/" class="active">Inicio</a>
+        <a href="/Mujer">Mujer</a>
+        <a href="/Hombre">Hombre</a>
+        <a href="/Infantil">Infantil</a>
+        <a href="/Accesorios">Accesorios</a>
+        <a href="/Deportivo">Deportivo</a>
+        <a href="/Tiendas">Tiendas</a>
+    </nav>
+
+    <main>
+        @RenderBody()
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-social">
+                <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+                <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#"><i class="fa-brands fa-youtube"></i></a>
+                <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+            </div>
+
+            <div class="footer-links">
+                <div class="footer-column">
+                    <h4>ACERCA DE</h4>
+                    <a href="#">Quick Shop</a>
+                    <a href="#">Términos y condiciones</a>
+                    <a href="#">Política de privacidad</a>
+                    <a href="#">Registrá tu tienda</a>
+                    <a href="#">Blog</a>
+                    <a href="#">Contacto</a>
+                    <a href="#">Botón de arrepentimiento</a>
+                </div>
+                <div class="footer-column">
+                    <h4>SERVICIOS</h4>
+                    <a href="#">Promociones y ofertas</a>
+                    <a href="#">Tendencias</a>
+                    <a href="#">Locales cerca de mí</a>
+                    <a href="#">Design process</a>
+                    <a href="#">FigJam</a>
+                </div>
+                <div class="footer-column">
+                    <h4>AYUDA</h4>
+                    <a href="#">¿Cómo comprar?</a>
+                    <a href="#">¿Cómo vender?</a>
+                    <a href="#">¿Qué es consolidado?</a>
+                    <a href="#">¿Dónde veo mi número de guía?</a>
+                    <a href="#">Preguntas generales</a>
+                    <a href="#">Mi cuenta</a>
+                    <a href="#">Envíos</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- Modal de registro -->
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <span id="closeModal" class="close">&times;</span>
+
+            <div class="modal-logo">
+                <img src="~/img/shopping-bag.png" alt="Logo QuickShop" class="logo-icon" />
+                <div class="logo">Quick<span>Shop</span></div>
+            </div>
+
+            <form class="modal-form">
+                <input type="text" placeholder="Nombre" required />
+                <input type="email" placeholder="Email" required />
+                <input type="password" placeholder="Contraseña" required />
+                <input type="password" placeholder="Confirmar contraseña" required />
+
+                <div class="modal-terms">
+                    <label class="custom-checkbox">
+                        <input type="checkbox" id="terms" required />
+                        <span class="checkmark"></span>
+                        Acepto los <a href="#">términos y condiciones</a> de Quick Shop
+                    </label>
+                </div>
+
+
+                <button type="submit" class="btn-modal-register">Registrarse</button>
+            </form>
+
+            <p class="modal-login-text">
+                ¿Ya tenés una cuenta?
+                <a href="#">Iniciá sesión</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Modal de iniciar sesión -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeLoginModal">&times;</span>
+
+            <div class="modal-logo">
+                <img src="~/img/shopping-bag.png" alt="Logo" class="logo-icon" style="width: 35px;">
+                <div class="logo">Quick<span>Shop</span></div>
+            </div>
+
+            <form class="modal-form">
+                <input type="email" placeholder="Email" required>
+                <input type="password" placeholder="Contraseña" required>
+
+                <button type="submit" class="btn-modal-login">Iniciar sesión</button>
+                <button type="button" class="btn-modal-create">Crear una cuenta</button>
+
+                <div class="modal-login-text">
+                    <a href="#">¿Olvidaste tu contraseña?</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <script src="~/js/modals.js" asp-append-version="true"></script>
+</body>
+</html>
