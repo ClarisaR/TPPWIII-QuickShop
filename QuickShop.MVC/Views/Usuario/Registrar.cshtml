@@ -1,0 +1,25 @@
+﻿@model QuickShop.MVC.Models.Usuario
+
+<form asp-action="Registrar" method="post">
+    <div asp-validation-summary="ModelOnly"></div>
+
+    <input asp-for="Nombre" placeholder="Nombre" />
+    <span asp-validation-for="Nombre"></span>
+
+    <input asp-for="Apellido" placeholder="Apellido" />
+    <span asp-validation-for="Apellido"></span>
+
+    <input asp-for="Email" placeholder="Email" />
+    <span asp-validation-for="Email"></span>
+
+    <input asp-for="Contrasenia" placeholder="Contraseña" type="password" />
+    <span asp-validation-for="Contrasenia"></span>
+
+    <input asp-for="Telefono" placeholder="Teléfono" />
+    <span asp-validation-for="Telefono"></span>
+
+    <input asp-for="Direccion" placeholder="Dirección" />
+    <span asp-validation-for="Direccion"></span>
+
+    <button type="submit">Registrarse</button>
+</form>
