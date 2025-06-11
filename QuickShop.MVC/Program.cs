@@ -14,8 +14,6 @@ builder.Services.AddHttpClient<UsuarioServicio>(client =>
 });
 builder.Services.AddScoped<IUsuarioServicio, UsuarioServicio>();
 
-
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
