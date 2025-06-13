@@ -1,7 +1,18 @@
+using QuickShop.MVC.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// agrega contexto para obtener la cookie con el token
+builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddHttpClient<UsuarioServicio>(client =>
+{
+    client.BaseAddress = new Uri("http://autenticacion-api:8080/api/Autenticacion/");
+});
+builder.Services.AddScoped<IUsuarioServicio, UsuarioServicio>();
 
 var app = builder.Build();
 

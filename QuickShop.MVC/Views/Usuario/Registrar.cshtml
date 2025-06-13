@@ -1,0 +1,53 @@
+﻿@model QuickShop.MVC.Models.Usuario
+
+@{
+	ViewData["Title"] = "Registro";
+
+}
+
+<div class="form-container">
+	<form asp-action="Registrar" method="post">
+		<div asp-validation-summary="ModelOnly"></div>
+
+		<div class="from-group">
+			<label asp-for="Nombre">Nombre/s</label>
+			<input asp-for="Nombre" />
+			<span asp-validation-for="Nombre"></span>
+		</div>x
+
+		<div class="from-group">
+			<label asp-for="Apellido">Apellido/s</label>
+			<input asp-for="Apellido" />
+			<span asp-validation-for="Apellido"></span>
+		</div>
+
+		<div class="from-group">
+			<label asp-for="Email">Correo electrónico</label>
+			<input asp-for="Email" />
+			<span asp-validation-for="Email"></span>
+		</div>
+
+		<div class="from-group">
+			<label asp-for="Contrasenia">Contraseña</label>
+			<input asp-for="Contrasenia" type="password" />
+			<span asp-validation-for="Contrasenia"></span>
+		</div>
+
+		<div class="from-group">
+			<label asp-for="Telefono">Teléfono</label>
+			<input asp-for="Telefono" />
+			<span asp-validation-for="Telefono"></span>
+		</div>
+
+		<div class="from-group">
+			<label asp-for="Direccion">Dirección</label>
+			<input asp-for="Direccion" />
+			<span asp-validation-for="Direccion"></span>
+		</div>
+
+
+		<button type="submit">Registrarse</button>
+	</form>
+</div>
+
+@Html.Partial("_ValidationScriptsPartial")
