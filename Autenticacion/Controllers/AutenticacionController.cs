@@ -33,7 +33,7 @@ namespace Autenticacion.Controllers
             // Si la contraseña coincide, devolvés la respuesta
             var loginResponse = new LoginResponse
             {
-                Token = _jwtService.GenerateToken(usuario.Email)
+                Token = _jwtService.GenerateToken(usuario.Email, usuario.Nombre, usuario.Id)
             };
 
             return Ok(loginResponse);
