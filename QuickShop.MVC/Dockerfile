@@ -1,12 +1,10 @@
 
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS dev
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /app
 
-COPY *.csproj ./
 RUN dotnet restore
+RUN dotnet dev-certs https --trust
 
-COPY . ./
+EXPOSE 8080
 
-EXPOSE 7257
-
-ENTRYPOINT ["dotnet", "watch", "run", "--no-launch-profile", "--urls", "http://0.0.0.0:7257"]
+ENTRYPOINT ["dotnet", "watch", "run", "--no-launch-profile"]
