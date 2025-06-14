@@ -21,13 +21,13 @@ namespace QuickShop.MVC.Services
 
         public async Task<bool> RegistrarUsuario(Usuario usuario)
         {
-            var response = await httpClient.PostAsJsonAsync("/register", usuario);
+            var response = await httpClient.PostAsJsonAsync("http://autenticacion-api:8080/api/Autenticacion/register", usuario);
             return response.IsSuccessStatusCode;
         }
 
         public async Task<string?> LoginUsuario(LoginDTO login)
         {
-            var response = await httpClient.PostAsJsonAsync("/login", login);
+            var response = await httpClient.PostAsJsonAsync("http://autenticacion-api:8080/api/Autenticacion/login", login);
             if (!response.IsSuccessStatusCode)
                 return null;
 
