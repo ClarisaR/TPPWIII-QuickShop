@@ -32,6 +32,6 @@ namespace Productos.Models
         public int LocalId { get; set; }
         public Local Local { get; set; }
 
-        public ICollection<Variante> Variantes { get; set; }
+        public ICollection<Variante> Variantes { get; set; } = [];
     }
 }
