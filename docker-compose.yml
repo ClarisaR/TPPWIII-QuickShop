@@ -6,7 +6,7 @@ services:
       SA_PASSWORD: "usuarios123!"
       ACCEPT_EULA: "Y"
     ports:
-      - "1433:1433"
+      - "1435:1433"
     volumes:
       - usuarios_data:/var/opt/mssql
     networks:
