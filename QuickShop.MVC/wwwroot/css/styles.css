@@ -608,7 +608,6 @@ header {
 
 /* Botón Crear cuenta */
 .btn-modal-create {
-    width: 100%;
     background-color: white;
     color: #F0297B;
     border: 2px solid #F0297B;

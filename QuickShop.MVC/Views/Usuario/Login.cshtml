@@ -3,22 +3,35 @@
 	ViewData["Title"] = "Iniciar sesión";
 }
 @model LoginDTO;
+<div class="d-flex justify-content-center align-items-center bg-light py-5" style="min-height: 100vh;">
+	<div class="modal-content p-4 rounded shadow w-100" style="max-width: 500px;">
+		<div class="text-center mb-4">
+			<img src="~/img/shopping-bag.png" alt="Logo QuickShop" class="mb-2" style="width: 40px;">
+			<h4 class="fw-bold">Quick<span class="text-primary">Shop</span></h4>
+		</div>
 
-<div class="form-container">
-	<form asp-action="Login" asp-controller="Usuario" method="post">
-		<div asp-validation-summary="ModelOnly"></div>
-		<div class="form-group">
-			<label asp-for="Email">Correo electrónico</label>
-			<input asp-for="Email" />
-			<span asp-validation-for="Email"></span>
-		</div>
-		<div class="form-group">
-			<label asp-for="Contrasenia">Contraseña</label>
-			<input asp-for="Contrasenia" type="password" />
-			<span asp-validation-for="Contrasenia"></span>
-		</div>
-		<button type="submit">Iniciar sesión</button>
-	</form>
+		<form asp-action="Login" asp-controller="Usuario" method="post">
+			<div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+			<div class="form-group mb-3">
+				<label asp-for="Email" class="form-label fw-bold">Correo electrónico</label>
+				<input asp-for="Email" class="form-control" />
+				<span asp-validation-for="Email" class="text-danger small"></span>
+			</div>
+
+			<div class="form-group mb-4">
+				<label asp-for="Contrasenia" class="form-label fw-bold">Contraseña</label>
+				<input asp-for="Contrasenia" type="password" class="form-control" />
+				<span asp-validation-for="Contrasenia" class="text-danger small"></span>
+			</div>
+			<button type="submit" class="btn btn-modal-login w-100">Iniciar sesión</button>
+		</form>
+
+		<p class="text-center mt-3 mb-0">
+			¿Todavía no tenés una cuenta? <a href="/Usuario/Registrar" class="text-decoration-none">Registrate</a>
+		</p>
+	</div>
 </div>
 
-@Html.Partial("_ValidationScriptsPartial");
+
+@Html.Partial("_ValidationScriptsPartial")
