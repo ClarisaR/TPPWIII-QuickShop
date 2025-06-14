@@ -28,15 +28,16 @@ namespace Usuarios.Controllers
             if (string.IsNullOrWhiteSpace(email))
                 return BadRequest("El email es obligatorio.");
 
-                var usuario = await _context.Usuarios
-                    .FirstOrDefaultAsync(u => u.Email == email);
+            var usuario = await _context.Usuarios
+                .FirstOrDefaultAsync(u => u.Email == email);
 
-             if (usuario == null)
+            if (usuario == null)
                 return NotFound($"No se encontró un usuario con el email '{email}'.");
 
             // Si no querés devolver toda la entidad (por seguridad), podés crear un DTO
             var usuarioDto = new
             {
+                usuario.Id,
                 usuario.Nombre,
                 usuario.Apellido,
                 usuario.Email,
@@ -105,7 +106,7 @@ namespace Usuarios.Controllers
             usuario.Apellido = actualizarUsuarioDto.Apellido ?? usuario.Apellido;
             usuario.Contrasenia = actualizarUsuarioDto.Contrasenia ?? usuario.Contrasenia;
             usuario.Telefono = actualizarUsuarioDto.Telefono ?? usuario.Telefono;
-            usuario.Email = actualizarUsuarioDto.Email ?? usuario.Email; 
+            usuario.Email = actualizarUsuarioDto.Email ?? usuario.Email;
             usuario.Direccion = actualizarUsuarioDto.Direccion ?? usuario.Direccion;
 
             await _context.SaveChangesAsync(); // Guarda los cambios
