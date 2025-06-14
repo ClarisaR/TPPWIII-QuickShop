@@ -69,6 +69,13 @@ namespace QuickShop.MVC.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+
+        [HttpGet]
+        public IActionResult Logout()
+        {
+            Response.Cookies.Delete("jwt");
+            return RedirectToAction("Index", "Home");
+        }
     }
 
 }

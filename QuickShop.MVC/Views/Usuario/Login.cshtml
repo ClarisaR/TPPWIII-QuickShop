@@ -1,11 +1,11 @@
 ﻿@{
-	Layout = "_LayoutSecundario";
+	Layout = "_Layout_Autenticacion";
 	ViewData["Title"] = "Iniciar sesión";
 }
 @model LoginDTO;
 
 <div class="form-container">
-	<form asp-action="Login" method="post">
+	<form asp-action="Login" asp-controller="Usuario" method="post">
 		<div asp-validation-summary="ModelOnly"></div>
 		<div class="form-group">
 			<label asp-for="Email">Correo electrónico</label>
@@ -17,6 +17,7 @@
 			<input asp-for="Contrasenia" type="password" />
 			<span asp-validation-for="Contrasenia"></span>
 		</div>
+		<button type="submit">Iniciar sesión</button>
 	</form>
 </div>
 

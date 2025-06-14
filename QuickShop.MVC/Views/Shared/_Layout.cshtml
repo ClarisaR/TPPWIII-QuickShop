@@ -11,6 +11,9 @@
 
 </head>
 <body>
+    @using Microsoft.AspNetCore.Authentication
+    @using Microsoft.AspNetCore.Authorization
+    @using System.Security.Claims
     <header>
         <div class="top-bar">
             <div class="top-left">
@@ -33,10 +36,18 @@
 
             <div class="top-right">
                 <i class="fa-solid fa-cart-shopping"></i>
-                <div class="buttons-container">
-                    <button id="openLoginModal" class="btn-login">Iniciar sesión</button>
-                    <button id="openRegisterModal" class="btn-register">Registrarse</button>
-                </div>
+                @if (User.Identity?.IsAuthenticated ?? false)
+                {
+                    <span>Hola, @User.FindFirst("nombre")?.Value</span>
+                    <a href="/Usuario/Logout" class="btn-login">Cerrar sesión</a>
+                }
+                else
+                {
+                    <div class="buttons-container">
+                        <a href="/Usuario/Login" id="openLoginModal" class="btn-login">Iniciar sesión</a>
+                        <a href="/Usuario/Registrar" id="openRegisterModal" class="btn-register">Registrarse</a>
+                    </div>
+                }
             </div>
 
         </div>
@@ -97,68 +108,5 @@
             </div>
         </div>
     </footer>
-
-
-    <!-- Modal de registro -->
-    <div id="registerModal" class="modal">
-        <div class="modal-content">
-            <span id="closeModal" class="close">&times;</span>
-
-            <div class="modal-logo">
-                <img src="~/img/shopping-bag.png" alt="Logo QuickShop" class="logo-icon" />
-                <div class="logo">Quick<span>Shop</span></div>
-            </div>
-
-            <form class="modal-form">
-                <input type="text" placeholder="Nombre" required />
-                <input type="email" placeholder="Email" required />
-                <input type="password" placeholder="Contraseña" required />
-                <input type="password" placeholder="Confirmar contraseña" required />
-
-                <div class="modal-terms">
-                    <label class="custom-checkbox">
-                        <input type="checkbox" id="terms" required />
-                        <span class="checkmark"></span>
-                        Acepto los <a href="#">términos y condiciones</a> de Quick Shop
-                    </label>
-                </div>
-
-
-                <button type="submit" class="btn-modal-register">Registrarse</button>
-            </form>
-
-            <p class="modal-login-text">
-                ¿Ya tenés una cuenta?
-                <a href="#">Iniciá sesión</a>
-            </p>
-        </div>
-    </div>
-
-    <!-- Modal de iniciar sesión -->
-    <div id="loginModal" class="modal">
-        <div class="modal-content">
-            <span class="close" id="closeLoginModal">&times;</span>
-
-            <div class="modal-logo">
-                <img src="~/img/shopping-bag.png" alt="Logo" class="logo-icon" style="width: 35px;">
-                <div class="logo">Quick<span>Shop</span></div>
-            </div>
-
-            <form class="modal-form">
-                <input type="email" placeholder="Email" required>
-                <input type="password" placeholder="Contraseña" required>
-
-                <button type="submit" class="btn-modal-login">Iniciar sesión</button>
-                <button type="button" class="btn-modal-create">Crear una cuenta</button>
-
-                <div class="modal-login-text">
-                    <a href="#">¿Olvidaste tu contraseña?</a>
-                </div>
-            </form>
-        </div>
-    </div>
-
-
-    <script src="~/js/modals.js" asp-append-version="true"></script>
 </body>
 </html>
