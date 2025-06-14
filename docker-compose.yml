@@ -26,6 +26,7 @@ services:
       - "5000:8080"
     volumes:
       - ./Usuarios:/app
+    command: sh -c "dotnet restore && dotnet watch run --no-launch-profile"
     networks:
       - usuarios-net
 
@@ -40,6 +41,7 @@ services:
       - "5001:8080"
     volumes:
       - ./Autenticacion:/app
+    command: sh -c "dotnet restore && dotnet watch run --no-launch-profile"
     networks:
       - usuarios-net
 
@@ -53,9 +55,10 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: Development
     ports:
-      - "5002:7257"
+      - "5002:8080"
     volumes:
       - ./Quickshop.MVC:/app
+    command: sh -c "dotnet restore && dotnet watch run --no-launch-profile"
     networks:
       - usuarios-net
 
