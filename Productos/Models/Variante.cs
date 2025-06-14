@@ -10,15 +10,15 @@ namespace Productos.Models
 
         [ForeignKey("Producto")]
         public int ProductoId { get; set; }
-        public Producto Producto { get; set; }
+        public Producto Producto { get; set; } = null!;
 
         [ForeignKey("Color")]
         public int ColorId { get; set; }
-        public Color Color { get; set; }
+        public Color Color { get; set; } = null!;
 
         [ForeignKey("Talle")]
         public int TalleId { get; set; }
-        public Talle Talle { get; set; }
+        public Talle Talle { get; set; } = null!;
 
         public int Stock { get; set; }
 

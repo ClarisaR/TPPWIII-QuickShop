@@ -8,9 +8,9 @@ namespace Productos.Models
         public int Id { get; set; }
 
         [Required]
-        [StringLength(10)]
-        public string Nombre { get; set; }
+        [MaxLength(10)]
+        public string Nombre { get; set; } = null!;
 
-        public ICollection<Variante> Variantes { get; set; }
+        public ICollection<Variante> Variantes { get; set; } = [];
     }
 }

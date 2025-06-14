@@ -9,9 +9,9 @@ namespace Productos.Models
         public int Id { get; set; }
 
         [Required]
-        [StringLength(20)]
-        public string Nombre { get; set; }
+        [MaxLength(20)]
+        public string Nombre { get; set; } = null!;
 
-        public ICollection<Local> Locales { get; set; }
+        public ICollection<Local> Locales { get; set; } = [];
     }
 }

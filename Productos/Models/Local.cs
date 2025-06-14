@@ -10,17 +10,17 @@ namespace Productos.Models
         public int Id { get; set; }
 
         [Required]
-        [StringLength(50)]
-        public string Nombre { get; set; }
+        [MaxLength(50)]
+        public string Nombre { get; set; } = null!;
 
         [Required]
-        [StringLength(200)]
-        public string Descripcion { get; set; }
+        [MaxLength(200)]
+        public string Descripcion { get; set; } = null!;
 
-        public Rubro Rubro { get; set; }
+        public Rubro Rubro { get; set; } = null!;
 
         public int RubroId { get; set; }
 
-        public ICollection<Producto> Productos { get; set; }
+        public ICollection<Producto> Productos { get; set; } = null!;
     }
 }
