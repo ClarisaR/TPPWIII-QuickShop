@@ -23,20 +23,47 @@ namespace Productos.Data
         {
             base.OnModelCreating(modelBuilder);
 
+            // Producto -> Categoria (muchos a uno)
             modelBuilder.Entity<Producto>()
                 .HasOne(p => p.Categoria)
                 .WithMany(c => c.Productos)
                 .HasForeignKey(p => p.CategoriaId);
 
+            // Producto -> Local (muchos a uno)
             modelBuilder.Entity<Producto>()
                 .HasOne(p => p.Local)
                 .WithMany(l => l.Productos)
                 .HasForeignKey(p => p.LocalId);
 
+            // Local -> Rubro (muchos a uno)
             modelBuilder.Entity<Local>()
                 .HasOne(l => l.Rubro)
-                .WithMany()
+                .WithMany(r => r.Locales)
                 .HasForeignKey(l => l.RubroId);
+
+            // Variante -> Producto (muchos a uno)
+            modelBuilder.Entity<Variante>()
+                .HasOne(v => v.Producto)
+                .WithMany(p => p.Variantes)
+                .HasForeignKey(v => v.ProductoId);
+
+            // Variante -> Talle (muchos a uno)
+            modelBuilder.Entity<Variante>()
+                .HasOne(v => v.Talle)
+                .WithMany(t => t.Variantes)
+                .HasForeignKey(v => v.TalleId);
+
+            // Variante -> Color (muchos a uno)
+            modelBuilder.Entity<Variante>()
+                .HasOne(v => v.Color)
+                .WithMany(c => c.Variantes)
+                .HasForeignKey(v => v.ColorId);
+
+            // Local -> Direccion (muchos a uno)
+            modelBuilder.Entity<Local>()
+                .HasOne(l => l.Direccion)
+                .WithOne() // Relacion unidireccional uno a uno
+                .HasForeignKey<Local>(l => l.DireccionId);
         }
     }
 }

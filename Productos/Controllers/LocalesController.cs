@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Productos.Data;
 using Productos.Models;
 
@@ -33,7 +34,7 @@ namespace Productos.Controllers
             {
                 return NotFound();
             }
-            return local;
+            return (IActionResult)local;
         }
 
         // POST: api/Usuarios

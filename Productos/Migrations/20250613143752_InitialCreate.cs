@@ -70,8 +70,7 @@ namespace Productos.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nombre = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Descripcion = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    RubroId = table.Column<int>(type: "int", nullable: false),
-                    RubroId1 = table.Column<int>(type: "int", nullable: true)
+                    RubroId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -82,11 +81,6 @@ namespace Productos.Migrations
                         principalTable: "Rubros",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Locales_Rubros_RubroId1",
-                        column: x => x.RubroId1,
-                        principalTable: "Rubros",
-                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -157,11 +151,6 @@ namespace Productos.Migrations
                 name: "IX_Locales_RubroId",
                 table: "Locales",
                 column: "RubroId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Locales_RubroId1",
-                table: "Locales",
-                column: "RubroId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Productos_CategoriaId",
