@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Productos.Models;
 using Productos.Services;
 
 namespace Productos.Controllers
@@ -15,7 +16,7 @@ namespace Productos.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetProductos()
+        public async Task<ActionResult<List<Producto>>> GetProductos()
         {
             var productos = await _productoService.GetProductos();
             if (productos == null || !productos.Any())
@@ -26,8 +27,8 @@ namespace Productos.Controllers
             return Ok(productos);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetProducto(int id)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Producto>> GetProducto(int id)
         {
             var producto = await _productoService.GetProducto(id);
             if (producto == null)
@@ -37,10 +38,10 @@ namespace Productos.Controllers
             return Ok(producto);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetProductoPorNombre(string nombre)
+        [HttpGet("nombre/{nombre}")]
+        public async Task<ActionResult<List<Producto>>> GetProductoPorNombre(string nombre)
         {
-            var producto = await _productoService.GetProductoPorNombre(nombre);
+            var producto = await _productoService.GetProductosPorNombre(nombre);
             if(producto == null)
             {
                 return NotFound($"No se encontró el producto {nombre}");
@@ -48,8 +49,8 @@ namespace Productos.Controllers
             return Ok(producto);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetProductoPorRubro(string rubro)
+        [HttpGet("rubro/{rubro}")]
+        public async Task<ActionResult<List<Producto>>> GetProductoPorRubro(string rubro)
         {
             var productos = await _productoService.GetProductosPorRubro(rubro);
             if(productos == null || !productos.Any())

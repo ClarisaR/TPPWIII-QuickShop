@@ -19,6 +19,7 @@ namespace Productos.Models
 
         public Rubro Rubro { get; set; } = null!;
 
+        [ForeignKey("Rubro")]
         public int RubroId { get; set; }
 
         public ICollection<Producto> Productos { get; set; } = null!;
