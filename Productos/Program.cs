@@ -11,6 +11,7 @@ builder.Services.AddDbContext<ProductoDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<IProductoService, ProductoService>();
+builder.Services.AddScoped<ILocalService, LocalService>();
 
 builder.Services.AddControllers()
     .AddJsonOptions(x =>

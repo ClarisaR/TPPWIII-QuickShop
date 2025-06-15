@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Productos.Data;
 using Productos.Models;
+using Productos.Services;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -11,58 +12,50 @@ namespace Productos.Controllers
     [ApiController]
     public class LocalesController : ControllerBase
     {
-        private readonly ProductoDbContext _context;
+        private readonly ILocalService _localService;
 
-        public LocalesController(ProductoDbContext context)
+        public LocalesController(ILocalService localService)
         {
-            _context = context;
+            _localService = localService;
         }
 
         // GET: api/Locales
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Local>>> GetLocales()
+        public async Task<ActionResult<List<Local>>> GetLocales()
         {
-            return await _context.Locales.ToListAsync();
+            var locales = await _localService.ObtenerLocales();
+            if (locales == null || !locales.Any())
+            {
+                return NotFound("No se encontraron locales.");
+            }
+            return Ok(locales);
         }
 
         // GET api/Locales/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetLocal(int id)
+        public async Task<ActionResult> GetLocal(int id)
         {
-            var local = await _context.Locales.FindAsync(id);
-            if (local == null)
-            {
-                return NotFound();
-            }
-            return (IActionResult)local;
+            var local = await _localService.ObtenerLocalPorId(id);
+            if (local == null) return NotFound();
+            return Ok(local);
         }
 
         // POST: api/Usuarios
         [HttpPost]
         public async Task<ActionResult<Local>> PostLocal(Local local)
         {
-            if (local == null)
-            {
-                return BadRequest("El local no puede ser nulo.");
-            }
-            _context.Locales.Add(local);
-            await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetLocal), new { id = local.Id }, local);
+            if (local == null) return BadRequest("El local no puede ser nulo.");
+
+            var createdLocal = await _localService.CrearLocal(local);
+            return CreatedAtAction(nameof(GetLocal), new { id = createdLocal.Id }, createdLocal);
         }
 
         // DELETE api/Locales/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteLocal(int id)
+        public async Task<ActionResult> DeleteLocal(int id)
         {
-            var local = await _context.Locales.FindAsync(id);
-            if (local != null)
-            {
-                _context.Locales.Remove(local);
-                _context.SaveChanges();
-            }
-            else {
-                return NotFound();
-            }
+            var result = await _localService.EliminarLocal(id);
+            if (!result) return NotFound();
             return Ok();
         }
     }
