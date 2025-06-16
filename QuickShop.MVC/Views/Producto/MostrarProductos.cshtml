@@ -1,0 +1,22 @@
+﻿@{
+	ViewData["Title"] = "Productos";
+}
+@model List<ProductoDTO>;
+
+<h2>Lista de productos</h2>
+
+<div class="grid-producto"> 
+	@foreach(var p in Model)
+	{
+	<div class="card-product">
+		<div class="card-img">
+			<img src="@p.Imagen" alt="@p.Nombre"/>
+		</div>
+		<div class="card-info">
+				<!-- <p>p.Categoria.Nombre</p>-->
+			<p>@p.Nombre</p>
+			<p>$@p.Precio</p>
+		</div>
+	</div>
+	}
+</div>

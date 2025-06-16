@@ -13,6 +13,8 @@ builder.Services.AddControllersWithViews();
 // agrega contexto para obtener la cookie con el token
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddHttpClient<IUsuarioServicio, UsuarioServicio>();
+builder.Services.AddHttpClient<IProductoServicio, ProductoServicio>();
+builder.Services.AddScoped<IProductoServicio, ProductoServicio>();
 
 builder.Services
     .AddAuthentication(options =>

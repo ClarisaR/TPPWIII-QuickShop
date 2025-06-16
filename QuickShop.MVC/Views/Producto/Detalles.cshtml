@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewData["Title"] = "Detalles";
+}
+@model ProductoDTO;
+
+<h2>Detalles</h2>
+
+<div class="details-container">
+    <img src="@Model.Imagen" alt="@Model.Nombre"/>
+    <p>Nombre: @Model.Nombre</p>
+    <p>Descripcion: @Model.Descripcion</p>
+    <p>Precio: $@Model.Precio</p>
+    <p>Nombre de la categoría: @Model.Categoria?.Nombre</p>
+    <p>Nombre del local: @Model.Local?.Nombre</p>
+    <p>VARIANTES:</p>
+    @*@foreach(var v in Model.Variantes)
+    {
+        <p>Color: @v.Color.Nombre</p>
+
+        <p>Talle: @v.Talle.Nombre</p>
+    }*@
+</div>
