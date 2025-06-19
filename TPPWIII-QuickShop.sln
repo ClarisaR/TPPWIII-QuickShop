@@ -12,6 +12,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Elementos de la solución",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Autenticacion", "Autenticacion\Autenticacion.csproj", "{86D90A1E-0374-4A93-81CC-A2EB823F8DDE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pedidos", "Pedidos\Pedidos.csproj", "{1F930EBD-F2BC-40DC-911D-316C456081FC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,6 +28,10 @@ Global
 		{86D90A1E-0374-4A93-81CC-A2EB823F8DDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{86D90A1E-0374-4A93-81CC-A2EB823F8DDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{86D90A1E-0374-4A93-81CC-A2EB823F8DDE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F930EBD-F2BC-40DC-911D-316C456081FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F930EBD-F2BC-40DC-911D-316C456081FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F930EBD-F2BC-40DC-911D-316C456081FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F930EBD-F2BC-40DC-911D-316C456081FC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
