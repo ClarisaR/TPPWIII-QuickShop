@@ -19,7 +19,7 @@ namespace QuickShop.MVC.Services
         {
             _httpClient = httpClient;
             _jsonOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-            _url = "http://localhost:5003/api/Locales";
+            _url = "http://productos-api:8080/api/Locales";
         }
 
         public async Task<List<LocalDTO>> ObtenerLocales()
