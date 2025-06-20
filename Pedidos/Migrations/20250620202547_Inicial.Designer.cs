@@ -12,7 +12,7 @@ using Pedidos.Data;
 namespace Pedidos.Migrations
 {
     [DbContext(typeof(PedidoDbContext))]
-    [Migration("20250619190951_Inicial")]
+    [Migration("20250620202547_Inicial")]
     partial class Inicial
     {
         /// <inheritdoc />
@@ -85,13 +85,11 @@ namespace Pedidos.Migrations
 
             modelBuilder.Entity("Pedidos.Models.PedidoProducto", b =>
                 {
-                    b.HasOne("Pedidos.Models.Pedido", "Pedido")
+                    b.HasOne("Pedidos.Models.Pedido", null)
                         .WithMany("PedidoProductos")
                         .HasForeignKey("IdPedido")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Pedido");
                 });
 
             modelBuilder.Entity("Pedidos.Models.Pedido", b =>

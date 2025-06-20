@@ -82,13 +82,11 @@ namespace Pedidos.Migrations
 
             modelBuilder.Entity("Pedidos.Models.PedidoProducto", b =>
                 {
-                    b.HasOne("Pedidos.Models.Pedido", "Pedido")
+                    b.HasOne("Pedidos.Models.Pedido", null)
                         .WithMany("PedidoProductos")
                         .HasForeignKey("IdPedido")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Pedido");
                 });
 
             modelBuilder.Entity("Pedidos.Models.Pedido", b =>

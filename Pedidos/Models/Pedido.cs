@@ -22,12 +22,12 @@ public class Pedido
 
     [Required]
     [MaxLength(255)]
-    public string DireccionHasta { get; set; } // Dirección de entrega del pedido
+    public string DireccionHasta { get; set; } // Dirección de entrega
 
     [Required]
     [MaxLength(255)]
-    public string DireccionDesde { get; set; } // Dirección desde donde se envía el pedido
+    public string DireccionDesde { get; set; } // Dirección de envío
 
-    // Relación con productos (si ya lo vas a agregar más adelante)
+    // Relación con productos: lista de PedidoProducto
     public List<PedidoProducto> PedidoProductos { get; set; } = new List<PedidoProducto>();
 }
