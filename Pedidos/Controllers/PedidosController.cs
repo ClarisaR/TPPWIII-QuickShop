@@ -21,12 +21,14 @@ namespace Pedidos.Controllers
         [HttpPost]
         public async Task<IActionResult> PostPedido([FromBody] CrearPedido pedidoDTO)
         {
+            
+            var total = pedidoDTO.PedidoProductos.Sum(pp => pp.CantidadProductos * pp.PrecioUnitario);
             var pedido = new Pedido
             {
                 IdUsuario = pedidoDTO.IdUsuario,
-                FechaPedido = pedidoDTO.FechaPedido,
+                FechaPedido = DateTime.UtcNow,
                 Estado = pedidoDTO.Estado,
-                Total = pedidoDTO.Total,
+                Total = total,
                 DireccionHasta = pedidoDTO.DireccionHasta,
                 DireccionDesde = pedidoDTO.DireccionDesde,
                 PedidoProductos = new List<PedidoProducto>() // Inicializamos
