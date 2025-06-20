@@ -18,6 +18,9 @@ namespace Productos.Services
         Task<List<Producto>> GetProductosSimilares(int idProducto);
         Task<List<Producto>> GetProductosDelMismoLocal(int idProducto);
         Task<List<Producto>> FiltrarProductos(FiltroDTO filtro);
+
+        Task<List<Producto>> GetProductosPorCategoria(string categoria);
+
     }
 
     public class ProductoService : IProductoService
@@ -214,6 +217,26 @@ namespace Productos.Services
 
             return productos;
         }
+        public async Task<List<Producto>> GetProductosPorCategoria(string categoria)
+        {
+            var productosPorCategoria = await _context.Productos
+                                    .Include(p => p.Local)
+                                    .Include(p => p.Categoria)
+                                    .Include(p => p.Variantes)
+                                    .Where(p => p.Categoria.Nombre == categoria)
+                                    .ToListAsync();
 
+            productosPorCategoria.ForEach(p =>
+            {
+                p.Variantes = _context.Variantes
+                            .Include(v => v.Color)
+                            .Include(v => v.Talle)
+                            .Where(v => v.ProductoId == p.Id)
+                            .ToList();
+            });
+
+
+            return productosPorCategoria;
+        }
     }
 }

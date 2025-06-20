@@ -119,5 +119,16 @@ namespace Productos.Controllers
             }
             return Ok(productos);
         }
+
+        [HttpGet("categoria/{categoria}")]
+        public async Task<ActionResult<List<Producto>>> GetProductosPorCategoria(string categoria)
+        {
+            var productos = await _productoService.GetProductosPorCategoria(categoria);
+            if (productos == null || !productos.Any())
+            {
+                return NotFound("No se encontraron productos en esta categoría.");
+            }
+            return Ok(productos);
+        }
     }
-    }
+}
