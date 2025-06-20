@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using QuickShop.MVC.Models;
 using QuickShop.MVC.Services;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace QuickShop.MVC.Controllers
 {
@@ -11,13 +10,16 @@ namespace QuickShop.MVC.Controllers
         private readonly IProductoServicio _productoServicio;
         public ProductoController(IProductoServicio productoServicio)
         {
-            this._productoServicio = productoServicio;
+           _productoServicio = productoServicio;
         }
 
         [HttpGet]
-        public IActionResult MostrarProductos()
+        public IActionResult MostrarProductos(FiltroDTO? filtro)
         {
-            List<ProductoDTO> productos = _productoServicio.ObtenerProductos().Result;
+            List<ProductoDTO> productos = (filtro != null) 
+                            ? _productoServicio.ObtenerProductos().Result  
+                            : _productoServicio.FiltrarProductos(filtro).Result;
+           
             return View(productos);
         }
 
@@ -51,6 +53,13 @@ namespace QuickShop.MVC.Controllers
         public IActionResult MostrarProductosPorColor(string color)
         {
             List<ProductoDTO> productos = _productoServicio.ObtenerProductosPorColor(color).Result;
+            return View("MostrarProductos", productos);
+        }
+
+        [Route("Producto/Categoria/{Categoria}")]
+        public IActionResult MostrarProductosPorCategproa(string categoria)
+        {
+            List<ProductoDTO> productos = _productoServicio.ObtenerProductosPorCategoria(categoria).Result;
             return View("MostrarProductos", productos);
         }
     }
