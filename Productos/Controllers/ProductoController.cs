@@ -12,7 +12,7 @@ namespace Productos.Controllers
 
         public ProductoController(IProductoService productoService)
         {
-            this._productoService = productoService;
+            _productoService = productoService;
         }
 
         [HttpGet]
@@ -42,7 +42,7 @@ namespace Productos.Controllers
         public async Task<ActionResult<List<Producto>>> GetProductoPorNombre(string nombre)
         {
             var producto = await _productoService.GetProductosPorNombre(nombre);
-            if(producto == null)
+            if (producto == null)
             {
                 return NotFound($"No se encontró el producto {nombre}");
             }
@@ -53,7 +53,7 @@ namespace Productos.Controllers
         public async Task<ActionResult<List<Producto>>> GetProductoPorRubro(string rubro)
         {
             var productos = await _productoService.GetProductosPorRubro(rubro);
-            if(productos == null || !productos.Any())
+            if (productos == null || !productos.Any())
             {
                 return NotFound("Productos no encontrados.");
             }
@@ -103,4 +103,5 @@ namespace Productos.Controllers
             }
             return Ok(productos);
         }
+    }
     }

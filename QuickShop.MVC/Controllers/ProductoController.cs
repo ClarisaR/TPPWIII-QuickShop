@@ -26,6 +26,8 @@ namespace QuickShop.MVC.Controllers
         public IActionResult Detalles(int id)
         {
             ProductoDTO producto = _productoServicio.ObtenerProducto(id).Result;
+            ViewBag.ProductosSimilares = _productoServicio.ObtenerProductosSimilares(id).Result;
+            ViewBag.ProductosDelLocal = _productoServicio.ObtenerProductosPorLocal(producto.LocalId).Result;
             return View(producto);
         }
 

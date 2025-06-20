@@ -20,4 +20,20 @@
 
         <p>Talle: @v.Talle.Nombre</p>
     }
+
+    <p>PRODUCTOS SIMILARES: </p>
+    @foreach (var p in ViewBag.ProductosSimilares)
+    {
+        <p>
+            <a asp-action="Detalles" asp-controller="Producto" asp-route-id="@p.Id">@p.Nombre - $@p.Precio</a>
+        </p>
+    }
+
+    <p>PRODUCTOS DEL MISMO LOCAL: </p>
+    @foreach (var p in ViewBag.ProductosDelLocal)
+    {
+        <p>
+            <a asp-action="Detalles" asp-controller="Producto" asp-route-id="@p.Id">@p.Nombre - $@p.Precio</a>
+        </p>
+    }
 </div>
