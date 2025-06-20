@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Productos.Dtos;
 using Productos.Models;
 using Productos.Services;
 
@@ -100,6 +101,21 @@ namespace Productos.Controllers
             if (productos == null || !productos.Any())
             {
                 return NotFound("No se encontraron productos en el local especificado.");
+            }
+            return Ok(productos);
+        }
+
+        [HttpPost("filtrar")]
+        public async Task<ActionResult<List<Producto>>> FiltrarProductos([FromBody] FiltroDTO filtro)
+        {
+            if (filtro == null)
+            {
+                return BadRequest("El filtro no puede ser nulo.");
+            }
+            var productos = await _productoService.FiltrarProductos(filtro);
+            if (productos == null || !productos.Any())
+            {
+                return NotFound("No se encontraron productos que coincidan con los criterios de filtro.");
             }
             return Ok(productos);
         }

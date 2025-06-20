@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Productos.Data;
+using Productos.Dtos;
 using Productos.Models;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -16,6 +17,7 @@ namespace Productos.Services
         Task<List<Producto>> GetProductosPorTalle(string talle);
         Task<List<Producto>> GetProductosSimilares(int idProducto);
         Task<List<Producto>> GetProductosDelMismoLocal(int idProducto);
+        Task<List<Producto>> FiltrarProductos(FiltroDTO filtro);
     }
 
     public class ProductoService : IProductoService
@@ -40,7 +42,7 @@ namespace Productos.Services
                                 .Where(v => v.ProductoId == id)
                                 .ToListAsync();
 
-            return producto ?? throw new Exception($"El producto con ID = {id} no existe");
+            return producto;
         }
 
         public async Task<List<Producto>> GetProductosPorNombre(string nombre)
@@ -61,7 +63,7 @@ namespace Productos.Services
                             .ToList();
             });
 
-            return productos.Any() ? productos : throw new Exception($"El producto '{nombre}' no fue encontrado.");
+            return productos;
         }
 
         public async Task<List<Producto>> GetProductos()
@@ -81,7 +83,7 @@ namespace Productos.Services
                             .ToList();
             });
 
-            return productos.Any() ? productos : throw new Exception($"No se encontraron productos.");
+            return productos;
         }
 
         public async Task<List<Producto>> GetProductosPorRubro(string rubro)
@@ -103,7 +105,7 @@ namespace Productos.Services
             });
 
 
-            return productosPorRubro.Any() ? productosPorRubro : throw new Exception("No se encontraron productos por rubro.");
+            return productosPorRubro;
         }
 
         public async Task<List<Producto>> GetProductosPorColor(string color)
@@ -122,7 +124,7 @@ namespace Productos.Services
                             .Where(v => v.ProductoId == p.Id)
                             .ToList();
             });
-            return productosPorColor.Any() ? productosPorColor : throw new Exception($"No se encontraron productos con el color '{color}'.");
+            return productosPorColor;
         }
 
         public async Task<List<Producto>> GetProductosPorTalle(string talle)
@@ -141,25 +143,25 @@ namespace Productos.Services
                             .Where(v => v.ProductoId == p.Id)
                             .ToList();
             });
-            return productosPorTalle.Any() ? productosPorTalle : throw new Exception($"No se encontraron productos con el talle '{talle}'.");
+            return productosPorTalle;
         }
 
         public async Task<List<Producto>> GetProductosSimilares(int idProducto)
         {
             var producto = await _context.Productos
-                                    .Include(p => p.Local)
+                                    .Include(p => p.Categoria)
                                     .FirstOrDefaultAsync(p => p.Id == idProducto);
-            var productosSimilares = await _context.Productos
+            if (producto == null || producto.Categoria == null)
+            {
+                return null;
+            }
+            return await _context.Productos
                                     .Include(p => p.Variantes)
                                     .Include(p => p.Local)
                                     .Include(p => p.Categoria)
                                     .Where(p => p.Id != producto.Id && p.Categoria.Id == producto.Categoria.Id)
                                     .Take(5)
                                     .ToListAsync();
-
-            return productosSimilares.Any()
-                ? productosSimilares
-                : throw new Exception($"No se encontraron productos similares a la categoría con ID = {idProducto}.");
         }
 
         public async Task<List<Producto>> GetProductosDelMismoLocal(int idProducto)
@@ -167,17 +169,51 @@ namespace Productos.Services
             var producto = await _context.Productos
                                     .Include(p => p.Local)
                                     .FirstOrDefaultAsync(p => p.Id == idProducto);
-            var productosPorLocal = await _context.Productos
+
+            if (producto == null || producto.Local == null)
+            {
+                return null;
+            }
+            return await _context.Productos
                                     .Include(p => p.Variantes)
                                     .Include(p => p.Local)
                                     .Include(p => p.Categoria)
                                     .Where(p => p.Id != producto.Id && p.Local.Id == producto.Local.Id)
                                     .Take(5)
                                     .ToListAsync();
-
-            return productosPorLocal.Any()
-                ? productosPorLocal
-                : throw new Exception($"No se encontraron productos para el local con ID = {idProducto}.");
         }
+
+        public async Task<List<Producto>> FiltrarProductos(FiltroDTO filtro)
+        {
+            var consulta = _context.Productos
+                .Include(p => p.Variantes)
+                .Include(p => p.Local)
+                .Include(p => p.Categoria)
+                .AsQueryable();
+
+            if (filtro.Categorias.Any())
+                consulta = consulta.Where(p => filtro.Categorias.Contains(p.Categoria.Nombre));
+
+            if (filtro.Colores.Any())
+                consulta = consulta.Where(p => p.Variantes.Any(v => filtro.Colores.Contains(v.Color.Nombre)));
+
+            if (filtro.Talles.Any())
+                consulta = consulta.Where(p => p.Variantes.Any(v => filtro.Talles.Contains(v.Talle.Nombre)));
+
+            if (filtro.Rubros.Any())
+                consulta = consulta.Where(p => filtro.Rubros.Contains(p.Local.Rubro.Nombre));
+
+            if (filtro.Locales.Any())
+                consulta = consulta.Where(p => filtro.Locales.Contains(p.Local.Nombre));
+
+            consulta = consulta.Where(p => p.Precio >= filtro.PrecioMinimo &&
+                                           p.Precio <= filtro.PrecioMaximo
+            );
+
+            var productos = await consulta.ToListAsync();
+
+            return productos;
+        }
+
     }
 }
