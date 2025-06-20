@@ -16,6 +16,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Productos", "Productos\Prod
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickShop.MVC", "QuickShop.MVC\QuickShop.MVC.csproj", "{F22C9CB1-1F41-B66A-AAF9-ED57FA89031B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pedidos", "Pedidos\Pedidos.csproj", "{1F930EBD-F2BC-40DC-911D-316C456081FC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -38,6 +40,10 @@ Global
 		{F22C9CB1-1F41-B66A-AAF9-ED57FA89031B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F22C9CB1-1F41-B66A-AAF9-ED57FA89031B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F22C9CB1-1F41-B66A-AAF9-ED57FA89031B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F930EBD-F2BC-40DC-911D-316C456081FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F930EBD-F2BC-40DC-911D-316C456081FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F930EBD-F2BC-40DC-911D-316C456081FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F930EBD-F2BC-40DC-911D-316C456081FC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
