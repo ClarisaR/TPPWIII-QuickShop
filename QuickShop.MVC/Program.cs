@@ -14,7 +14,9 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddHttpClient<IUsuarioServicio, UsuarioServicio>();
 builder.Services.AddHttpClient<IProductoServicio, ProductoServicio>();
+builder.Services.AddHttpClient<ILocalServicio, LocalServicio>();
 builder.Services.AddScoped<IProductoServicio, ProductoServicio>();
+builder.Services.AddScoped<ILocalServicio, LocalServicio>();
 
 builder.Services
     .AddAuthentication(options =>
