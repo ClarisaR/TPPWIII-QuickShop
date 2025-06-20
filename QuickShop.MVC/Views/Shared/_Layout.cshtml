@@ -35,7 +35,10 @@
             </div>
 
             <div class="top-right">
-                <i class="fa-solid fa-cart-shopping"></i>
+                <!--carrito -->
+                <button id="cart-icon" class="cart-icon-btn">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                </button> 
                 @if (User.Identity?.IsAuthenticated ?? false)
                 {
                     <span>Hola, @User.FindFirst("nombre")?.Value</span>
@@ -49,6 +52,29 @@
                     </div>
                 }
             </div>
+            <!--slide carrito -->
+            <div id="cart-slide" class="cart-slide hidden">
+                <div class="cart-header">
+                    <h2>Carrito - <span id="cart-count">0</span> Items</h2>
+                    <button id="close-cart">✖</button>
+                </div>
+
+                <div class="cart-body">
+                    <div id="cart-items" class="cart-items">
+                        <!-- Los productos van aquí -->
+                        <!-- Los pushea el carrito.js -->
+                    </div>
+
+                    <div class="cart-summary">
+                        <h3>Resumen</h3>
+                        <p>Subtotal: $<span id="subtotal">0.00</span></p>
+                        <p>Envio: Gratis</p>
+                        <p><strong>Total: $<span id="total">0.00</span></strong></p>
+                        <button id="checkout-btn" disabled>CONFIRMAR COMPRA</button>
+                    </div>
+                </div>
+            </div>
+            <!--fin slide carrito -->
 
         </div>
     </header>
@@ -108,5 +134,7 @@
             </div>
         </div>
     </footer>
+    <!-- logica slide carrito -->
+    <script src="js/carrito.js"></script>
 </body>
 </html>
