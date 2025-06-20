@@ -14,6 +14,8 @@ namespace Productos.Services
 
         Task<List<Producto>> GetProductosPorColor(string color);
         Task<List<Producto>> GetProductosPorTalle(string talle);
+        Task<List<Producto>> GetProductosSimilares(int id);
+        Task<List<Producto>> GetProductosPorLocal(int id);
     }
 
     public class ProductoService : IProductoService
@@ -27,16 +29,16 @@ namespace Productos.Services
         public async Task<Producto> GetProducto(int id)
         {
             var producto = await _context.Productos
-                                .Include(p => p.Variantes)
-                                .Include(p => p.Local)
-                                .Include(p => p.Categoria)
-                                .FirstOrDefaultAsync(p => p.Id == id);
+                            .Include(p => p.Variantes)
+                            .Include(p => p.Local)
+                            .Include(p => p.Categoria)
+                            .FirstOrDefaultAsync(p => p.Id == id);
 
             producto.Variantes = await _context.Variantes
-                                        .Include(v => v.Color)
-                                        .Include(v => v.Talle)
-                                        .Where(v => v.ProductoId == id)
-                                        .ToListAsync();
+                                .Include(v => v.Color)
+                                .Include(v => v.Talle)
+                                .Where(v => v.ProductoId == id)
+                                .ToListAsync();
 
             return producto ?? throw new Exception($"El producto con ID = {id} no existe");
         }
@@ -44,11 +46,11 @@ namespace Productos.Services
         public async Task<List<Producto>> GetProductosPorNombre(string nombre)
         {
             var productos = await _context.Productos
-                                  .Include(p => p.Variantes)
-                                  .Include(p => p.Local)
-                                  .Include(p => p.Categoria)
-                                  .Where(p => p.Nombre.Contains(nombre))
-                                  .ToListAsync();
+                            .Include(p => p.Variantes)
+                            .Include(p => p.Local)
+                            .Include(p => p.Categoria)
+                            .Where(p => p.Nombre.Contains(nombre))
+                            .ToListAsync();
 
             productos.ForEach(p =>
             {
@@ -65,10 +67,10 @@ namespace Productos.Services
         public async Task<List<Producto>> GetProductos()
         {
             var productos = await _context.Productos
-                                .Include(p => p.Local)
-                                .Include(p => p.Categoria)
-                                .Include(p => p.Variantes)
-                                .ToListAsync();
+                            .Include(p => p.Local)
+                            .Include(p => p.Categoria)
+                            .Include(p => p.Variantes)
+                            .ToListAsync();
 
             productos.ForEach(p =>
             {
@@ -85,11 +87,11 @@ namespace Productos.Services
         public async Task<List<Producto>> GetProductosPorRubro(string rubro)
         {
             var productosPorRubro = await _context.Productos
-                                        .Include(p => p.Local)
-                                        .Include(p => p.Categoria)
-                                        .Include(p => p.Variantes)
-                                        .Where(p => p.Local.Rubro.Nombre == rubro)
-                                        .ToListAsync();
+                                    .Include(p => p.Local)
+                                    .Include(p => p.Categoria)
+                                    .Include(p => p.Variantes)
+                                    .Where(p => p.Local.Rubro.Nombre == rubro)
+                                    .ToListAsync();
 
             productosPorRubro.ForEach(p =>
             {
@@ -107,10 +109,10 @@ namespace Productos.Services
         public async Task<List<Producto>> GetProductosPorColor(string color)
         {
             var productosPorColor = await _context.Productos.Include(p => p.Variantes)
-                                        .Include(p => p.Local)
-                                        .Include(p => p.Categoria)
-                                        .Where(p => p.Variantes.Any(v => v.Color.Nombre == color))
-                                        .ToListAsync();
+                                    .Include(p => p.Local)
+                                    .Include(p => p.Categoria)
+                                    .Where(p => p.Variantes.Any(v => v.Color.Nombre == color))
+                                    .ToListAsync();
 
             productosPorColor.ForEach(p =>
             {
@@ -126,11 +128,11 @@ namespace Productos.Services
         public async Task<List<Producto>> GetProductosPorTalle(string talle)
         {
             var productosPorTalle = await _context.Productos
-                                        .Include(p => p.Variantes)
-                                        .Include(p => p.Local)
-                                        .Include(p => p.Categoria)
-                                        .Where(p => p.Variantes.Any(v => v.Talle.Nombre == talle))
-                                        .ToListAsync();
+                                    .Include(p => p.Variantes)
+                                    .Include(p => p.Local)
+                                    .Include(p => p.Categoria)
+                                    .Where(p => p.Variantes.Any(v => v.Talle.Nombre == talle))
+                                    .ToListAsync();
             productosPorTalle.ForEach(p =>
             {
                 p.Variantes = _context.Variantes
@@ -140,6 +142,36 @@ namespace Productos.Services
                             .ToList();
             });
             return productosPorTalle.Any() ? productosPorTalle : throw new Exception($"No se encontraron productos con el talle '{talle}'.");
+        }
+
+        public async Task<List<Producto>> GetProductosSimilares(int id)
+        {
+            var productosSimilares = await _context.Productos
+                                    .Include(p => p.Variantes)
+                                    .Include(p => p.Local)
+                                    .Include(p => p.Categoria)
+                                    .Where(p => p.Categoria.Id == id)
+                                    .Take(5)
+                                    .ToListAsync();
+
+            return productosSimilares.Any()
+                ? productosSimilares
+                : throw new Exception($"No se encontraron productos similares a la categoría con ID = {id}.");
+        }
+
+        public async Task<List<Producto>> GetProductosPorLocal(int id)
+        {
+            var productosPorLocal = await _context.Productos
+                                    .Include(p => p.Variantes)
+                                    .Include(p => p.Local)
+                                    .Include(p => p.Categoria)
+                                    .Where(p => p.LocalId == id)
+                                    .Take(5)
+                                    .ToListAsync();
+
+            return productosPorLocal.Any()
+                ? productosPorLocal
+                : throw new Exception($"No se encontraron productos para el local con ID = {id}.");
         }
     }
 }

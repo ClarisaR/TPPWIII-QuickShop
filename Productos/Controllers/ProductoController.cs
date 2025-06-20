@@ -81,5 +81,26 @@ namespace Productos.Controllers
             }
             return Ok(productos);
         }
+
+        [HttpGet("/similares/{id}")]
+        public async Task<ActionResult<List<Producto>>> GetProductosSimilares(int id)
+        {
+            var productos = await _productoService.GetProductosSimilares(id);
+            if (productos == null || !productos.Any())
+            {
+                return NotFound("No se encontraron productos similares.");
+            }
+            return Ok(productos);
+        }
+
+        [HttpGet("/local/{id}")]
+        public async Task<ActionResult<List<Producto>>> GetProductosPorLocal(int id)
+        {
+            var productos = await _productoService.GetProductosPorLocal(id);
+            if (productos == null || !productos.Any())
+            {
+                return NotFound("No se encontraron productos en el local especificado.");
+            }
+            return Ok(productos);
+        }
     }
-}
