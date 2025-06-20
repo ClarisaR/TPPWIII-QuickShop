@@ -14,8 +14,8 @@ namespace Productos.Services
 
         Task<List<Producto>> GetProductosPorColor(string color);
         Task<List<Producto>> GetProductosPorTalle(string talle);
-        Task<List<Producto>> GetProductosSimilares(int id);
-        Task<List<Producto>> GetProductosPorLocal(int id);
+        Task<List<Producto>> GetProductosSimilares(int idProducto);
+        Task<List<Producto>> GetProductosDelMismoLocal(int idProducto);
     }
 
     public class ProductoService : IProductoService
@@ -144,34 +144,40 @@ namespace Productos.Services
             return productosPorTalle.Any() ? productosPorTalle : throw new Exception($"No se encontraron productos con el talle '{talle}'.");
         }
 
-        public async Task<List<Producto>> GetProductosSimilares(int id)
+        public async Task<List<Producto>> GetProductosSimilares(int idProducto)
         {
+            var producto = await _context.Productos
+                                    .Include(p => p.Local)
+                                    .FirstOrDefaultAsync(p => p.Id == idProducto);
             var productosSimilares = await _context.Productos
                                     .Include(p => p.Variantes)
                                     .Include(p => p.Local)
                                     .Include(p => p.Categoria)
-                                    .Where(p => p.Categoria.Id == id)
+                                    .Where(p => p.Id != producto.Id && p.Categoria.Id == producto.Categoria.Id)
                                     .Take(5)
                                     .ToListAsync();
 
             return productosSimilares.Any()
                 ? productosSimilares
-                : throw new Exception($"No se encontraron productos similares a la categoría con ID = {id}.");
+                : throw new Exception($"No se encontraron productos similares a la categoría con ID = {idProducto}.");
         }
 
-        public async Task<List<Producto>> GetProductosPorLocal(int id)
+        public async Task<List<Producto>> GetProductosDelMismoLocal(int idProducto)
         {
+            var producto = await _context.Productos
+                                    .Include(p => p.Local)
+                                    .FirstOrDefaultAsync(p => p.Id == idProducto);
             var productosPorLocal = await _context.Productos
                                     .Include(p => p.Variantes)
                                     .Include(p => p.Local)
                                     .Include(p => p.Categoria)
-                                    .Where(p => p.LocalId == id)
+                                    .Where(p => p.Id != producto.Id && p.Local.Id == producto.Local.Id)
                                     .Take(5)
                                     .ToListAsync();
 
             return productosPorLocal.Any()
                 ? productosPorLocal
-                : throw new Exception($"No se encontraron productos para el local con ID = {id}.");
+                : throw new Exception($"No se encontraron productos para el local con ID = {idProducto}.");
         }
     }
 }

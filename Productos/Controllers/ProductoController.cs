@@ -82,10 +82,10 @@ namespace Productos.Controllers
             return Ok(productos);
         }
 
-        [HttpGet("/similares/{id}")]
-        public async Task<ActionResult<List<Producto>>> GetProductosSimilares(int id)
+        [HttpGet("similares/{id}")]
+        public async Task<ActionResult<List<Producto>>> GetProductosSimilares(int idProducto)
         {
-            var productos = await _productoService.GetProductosSimilares(id);
+            var productos = await _productoService.GetProductosSimilares(idProducto);
             if (productos == null || !productos.Any())
             {
                 return NotFound("No se encontraron productos similares.");
@@ -93,10 +93,10 @@ namespace Productos.Controllers
             return Ok(productos);
         }
 
-        [HttpGet("/local/{id}")]
-        public async Task<ActionResult<List<Producto>>> GetProductosPorLocal(int id)
+        [HttpGet("local/{id}")]
+        public async Task<ActionResult<List<Producto>>> GetProductosDelMismoLocal(int idProducto)
         {
-            var productos = await _productoService.GetProductosPorLocal(id);
+            var productos = await _productoService.GetProductosDelMismoLocal(idProducto);
             if (productos == null || !productos.Any())
             {
                 return NotFound("No se encontraron productos en el local especificado.");
