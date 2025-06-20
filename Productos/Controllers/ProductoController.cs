@@ -59,5 +59,27 @@ namespace Productos.Controllers
             }
             return Ok(productos);
         }
+
+        [HttpGet("color/{color}")]
+        public async Task<ActionResult<List<Producto>>> GetProductoPorColor(string color)
+        {
+            var productos = await _productoService.GetProductosPorColor(color);
+            if (productos == null || !productos.Any())
+            {
+                return NotFound("Productos no encontrados.");
+            }
+            return Ok(productos);
+        }
+
+        [HttpGet("talle/{talle}")]
+        public async Task<ActionResult<List<Producto>>> GetProductoPorTalle(string talle)
+        {
+            var productos = await _productoService.GetProductosPorTalle(talle);
+            if (productos == null || !productos.Any())
+            {
+                return NotFound("Productos no encontrados.");
+            }
+            return Ok(productos);
+        }
     }
 }

@@ -44,5 +44,12 @@ namespace QuickShop.MVC.Controllers
 
             return View("MostrarProductos", productos);
         }
+
+        [Route("Producto/Color/{color}")]
+        public IActionResult MostrarProductosPorColor(string color)
+        {
+            List<ProductoDTO> productos = _productoServicio.ObtenerProductosPorColor(color).Result;
+            return View("MostrarProductos", productos);
+        }
     }
 }

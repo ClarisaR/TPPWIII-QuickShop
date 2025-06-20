@@ -12,6 +12,8 @@ namespace QuickShop.MVC.Services
         Task<List<ProductoDTO>> ObtenerProductosPorNombre(string nombre);
 
         Task<List<ProductoDTO>> ObtenerProductosPorRubro(string rubro);
+        Task<List<ProductoDTO>> ObtenerProductosPorColor(string color);
+        Task<List<ProductoDTO>> ObtenerProductosPorTalle(string talle);
     }
     public class ProductoServicio : IProductoServicio
     {
@@ -69,6 +71,24 @@ namespace QuickShop.MVC.Services
             var json = await response.Content.ReadAsStringAsync();
             var productos = JsonSerializer.Deserialize<List<ProductoDTO>>(json, opcionesSerializacion);
 
+            return productos;
+        }
+
+        public async Task<List<ProductoDTO>> ObtenerProductosPorColor(string color)
+        {
+            var response = await _httpClient.GetAsync($"{_url}/color/{color}");
+            if (!response.IsSuccessStatusCode) return null;
+            var json = await response.Content.ReadAsStringAsync();
+            var productos = JsonSerializer.Deserialize<List<ProductoDTO>>(json, opcionesSerializacion);
+            return productos;
+        }
+
+        public async Task<List<ProductoDTO>> ObtenerProductosPorTalle(string talle)
+        {
+            var response = await _httpClient.GetAsync($"{_url}/talle/{talle}");
+            if (!response.IsSuccessStatusCode) return null;
+            var json = await response.Content.ReadAsStringAsync();
+            var productos = JsonSerializer.Deserialize<List<ProductoDTO>>(json, opcionesSerializacion);
             return productos;
         }
     }
