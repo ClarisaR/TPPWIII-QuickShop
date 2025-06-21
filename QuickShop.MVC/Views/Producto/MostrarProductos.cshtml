@@ -1,22 +1,22 @@
 ﻿@{
-    ViewData["Title"] ??= "Productos";
+	ViewData["Title"] ??= "Productos";
 }
-@model List<ProductoDTO>
+@model ProductosViewModel
 
 <!DOCTYPE html>
 <html lang="es">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Listado de Productos</title>
-    <link rel="stylesheet" href="/styles/style.css" />
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Listado de Productos</title>
+	<link rel="stylesheet" href="/styles/style.css" />
 </head>
 
 <body>
-    <div class="container">
-        <aside class="sidebar">
-            <h3>Filtros</h3>
+	<div class="container">
+		<aside class="sidebar">
+			@* <h3>Filtros</h3>
             <div class="filter-group"><span>Buzos</span><button class="badge">×</button></div>
             <div class="filter-group"><span>Invierno</span><button class="badge">×</button></div>
             <div class="filter-group"><span>Hombre</span><button class="badge">×</button></div>
@@ -38,27 +38,38 @@
             <h4>Tienda</h4>
             <label><input type="checkbox"> Antonio’s</label>
 
-            <a class="show-more">Mostrar más</a>
-        </aside>
+            <a class="show-more">Mostrar más</a> *@
+			@await Html.PartialAsync("_FormularioFiltro", Model.Filtro)
+		</aside>
 
-        <main class="products">
-            <div class="sort">
-                <label>Ordenar por:</label>
-                <select>
-                    <option>Más relevantes</option>
-                    <option>Menor precio</option>
-                    <option>Mayor precio</option>
-                </select>
-            </div>
+		<main class="products">
+			<div class="sort">
+				<label>Ordenar por:</label>
+				<select>
+					<option>Más relevantes</option>
+					<option>Menor precio</option>
+					<option>Mayor precio</option>
+				</select>
+			</div>
 
-            <div class="grid">
-                @foreach (var p in Model)
-                {
-                    @Html.Partial("_ProductoCard", p)
-                }
-            </div>
-        </main>
-    </div>
+			<div class="grid">
+				@if (Model.Productos == null || !Model.Productos.Any())
+				{
+					<p>No hay productos disponibles.</p>
+				}else @if (Model.Productos == null || !Model.Productos.Any() && Model.Filtro != null)
+				{
+					<p>No se encontraron productos que coincidan con los filtros aplicados.</p>
+				}
+				else
+				{
+					@foreach (var p in Model.Productos)
+					{
+						@await Html.PartialAsync("_ProductoCard", p)
+					}
+				}
+			</div>
+		</main>
+	</div>
 </body>
 
 </html>

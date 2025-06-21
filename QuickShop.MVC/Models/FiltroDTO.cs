@@ -11,7 +11,7 @@
 
         public double PrecioMinimo { get; set; } = 0;
 
-        public double PrecioMaximo { get; set; } = double.MaxValue;
+        public double PrecioMaximo { get; set; } = 1000000D;
 
     }
 }

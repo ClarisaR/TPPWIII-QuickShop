@@ -1,26 +1,60 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using QuickShop.MVC.Models;
+using QuickShop.MVC.Models.Enums;
 using QuickShop.MVC.Services;
 
 namespace QuickShop.MVC.Controllers
 {
     public class ProductoController : Controller
     {
-
         private readonly IProductoServicio _productoServicio;
+
         public ProductoController(IProductoServicio productoServicio)
         {
-           _productoServicio = productoServicio;
+            _productoServicio = productoServicio;
+        }
+
+        private void CargarEnumsEnViewBag()
+        {
+            ViewBag.Categorias = Enum.GetValues(typeof(CategoriaEnum)).Cast<CategoriaEnum>().Select(c => c.ToString()).ToList();
+            ViewBag.Colores = Enum.GetValues(typeof(ColorEnum)).Cast<ColorEnum>().Select(c => c.ToString()).ToList();
+            ViewBag.Talles = Enum.GetValues(typeof(TalleEnum)).Cast<TalleEnum>().Select(c => c.ToString()).ToList();
+            ViewBag.Rubros = Enum.GetValues(typeof(RubroEnum)).Cast<RubroEnum>().Select(c => c.ToString()).ToList();
+        }
+
+        private IActionResult RetornarVistaConProductos(List<ProductoDTO> productos, FiltroDTO? filtro = null)
+        {
+            CargarEnumsEnViewBag();
+
+            var viewModel = new ProductosViewModel
+            {
+                Productos = productos,
+                Filtro = filtro ?? new FiltroDTO()
+            };
+
+            return View("MostrarProductos", viewModel);
         }
 
         [HttpGet]
         public IActionResult MostrarProductos(FiltroDTO? filtro)
         {
-            List<ProductoDTO> productos = (filtro != null) 
-                            ? _productoServicio.ObtenerProductos().Result  
-                            : _productoServicio.FiltrarProductos(filtro).Result;
-           
-            return View(productos);
+            CargarEnumsEnViewBag();
+
+            bool filtroVacio = filtro == null
+                || (!filtro.Categorias.Any() && !filtro.Colores.Any() && !filtro.Talles.Any()
+                    && filtro.PrecioMinimo == 0 && filtro.PrecioMaximo == double.MaxValue);
+
+            var productos = filtroVacio
+                ? _productoServicio.ObtenerProductos().Result
+                : _productoServicio.FiltrarProductos(filtro).Result;
+
+            var viewModel = new ProductosViewModel
+            {
+                Productos = productos,
+                Filtro = filtro ?? new FiltroDTO()
+            };
+
+            return View(viewModel);
         }
 
         [HttpGet]
@@ -33,34 +67,36 @@ namespace QuickShop.MVC.Controllers
             return View(producto);
         }
 
+        [HttpGet]
         [Route("Producto/Nombre/{nombre}")]
-        public IActionResult MostrarProductosPorNombre(string nombre) 
+        public IActionResult MostrarProductosPorNombre(string nombre, FiltroDTO? filtro)
         {
-            List<ProductoDTO> productos = _productoServicio.ObtenerProductosPorNombre(nombre).Result;
-
-            return View("MostrarProductos", productos);
+            var productos = _productoServicio.ObtenerProductosPorNombre(nombre).Result;
+            return RetornarVistaConProductos(productos, filtro);
         }
 
+        [HttpGet]
         [Route("Producto/Rubro/{rubro}")]
         public IActionResult MostrarProductosPorRubro(string rubro)
         {
-            List<ProductoDTO> productos = _productoServicio.ObtenerProductosPorRubro(rubro).Result;
-
-            return View("MostrarProductos", productos);
+            var productos = _productoServicio.ObtenerProductosPorRubro(rubro).Result;
+            return RetornarVistaConProductos(productos);
         }
 
+        [HttpGet]
         [Route("Producto/Color/{color}")]
         public IActionResult MostrarProductosPorColor(string color)
         {
-            List<ProductoDTO> productos = _productoServicio.ObtenerProductosPorColor(color).Result;
-            return View("MostrarProductos", productos);
+            var productos = _productoServicio.ObtenerProductosPorColor(color).Result;
+            return RetornarVistaConProductos(productos);
         }
 
-        [Route("Producto/Categoria/{Categoria}")]
-        public IActionResult MostrarProductosPorCategproa(string categoria)
+        [HttpGet]
+        [Route("Producto/Categoria/{categoria}")]
+        public IActionResult MostrarProductosPorCategoria(string categoria)
         {
-            List<ProductoDTO> productos = _productoServicio.ObtenerProductosPorCategoria(categoria).Result;
-            return View("MostrarProductos", productos);
+            var productos = _productoServicio.ObtenerProductosPorCategoria(categoria).Result;
+            return RetornarVistaConProductos(productos);
         }
     }
 }

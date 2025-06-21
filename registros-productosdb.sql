@@ -56,8 +56,8 @@ VALUES
   ('M'),
   ('L'),
   ('XL'),
-  ('2XL'),
-  ('3XL');
+  ('XXL'),
+  ('XXXL');
 
 INSERT INTO Rubros (Nombre) 
 VALUES 

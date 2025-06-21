@@ -98,14 +98,15 @@ namespace Productos.Services
                                     .Where(p => p.Local.Rubro.Nombre == rubro)
                                     .ToListAsync();
 
-            productosPorRubro.ForEach(p =>
-            {
-                p.Variantes = _context.Variantes
-                            .Include(v => v.Color)
-                            .Include(v => v.Talle)
-                            .Where(v => v.ProductoId == p.Id)
-                            .ToList();
-            });
+            //lo comenté porque al incluir las variantes me hacia un error de loop
+            //productosPorRubro.ForEach(p =>
+            //{
+            //    p.Variantes = _context.Variantes
+            //                .Include(v => v.Color)
+            //                .Include(v => v.Talle)
+            //                .Where(v => v.ProductoId == p.Id)
+            //                .ToList();
+            //});
 
 
             return productosPorRubro;

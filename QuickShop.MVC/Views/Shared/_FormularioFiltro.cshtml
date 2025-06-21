@@ -1,0 +1,54 @@
+﻿@model FiltroDTO;
+
+<form asp-action="MostrarProductos" method="get" class="filtro-form">
+    <div>
+        <label>Precio mínimo</label>
+        <input type="number" step="any" name="PrecioMinimo" value="@Model?.PrecioMinimo" />
+    </div>
+
+    <div>
+        <label>Precio máximo</label>
+        <input type="number" step="any" name="PrecioMaximo" value="@Model?.PrecioMaximo" />
+    </div>
+    <fieldset>
+        <legend>Categorías</legend>
+        @foreach (var categoria in ViewBag.Categorias as List<string>)
+        {
+            <label>
+                <input type="checkbox" name="Categorias" value="@categoria" /> @categoria
+            </label>
+        }
+    </fieldset>
+
+    <fieldset>
+        <legend>Colores</legend>
+        @foreach (var color in ViewBag.Colores as List<string>)
+        {
+            <label>
+                <input type="checkbox" name="Colores" value="@color" /> @color
+            </label>
+        }
+    </fieldset>
+
+    <fieldset>
+        <legend>Talles</legend>
+        @foreach (var talle in ViewBag.Talles as List<string>)
+        {
+            <label>
+                <input type="checkbox" name="Talles" value="@talle" /> @talle
+            </label>
+        }
+    </fieldset>
+
+    <fieldset>
+        <legend>Rubros</legend>
+        @foreach (var rubro in ViewBag.Rubros as List<string>)
+        {
+            <label>
+                <input type="checkbox" name="Rubros" value="@rubro" /> @rubro
+            </label>
+        }
+    </fieldset>
+
+    <button type="submit">Filtrar</button>
+</form>
