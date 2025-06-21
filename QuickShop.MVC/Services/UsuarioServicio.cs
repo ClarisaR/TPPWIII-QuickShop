@@ -12,11 +12,9 @@ namespace QuickShop.MVC.Services
     {
 
         private readonly HttpClient httpClient;
-        private readonly IHttpContextAccessor httpContext;
-        public UsuarioServicio(HttpClient httpClient, IHttpContextAccessor httpContext)
+        public UsuarioServicio(HttpClient httpClient)
         {
             this.httpClient = httpClient;
-            this.httpContext = httpContext;
         }
 
         public async Task<bool> RegistrarUsuario(Usuario usuario)

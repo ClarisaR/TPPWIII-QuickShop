@@ -1,0 +1,56 @@
+﻿@{
+	ViewData["Title"] = "Pedidos";
+}
+@model List<PedidoDTO>
+
+<h2 class="mb-4">🧾 Mis Pedidos</h2>
+
+@if (Model.Any())
+{
+    <div class="table-responsive">
+        <table class="table table-hover table-bordered align-middle shadow-sm rounded bg-white">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Total</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var pedido in Model)
+                {
+                    <tr>
+                        <td>@pedido.IdPedido</td>
+                        <td>@pedido.FechaPedido.ToString("dd/MM/yyyy")</td>
+                        <td>@pedido.Total.ToString("C")</td>
+                        <td>
+                            <span class="badge
+                                @(pedido.Estado == "Pendiente" ? "bg-warning text-dark" :
+                                  pedido.Estado == "Enviado" ? "bg-info text-dark" :
+                                  pedido.Estado == "Entregado" ? "bg-success" :
+                                  "bg-secondary")">
+                                @pedido.Estado
+                            </span>
+                        </td>
+                        <td>
+                            <a class="btn btn-sm btn-outline-primary"
+                               asp-action="VerPedido" asp-route-id="@pedido.IdPedido">
+                                Ver detalles
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="alert alert-info text-center shadow-sm mt-4" role="alert">
+        No se encontraron pedidos registrados 🛒
+    </div>
+}
+
+                            <partial name="_ValidationScriptsPartial" />

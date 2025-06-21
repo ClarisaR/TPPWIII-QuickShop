@@ -1,0 +1,19 @@
+﻿
+@{
+	ViewData["Title"] = "Detalle Pedido";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model PedidoDTO;
+
+<h2>Detalle del Pedido</h2>
+
+<div class="card mb-3">
+	<div class="card-body">
+		<h5 class="card-title">Pedido ID: @Model.IdPedido</h5>
+		<p class="card-text">Fecha: @Model.FechaPedido.ToString("dd/MM/yyyy")</p>
+		<p class="card-text">Total: @Model.Total.ToString("C")</p>
+		<p class="card-text">Estado: @Model.Estado</p>
+	</div>
+	<div class="card-footer">
+		<a class="btn btn-secondary" asp-action="MisPedidos">Volver a Mis Pedidos</a>
+	</div>

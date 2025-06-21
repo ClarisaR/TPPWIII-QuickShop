@@ -1,6 +1,7 @@
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using QuickShop.MVC.Controllers;
 using QuickShop.MVC.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,7 +13,11 @@ builder.Services.AddControllersWithViews();
 
 // agrega contexto para obtener la cookie con el token
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddSession();
 builder.Services.AddHttpClient<IUsuarioServicio, UsuarioServicio>();
+builder.Services.AddScoped<IPedidoServicio, PedidoServicio>();
+builder.Services.AddHttpClient<PedidoController>();
+
 
 builder.Services
     .AddAuthentication(options =>
@@ -66,7 +71,7 @@ app.UseRouting();
 
 app.UseAuthorization();
 app.UseAuthentication();
-
+app.UseSession();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
