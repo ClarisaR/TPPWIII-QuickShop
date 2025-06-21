@@ -11,13 +11,13 @@
     align-items: center;
 }
 
-.hero::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-color: rgba(0, 0, 0, 0.4);
-    z-index: 1;
-}
+    .hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-color: rgba(0, 0, 0, 0.4);
+        z-index: 1;
+    }
 
 .hero-content {
     position: relative;
@@ -26,10 +26,10 @@
     color: white;
 }
 
-.hero-content h1 {
-    font-size: 70px;
-    margin-bottom: 20px;
-}
+    .hero-content h1 {
+        font-size: 70px;
+        margin-bottom: 20px;
+    }
 
 .btn-primary {
     background-color: #08A6A8;
@@ -44,12 +44,17 @@
 /* Secciones */
 .carruseles {
     background-color: #F5F5F5;
-    padding-bottom: 120px;
 }
 
 .section-category {
     background-color: #F5F5F5;
-    width: 80%;
+    width: 100%;
+    margin: auto;
+}
+
+.section-category-2 {
+    background-color: #E6E6E6;
+    width: 100%;
     margin: auto;
 }
 
@@ -58,6 +63,7 @@
     padding: 0 40px;
     text-align: center;
 }
+
     .section-header h2 {
         font-size: 30px;
         font-weight: 700;
@@ -66,31 +72,39 @@
         display: inline-block;
         margin-top: 80px;
     }
-.section-header h2::after {
-    content: "";
-    display: block;
-    width: 100%;
-    height: 3px;
-    background-color: #F0297B;
-}
+
+        .section-header h2::after {
+            content: "";
+            display: block;
+            width: 100%;
+            height: 3px;
+            background-color: #F0297B;
+        }
 
 /* Carrusel */
 .cards-wrapper {
+    width: 60%;
+    margin: auto;
     position: relative;
     display: flex;
     align-items: center;
     overflow: hidden;
+    justify-content: center;
+    padding-bottom: 20px;
 }
+
 
 .cards-container {
     display: flex;
     gap: 50px;
     transition: transform 0.3s ease-in-out;
-    margin: 20px 40px;
-    padding: 10px 20px;
+    margin: 10px 40px;
+    padding: 10px 0; /* Quitamos el 20px horizontal */
     overflow-x: hidden;
     scroll-behavior: smooth;
+    justify-content: flex-start;
 }
+
 
 .arrow {
     background-color: transparent;
@@ -101,6 +115,7 @@
     padding: 8px;
     z-index: 1;
 }
+
     .arrow.left {
         position: relative;
         left: 10px;
