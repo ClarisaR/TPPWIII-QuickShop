@@ -1,26 +1,42 @@
 using Microsoft.AspNetCore.Mvc;
 using QuickShop.MVC.Models;
+using QuickShop.MVC.Services;
 using System.Diagnostics;
 
 namespace QuickShop.MVC.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILocalServicio _localServicio;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILocalServicio localServicio)
         {
-            _logger = logger;
+            _localServicio = localServicio;
         }
 
-        public IActionResult Index()
+        [HttpGet]
+        public async Task<IActionResult> Index()
         {
-            return View();
+            List<LocalDTO> locales;
+            try
+            {
+                locales = await _localServicio.ObtenerLocales();
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", "No se pudieron cargar los locales.");
+                locales = new List<LocalDTO>();
+            }
+            return View(locales);
         }
 
-        public IActionResult Privacy()
+        [HttpGet]
+        [Route("Home/LocalConProductos/{id}")]
+        public IActionResult LocalConProductos(int id)
         {
-            return View();
+            LocalDTO local = _localServicio.ObtenerLocalConProductos(id).Result;
+            List<ProductoDTO> productos = local?.Productos?.ToList() ?? new List<ProductoDTO>();
+            return View("~/Views/Producto/MostrarProductos.cshtml", productos);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

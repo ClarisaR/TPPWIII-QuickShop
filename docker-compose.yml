@@ -6,7 +6,7 @@ services:
       SA_PASSWORD: "usuarios123!"
       ACCEPT_EULA: "Y"
     ports:
-      - "1435:1433"
+      - "1433:1433"
     volumes:
       - usuarios_data:/var/opt/mssql
     networks:
@@ -61,6 +61,36 @@ services:
     command: sh -c "dotnet restore && dotnet watch run --no-launch-profile"
     networks:
       - usuarios-net
+ 
+  pedidos-db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: pedidos-db
+    environment:
+      SA_PASSWORD: "pedidos123!"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1434:1433"
+    volumes:
+      - pedidos_data:/var/opt/mssql
+    networks:
+      - usuarios-net
+ 
+  pedidos-api:
+    build:
+      context: ./Pedidos
+      dockerfile: Dockerfile
+    container_name: pedidos-api
+    depends_on:
+      - pedidos-db
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__DefaultConnection: Server=pedidos-db;Database=PedidosDb;User Id=sa;Password=pedidos123!;TrustServerCertificate=True;Encrypt=True;
+    ports:
+      - "5004:8080"
+    volumes:
+      - ./Pedidos:/app
+    networks:
+      - usuarios-net
 
   productos-db:
     image: mcr.microsoft.com/mssql/server:2022-latest
@@ -91,38 +121,7 @@ services:
       - ./Productos:/app
     networks:
       - usuarios-net
-
- 
-  pedidos-db:
-    image: mcr.microsoft.com/mssql/server:2022-latest
-    container_name: pedidos-db
-    environment:
-      SA_PASSWORD: "pedidos123!"
-      ACCEPT_EULA: "Y"
-    ports:
-      - "1436:1433"
-    volumes:
-      - pedidos_data:/var/opt/mssql
-    networks:
-      - usuarios-net
-
-  pedidos-api:
-    build:
-      context: ./Pedidos
-      dockerfile: Dockerfile
-    container_name: pedidos-api
-    depends_on:
-      - pedidos-db
-    environment:
-      ASPNETCORE_ENVIRONMENT: Development
-      ConnectionStrings__DefaultConnection: Server=pedidos-db;Database=PedidosDb;User Id=sa;Password=pedidos123!;TrustServerCertificate=True;Encrypt=True;
-    ports:
-      - "5004:8080"
-    volumes:
-      - ./Pedidos:/app
-    networks:
-      - usuarios-net
-
+      
 volumes:
   usuarios_data:
   productos_data:

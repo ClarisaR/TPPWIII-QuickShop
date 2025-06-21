@@ -1,23 +1,56 @@
-﻿
-@{
-    ViewData["Title"] = "Detalles";
+﻿@{
+	ViewData["Title"] = "Detalles";
 }
 @model ProductoDTO;
 
 <h2>Detalles</h2>
 
 <div class="details-container">
-    <img src="@Model.Imagen" alt="@Model.Nombre"/>
-    <p>Nombre: @Model.Nombre</p>
-    <p>Descripcion: @Model.Descripcion</p>
-    <p>Precio: $@Model.Precio</p>
-    <p>Nombre de la categoría: @Model.Categoria?.Nombre</p>
-    <p>Nombre del local: @Model.Local?.Nombre</p>
-    <p>VARIANTES:</p>
-    @*@foreach(var v in Model.Variantes)
-    {
-        <p>Color: @v.Color.Nombre</p>
+	<img src="@Model.Imagen" alt="@Model.Nombre" />
+	<p>Nombre: @Model.Nombre</p>
+	<p>Descripcion: @Model.Descripcion</p>
+	<p>Precio: $@Model.Precio</p>
+	<p>Nombre de la categoría: @Model.Categoria?.Nombre</p>
+	<p>Nombre del local: @Model.Local?.Nombre</p>
+	<p>VARIANTES:</p>
+	@foreach (var v in Model.Variantes)
+	{
+		<p>Color: @v.Color.Nombre</p>
 
-        <p>Talle: @v.Talle.Nombre</p>
-    }*@
+		<p>Talle: @v.Talle.Nombre</p>
+	}
+
+	<p>PRODUCTOS SIMILARES: </p>
+	@if (ViewBag.ProductosSimilares == null || !ViewBag.ProductosSimilares.Any())
+	{
+		<p>No hay productos similares.</p>
+	}
+	else
+	{
+		<p>Estos son los productos similares:</p>
+		@foreach (var p in ViewBag.ProductosSimilares)
+		{
+			<p>
+				<a asp-action="Detalles" asp-controller="Producto" asp-route-id="@p.Id">@p.Nombre - $@p.Precio</a>
+			</p>
+		}
+
+	}
+
+	<p>PRODUCTOS DEL MISMO LOCAL: </p>
+	@if (ViewBag.ProductosDelLocal == null || !ViewBag.ProductosDelLocal.Any())
+	{
+		<p>No hay productos del mismo local.</p>
+	}
+	else
+	{
+		<p>Estos son los productos del mismo local:</p>
+		@foreach (var p in ViewBag.ProductosDelLocal)
+		{
+			<p>
+				<a asp-action="Detalles" asp-controller="Producto" asp-route-id="@p.Id">@p.Nombre - $@p.Precio</a>
+			</p>
+		}
+	}
+
 </div>

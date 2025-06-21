@@ -26,6 +26,8 @@ namespace QuickShop.MVC.Controllers
         public IActionResult Detalles(int id)
         {
             ProductoDTO producto = _productoServicio.ObtenerProducto(id).Result;
+            ViewBag.ProductosSimilares = _productoServicio.ObtenerProductosSimilares(id).Result;
+            ViewBag.ProductosDelLocal = _productoServicio.ObtenerProductosPorLocal(producto.LocalId).Result;
             return View(producto);
         }
 
@@ -42,6 +44,13 @@ namespace QuickShop.MVC.Controllers
         {
             List<ProductoDTO> productos = _productoServicio.ObtenerProductosPorRubro(rubro).Result;
 
+            return View("MostrarProductos", productos);
+        }
+
+        [Route("Producto/Color/{color}")]
+        public IActionResult MostrarProductosPorColor(string color)
+        {
+            List<ProductoDTO> productos = _productoServicio.ObtenerProductosPorColor(color).Result;
             return View("MostrarProductos", productos);
         }
     }

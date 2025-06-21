@@ -30,6 +30,8 @@ namespace Productos.Services
                 {
                     Id = l.Id,
                     Nombre = l.Nombre,
+                    Descripcion = l.Descripcion,
+                    Imagen = l.Imagen,
                     Rubro = new Rubro
                     {
                         Id = l.Rubro.Id,
@@ -44,7 +46,9 @@ namespace Productos.Services
 
         public async Task<Local?> ObtenerLocalPorId(int id)
         {
-            return await _context.Locales.FindAsync(id);
+            return await _context.Locales
+                .Include(l => l.Productos)
+                .FirstOrDefaultAsync(l => l.Id == id);
         }
 
         public async Task<Local> CrearLocal(Local local)

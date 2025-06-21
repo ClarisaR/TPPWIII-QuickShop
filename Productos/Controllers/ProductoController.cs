@@ -12,7 +12,7 @@ namespace Productos.Controllers
 
         public ProductoController(IProductoService productoService)
         {
-            this._productoService = productoService;
+            _productoService = productoService;
         }
 
         [HttpGet]
@@ -42,7 +42,7 @@ namespace Productos.Controllers
         public async Task<ActionResult<List<Producto>>> GetProductoPorNombre(string nombre)
         {
             var producto = await _productoService.GetProductosPorNombre(nombre);
-            if(producto == null)
+            if (producto == null)
             {
                 return NotFound($"No se encontró el producto {nombre}");
             }
@@ -53,11 +53,55 @@ namespace Productos.Controllers
         public async Task<ActionResult<List<Producto>>> GetProductoPorRubro(string rubro)
         {
             var productos = await _productoService.GetProductosPorRubro(rubro);
-            if(productos == null || !productos.Any())
+            if (productos == null || !productos.Any())
             {
                 return NotFound("Productos no encontrados.");
             }
             return Ok(productos);
         }
+
+        [HttpGet("color/{color}")]
+        public async Task<ActionResult<List<Producto>>> GetProductoPorColor(string color)
+        {
+            var productos = await _productoService.GetProductosPorColor(color);
+            if (productos == null || !productos.Any())
+            {
+                return NotFound("Productos no encontrados.");
+            }
+            return Ok(productos);
+        }
+
+        [HttpGet("talle/{talle}")]
+        public async Task<ActionResult<List<Producto>>> GetProductoPorTalle(string talle)
+        {
+            var productos = await _productoService.GetProductosPorTalle(talle);
+            if (productos == null || !productos.Any())
+            {
+                return NotFound("Productos no encontrados.");
+            }
+            return Ok(productos);
+        }
+
+        [HttpGet("similares/{id}")]
+        public async Task<ActionResult<List<Producto>>> GetProductosSimilares(int idProducto)
+        {
+            var productos = await _productoService.GetProductosSimilares(idProducto);
+            if (productos == null || !productos.Any())
+            {
+                return NotFound("No se encontraron productos similares.");
+            }
+            return Ok(productos);
+        }
+
+        [HttpGet("local/{id}")]
+        public async Task<ActionResult<List<Producto>>> GetProductosDelMismoLocal(int idProducto)
+        {
+            var productos = await _productoService.GetProductosDelMismoLocal(idProducto);
+            if (productos == null || !productos.Any())
+            {
+                return NotFound("No se encontraron productos en el local especificado.");
+            }
+            return Ok(productos);
+        }
     }
-}
+    }

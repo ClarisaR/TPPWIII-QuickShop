@@ -59,6 +59,7 @@ function renderCart() {
         cartCount.innerText = 0;
         subtotal.innerText = '0.00';
         total.innerText = '0.00';
+        updateCartCount(0);
         return;
     }
 
@@ -69,22 +70,22 @@ function renderCart() {
         const div = document.createElement('div');
         div.className = 'cart-item';
         div.innerHTML = `
-      <img src="${item.imagen}" alt="${item.nombre}">
-      <div class="item-info">
-        <strong>${item.nombre}</strong><br>
-        Color: ${item.color}<br>
-        Talle: ${item.talla}<br>
-        $${item.precio.toFixed(2)}
-        <div class="qty-controls">
-          <button onclick="restar(${index})">-</button>
-          <span>${item.cantidad}</span>
-          <button onclick="sumar(${index})">+</button>
-        </div>
-      </div>
-      <div class="item-actions">
-        <button onclick="eliminar(${index})">🗑️</button>
-      </div>
-    `;
+            <img src="${item.imagen}" alt="${item.nombre}">
+            <div class="item-info">
+                <strong>${item.nombre}</strong><br>
+                Color: ${item.color}<br>
+                Talle: ${item.talla}<br>
+                $${item.precio.toFixed(2)}
+                <div class="qty-controls">
+                    <button onclick="restar(${index})">-</button>
+                    <span>${item.cantidad}</span>
+                    <button onclick="sumar(${index})">+</button>
+                </div>
+            </div>
+            <div class="item-actions">
+                <button onclick="eliminar(${index})">🗑️</button>
+            </div>
+        `;
         cartItems.appendChild(div);
     });
 
@@ -92,7 +93,9 @@ function renderCart() {
     subtotal.innerText = sum.toFixed(2);
     total.innerText = sum.toFixed(2);
     checkoutBtn.disabled = false;
+    updateCartCount(totalItems);
 }
+
 
 function sumar(index) {
     cart[index].cantidad++;
@@ -112,6 +115,19 @@ function eliminar(index) {
     cart.splice(index, 1);
     renderCart();
 }
+
+function updateCartCount(count) {
+    const badge = document.getElementById('cart-count-badge');
+    if (!badge) return;
+
+    if (count === 0) {
+        badge.style.display = 'none';
+    } else {
+        badge.style.display = 'inline-block';
+        badge.textContent = count;
+    }
+}
+
 
 document.getElementById('cart-icon').addEventListener('click', () => {
     document.getElementById('cart-slide').classList.add('open');

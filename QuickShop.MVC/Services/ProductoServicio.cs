@@ -12,6 +12,10 @@ namespace QuickShop.MVC.Services
         Task<List<ProductoDTO>> ObtenerProductosPorNombre(string nombre);
 
         Task<List<ProductoDTO>> ObtenerProductosPorRubro(string rubro);
+        Task<List<ProductoDTO>> ObtenerProductosPorColor(string color);
+        Task<List<ProductoDTO>> ObtenerProductosPorTalle(string talle);
+        Task<List<ProductoDTO>> ObtenerProductosSimilares(int id);
+        Task<List<ProductoDTO>> ObtenerProductosPorLocal(int? localId);
     }
     public class ProductoServicio : IProductoServicio
     {
@@ -70,6 +74,42 @@ namespace QuickShop.MVC.Services
             var productos = JsonSerializer.Deserialize<List<ProductoDTO>>(json, opcionesSerializacion);
 
             return productos;
+        }
+
+        public async Task<List<ProductoDTO>> ObtenerProductosPorColor(string color)
+        {
+            var response = await _httpClient.GetAsync($"{_url}/color/{color}");
+            if (!response.IsSuccessStatusCode) return null;
+            var json = await response.Content.ReadAsStringAsync();
+            var productos = JsonSerializer.Deserialize<List<ProductoDTO>>(json, opcionesSerializacion);
+            return productos;
+        }
+
+        public async Task<List<ProductoDTO>> ObtenerProductosPorTalle(string talle)
+        {
+            var response = await _httpClient.GetAsync($"{_url}/talle/{talle}");
+            if (!response.IsSuccessStatusCode) return null;
+            var json = await response.Content.ReadAsStringAsync();
+            var productos = JsonSerializer.Deserialize<List<ProductoDTO>>(json, opcionesSerializacion);
+            return productos;
+        }
+
+        public async Task<List<ProductoDTO>> ObtenerProductosSimilares(int id)
+        {
+            var response = await _httpClient.GetAsync($"{_url}/similares/{id}");
+            if (!response.IsSuccessStatusCode) return null;
+            var json = await response.Content.ReadAsStringAsync();
+            var productosSimilares = JsonSerializer.Deserialize<List<ProductoDTO>>(json, opcionesSerializacion);
+            return productosSimilares;
+        }
+
+        public async Task<List<ProductoDTO>> ObtenerProductosPorLocal(int? localId)
+        {
+            var response = await _httpClient.GetAsync($"{_url}/local/{localId}");
+            if (!response.IsSuccessStatusCode) return null;
+            var json = await response.Content.ReadAsStringAsync();
+            var productosPorLocal = JsonSerializer.Deserialize<List<ProductoDTO>>(json, opcionesSerializacion);
+            return productosPorLocal;
         }
     }
 }
