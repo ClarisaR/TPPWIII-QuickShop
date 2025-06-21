@@ -125,6 +125,7 @@ services:
 
 volumes:
   usuarios_data:
+  productos_data:
   pedidos_data:
 
 networks:
