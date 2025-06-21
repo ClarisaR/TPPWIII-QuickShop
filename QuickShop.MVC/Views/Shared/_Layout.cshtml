@@ -40,7 +40,6 @@
                     </div>
                 </form>
             </div>
-
             <div class="top-right">
                 <i class="fa-solid fa-cart-shopping"></i>
                 @if (User.Identity?.IsAuthenticated ?? false)
@@ -91,7 +90,7 @@
             Deportiva
         </a>
 
-        <a asp-controller="Tienda" asp-action="Index"
+        <a asp-controller="Tienda" asp-action="VerTiendas"
            class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Tienda" ? "active" : "")">
             Tiendas
         </a>
