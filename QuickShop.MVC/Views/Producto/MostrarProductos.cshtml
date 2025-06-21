@@ -1,22 +1,64 @@
 ﻿@{
-	ViewData["Title"] = "Productos";
+    ViewData["Title"] ??= "Productos";
 }
-@model List<ProductoDTO>;
+@model List<ProductoDTO>
 
-<h2>Lista de productos</h2>
+<!DOCTYPE html>
+<html lang="es">
 
-<div class="grid-producto"> 
-	@foreach(var p in Model)
-	{
-	<div class="card-product">
-		<div class="card-img">
-			<img src="@p.Imagen" alt="@p.Nombre"/>
-		</div>
-		<div class="card-info">
-				<!-- <p>p.Categoria.Nombre</p>-->
-			<p>@p.Nombre</p>
-			<p>$@p.Precio</p>
-		</div>
-	</div>
-	}
-</div>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Listado de Productos</title>
+    <link rel="stylesheet" href="/styles/style.css" />
+</head>
+
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <h3>Filtros</h3>
+            <div class="filter-group"><span>Buzos</span><button class="badge">×</button></div>
+            <div class="filter-group"><span>Invierno</span><button class="badge">×</button></div>
+            <div class="filter-group"><span>Hombre</span><button class="badge">×</button></div>
+
+            <h4>Precio</h4>
+            <input type="range" min="0" max="1000000" />
+
+            <h4>Color</h4>
+            <label><input type="checkbox"> Blanco</label>
+            <label><input type="checkbox"> Azul</label>
+            <label><input type="checkbox"> Rojo</label>
+
+            <h4>Talle</h4>
+            <label><input type="checkbox"> S</label>
+            <label><input type="checkbox"> M</label>
+            <label><input type="checkbox"> L</label>
+            <label><input type="checkbox"> XL</label>
+
+            <h4>Tienda</h4>
+            <label><input type="checkbox"> Antonio’s</label>
+
+            <a class="show-more">Mostrar más</a>
+        </aside>
+
+        <main class="products">
+            <div class="sort">
+                <label>Ordenar por:</label>
+                <select>
+                    <option>Más relevantes</option>
+                    <option>Menor precio</option>
+                    <option>Mayor precio</option>
+                </select>
+            </div>
+
+            <div class="grid">
+                @foreach (var p in Model)
+                {
+                    @Html.Partial("_ProductoCard", p)
+                }
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>

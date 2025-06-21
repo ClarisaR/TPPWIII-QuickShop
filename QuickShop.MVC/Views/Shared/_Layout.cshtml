@@ -54,19 +54,47 @@
     </header>
 
     <nav class="nav-categories">
-        <a href="/" class="active">Inicio</a>
-        <a href="/Mujer">Mujer</a>
-        <a href="/Hombre">Hombre</a>
-        <a href="/Infantil">Infantil</a>
-        <a href="/Accesorios">Accesorios</a>
-        <a href="/Deportivo">Deportivo</a>
-        <a href="/Tiendas">Tiendas</a>
+        <a asp-controller="Home" asp-action="Index"
+           class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Home" ? "active" : "")">
+            Inicio
+        </a>
+
+        <a asp-controller="Producto" asp-action="MostrarProductosPorRubro" asp-route-rubro="Mujer"
+           class="@(Context.Request.Path.ToString().Contains("/Producto/Rubro/Mujer") ? "active" : "")">
+            Mujer
+        </a>
+
+        <a asp-controller="Producto" asp-action="MostrarProductosPorRubro" asp-route-rubro="Hombre"
+           class="@(Context.Request.Path.ToString().Contains("/Producto/Rubro/Hombre") ? "active" : "")">
+            Hombre
+        </a>
+
+        <a asp-controller="Producto" asp-action="MostrarProductosPorRubro" asp-route-rubro="Infantil"
+           class="@(Context.Request.Path.ToString().Contains("/Producto/Rubro/Infantil") ? "active" : "")">
+            Infantil
+        </a>
+
+        <a asp-controller="Producto" asp-action="MostrarProductosPorRubro" asp-route-rubro="Accesorios"
+           class="@(Context.Request.Path.ToString().Contains("/Producto/Rubro/Accesorios") ? "active" : "")">
+            Accesorios
+        </a>
+
+        <a asp-controller="Producto" asp-action="MostrarProductosPorRubro" asp-route-rubro="Deportiva"
+           class="@(Context.Request.Path.ToString().Contains("/Producto/Rubro/Deportiva") ? "active" : "")">
+            Deportiva
+        </a>
+
+        <a asp-controller="Tienda" asp-action="Index"
+           class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Tienda" ? "active" : "")">
+            Tiendas
+        </a>
     </nav>
+
+
 
     <main>
         @RenderBody()
     </main>
-
     <footer class="footer">
         <div class="footer-container">
             <div class="footer-social">
