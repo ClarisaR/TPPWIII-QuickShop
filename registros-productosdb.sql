@@ -93,23 +93,23 @@ INSERT INTO Locales (Nombre, Descripcion, RubroId, DireccionId, Imagen) VALUES
 ('Fuse', 'none', 1, 1, 'fuse.png'),
 ('Istoria', 'none', 1, 2, 'istoria.png'),
 ('Astra', 'none', 1, 3, 'astra.png'),
-('Venecia', 'none', 1, 4, 'astra.png'),
+('Re loca', 'none', 1, 4, 'loca.png'),
 ('Drop', 'none', 2, 5, 'drop.png'),
 ('Noou', 'none', 2, 6, 'noou.png'),
 ('Cosmos', 'none', 2, 7, 'cosmos.png'),
-('Equus', 'none', 2, 8, 'cosmos.png'),
+('Never', 'none', 2, 8, 'never.png'),
 ('Mimo Kids', 'none', 3, 9, 'mimo_kids.png'),
 ('Mimico', 'none', 3, 10, 'mimico.png'),
 ('Buma', 'none', 3, 11, 'buma.png'),
-('Vector', 'none', 3, 12, 'buma.png'),
+('Nunka', 'none', 3, 12, 'nunka.png'),
 ('Chloe', 'none', 4, 13, 'chloe.png'),
 ('Luxe Loom', 'none', 4, 14, 'luxe_loom.png'),
 ('Almaira', 'none', 4, 15, 'almaira.png'),
-('Tinchos', 'none', 4, 16, 'almaira.png'),
+('Silly', 'none', 4, 16, 'silly.png'),
 ('TFL', 'none', 5, 17, 'tfl.png'),
 ('Rossfit', 'none', 5, 18, 'rossfit.png'),
 ('Parner', 'none', 5, 19, 'parner.png'),
-('Mira y aprende', 'none', 5, 20, 'parner.png');
+('Siempre fitness', 'none', 5, 20, 'siempre-fit.png');
 
 
 INSERT INTO [ProductosDb].[dbo].[Productos] 
