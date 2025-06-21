@@ -83,7 +83,7 @@ namespace Productos.Controllers
             return Ok(productos);
         }
 
-        [HttpGet("similares/{id}")]
+        [HttpGet("similares/{idProducto}")]
         public async Task<ActionResult<List<Producto>>> GetProductosSimilares(int idProducto)
         {
             var productos = await _productoService.GetProductosSimilares(idProducto);
@@ -94,7 +94,7 @@ namespace Productos.Controllers
             return Ok(productos);
         }
 
-        [HttpGet("local/{id}")]
+        [HttpGet("local/{idProducto}")]
         public async Task<ActionResult<List<Producto>>> GetProductosDelMismoLocal(int idProducto)
         {
             var productos = await _productoService.GetProductosDelMismoLocal(idProducto);
