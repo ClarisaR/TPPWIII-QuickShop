@@ -51,12 +51,6 @@
     font-weight: bold;
 }
 
-.price {
-    font-size: 1.25rem;
-    color: #000;
-    margin-bottom: 12px;
-}
-
 .sizes {
     margin-bottom: 12px;
 }
@@ -102,3 +96,9 @@
     .color.blue {
         background: #1E88E5;
     }
+
+.product-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}

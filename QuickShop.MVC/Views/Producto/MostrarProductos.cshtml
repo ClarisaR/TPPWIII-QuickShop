@@ -3,16 +3,9 @@
 }
 @model ProductosViewModel
 
-<!DOCTYPE html>
-<html lang="es">
-
-<head>
-	<meta charset="UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>Listado de Productos</title>
-	<link rel="stylesheet" href="/styles/style.css" />
-</head>
-
+@section Styles {
+	<link rel="stylesheet" href="~/css/productoCard.css" asp-append-version="true" />
+}
 <body>
 	<div class="container">
 		<aside class="sidebar">
@@ -71,5 +64,3 @@
 		</main>
 	</div>
 </body>
-
-</html>

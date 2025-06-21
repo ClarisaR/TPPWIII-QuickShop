@@ -1,56 +1,140 @@
-﻿@{
-	ViewData["Title"] = "Detalles";
+﻿@model ProductoDTO
+@{
+    ViewData["Title"] = "Detalle del Producto";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@model ProductoDTO;
 
-<h2>Detalles</h2>
+@section Styles {
+    <link rel="stylesheet" href="~/css/detalleProducto.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/productoCard.css" asp-append-version="true" />
+}
 
-<div class="details-container">
-	<img src="@Model.Imagen" alt="@Model.Nombre" />
-	<p>Nombre: @Model.Nombre</p>
-	<p>Descripcion: @Model.Descripcion</p>
-	<p>Precio: $@Model.Precio</p>
-	<p>Nombre de la categoría: @Model.Categoria?.Nombre</p>
-	<p>Nombre del local: @Model.Local?.Nombre</p>
-	<p>VARIANTES:</p>
-	@foreach (var v in Model.Variantes)
-	{
-		<p>Color: @v.Color.Nombre</p>
+<div class="product-detail">
+    <div class="main-info">
+        <div class="detail-image">
+            <button class="fav-btn"><i class="fas fa-heart"></i></button>
 
-		<p>Talle: @v.Talle.Nombre</p>
-	}
+            <img src="@Model.Imagen" alt="@Model.Nombre">
+        </div>
+        <div class="detail-info">
+            <h2 class="detail-title">@Model.Nombre</h2>
+            <p class="detail-price">$@Model.Precio?.ToString("N2", new System.Globalization.CultureInfo("es-AR"))</p>
 
-	<p>PRODUCTOS SIMILARES: </p>
-	@if (ViewBag.ProductosSimilares == null || !ViewBag.ProductosSimilares.Any())
-	{
-		<p>No hay productos similares.</p>
-	}
-	else
-	{
-		<p>Estos son los productos similares:</p>
-		@foreach (var p in ViewBag.ProductosSimilares)
-		{
-			<p>
-				<a asp-action="Detalles" asp-controller="Producto" asp-route-id="@p.Id">@p.Nombre - $@p.Precio</a>
-			</p>
-		}
+            <div class="detail-options">
+                <div>
+                    <label for="size">Talle</label>
+                    <select id="size">
+                        @foreach (var v in Model.Variantes.Select(v => v.Talle.Nombre).Distinct())
+                        {
+                            <option>@v</option>
+                        }
+                    </select>
+                </div>
+                <div>
+                    <label for="color">Color</label>
+                    <select id="color">
+                        @foreach (var v in Model.Variantes.Select(v => v.Color.Nombre).Distinct())
+                        {
+                            <option>@v</option>
+                        }
+                    </select>
+                </div>
+            </div>
 
-	}
+            <div class="detail-buttons">
+                <button class="btn primary">Agregar al carrito</button>
+                <button class="btn secondary">Comprar ahora</button>
+            </div>
 
-	<p>PRODUCTOS DEL MISMO LOCAL: </p>
-	@if (ViewBag.ProductosDelLocal == null || !ViewBag.ProductosDelLocal.Any())
-	{
-		<p>No hay productos del mismo local.</p>
-	}
-	else
-	{
-		<p>Estos son los productos del mismo local:</p>
-		@foreach (var p in ViewBag.ProductosDelLocal)
-		{
-			<p>
-				<a asp-action="Detalles" asp-controller="Producto" asp-route-id="@p.Id">@p.Nombre - $@p.Precio</a>
-			</p>
-		}
-	}
+            <div class="detail-description">
+                <h4>Descripción</h4>
+                <p>@Model.Descripcion</p>
+                <p><strong>Categoría:</strong> @Model.Categoria?.Nombre</p>
+                <p><strong>Local:</strong> @Model.Local?.Nombre</p>
+            </div>
+        </div>
+    </div>
 
+    <!-- Productos similares -->
+    <div class="related-wrapper">
+        <div class="related-section">
+            <div class="section-header">
+                <h3>Productos similares</h3>
+                <a href="#">Ver más</a>
+            </div>
+            @{
+                var productosSimilares = ViewBag.ProductosSimilares as List<ProductoDTO>;
+            }
+
+            @if (productosSimilares != null && productosSimilares.Any())
+            {
+                <div class="cards-wrapper">
+                    <button class="arrow left similares"><i class="fa-solid fa-chevron-left"></i></button>
+                    <div class="cards-container carruselSimilares">
+                        @foreach (var p in productosSimilares)
+                        {
+                            <div class="card">@Html.Partial("_ProductoCard", p)</div>
+                        }
+                    </div>
+                    <button class="arrow right similares"><i class="fa-solid fa-chevron-right"></i></button>
+                </div>
+            }
+            else
+            {
+                <p>No hay productos similares.</p>
+            }
+        </div>
+
+    </div>
+
+    <!-- Productos del mismo local -->
+    <div class="related-section">
+        <div class="section-header">
+            <h3>Productos de @Model.Local?.Nombre</h3>
+            <a href="#">Ver más</a>
+        </div>
+        <div class="grid">
+
+            @{
+                var productosDelLocal = ViewBag.ProductosDelLocal as List<ProductoDTO>;
+            }
+            @if (productosDelLocal != null && productosDelLocal.Any())
+            {
+                foreach (var p in productosDelLocal)
+                {
+                    @Html.Partial("_ProductoCard", p)
+                }
+            }
+            else
+            {
+                <p>No hay productos del mismo local.</p>
+            }
+
+        </div>
+    </div>
 </div>
+</div>
+@section Scripts {
+    <script>
+        function initCarruselSimilares() {
+            const container = document.querySelector(".carruselSimilares");
+            const card = container.querySelector(".card");
+            const btnLeft = document.querySelector(".arrow.left.similares");
+            const btnRight = document.querySelector(".arrow.right.similares");
+
+            if (!card || !container) return;
+
+            const scrollAmount = card.offsetWidth + 16; // card + gap
+
+            btnLeft?.addEventListener("click", () => {
+                container.scrollBy({ left: -scrollAmount, behavior: "smooth" });
+            });
+
+            btnRight?.addEventListener("click", () => {
+                container.scrollBy({ left: scrollAmount, behavior: "smooth" });
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", initCarruselSimilares);
+    </script>
+}

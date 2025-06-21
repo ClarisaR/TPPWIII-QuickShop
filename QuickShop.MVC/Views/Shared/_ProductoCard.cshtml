@@ -2,24 +2,26 @@
 @section Styles {
     <link rel="stylesheet" href="~/css/productoCard.css" asp-append-version="true" />
 }
-<div class="product-card">
-    <div class="img-wrapper">
-        <img src="@Model.Imagen" alt="@Model.Nombre" />
-    </div>
-    <div class="product-info">
-        <p class="category">@Model.Categoria.Nombre</p>
-        <h3 class="title">@Model.Nombre</h3>
-        <p class="price">$@Model.Precio</p>
-        <div class="sizes">
-            <span>S</span><span>M</span><span>L</span><span>XL</span>
+<a href="@Url.Action("Detalles", "Producto", new { id = Model.Id })" class="product-card-link">
+
+    <div class="product-card">
+        <div class="img-wrapper">
+            <img src="@Model.Imagen" alt="@Model.Nombre" />
         </div>
-        <div class="colors">
-            <span class="color black"></span>
-            <span class="color white"></span>
-            <span class="color yellow"></span>
-            <span class="color red"></span>
-            <span class="color orange"></span>
-            <span class="color blue"></span>
+        <div class="product-info">
+            <p class="category">@Model.Categoria?.Nombre</p>
+            <h3 class="title">@Model.Nombre</h3>
+            <p class="price">$@Model.Precio?.ToString("N2", new System.Globalization.CultureInfo("es-AR"))</p>
+            <div class="sizes">
+                <span>S</span><span>M</span><span>L</span><span>XL</span>
+            </div>
+            <div class="colors">
+                <span class="color black"></span>
+                <span class="color white"></span>
+                <span class="color yellow"></span>
+                <span class="color red"></span>
+                <span class="color orange"></span>
+                <span class="color blue"></span>
+            </div>
         </div>
     </div>
-</div>

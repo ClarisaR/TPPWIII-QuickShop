@@ -15,7 +15,7 @@ button {
 header {
     background-color: white;
     padding: 10px 20px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid #e0e0e0;
 }
 
 .logo-icon {
@@ -138,6 +138,7 @@ header {
     border: none;
     border-radius: 10px;
     cursor: pointer;
+    text-decoration: none;
 }
 
 .btn-login {
@@ -163,14 +164,15 @@ header {
         border: 1px solid #055a5c;
     }
 
-/* Categorías*/
+/*Rubros*/
 
 .nav-categories {
-    margin-top: 10px;
     display: flex;
     justify-content: center;
     gap: 20px;
     padding: 15px;
+    border-top: 1px solid #e0e0e0; /* Borde superior sutil */
+    border-bottom: 1px solid #e0e0e0; /* Borde inferior sutil */
 }
 
     .nav-categories a {
@@ -387,6 +389,42 @@ header {
     .custom-checkbox input:checked ~ .checkmark::after {
         display: block;
     }
+.price-filter {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 10px;
+}
+
+    .price-filter input[type="number"] {
+        width: 80px;
+        padding: 6px 10px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 14px;
+    }
+
+.price-dash {
+    font-size: 18px;
+    margin: 0 4px;
+}
+
+.arrow-btn {
+    font-size: 16px;
+    background-color: transparent;
+    border: none;
+    color: #ccc;
+    cursor: default;
+    padding: 4px 8px;
+    border-radius: 6px;
+    transition: color 0.3s ease;
+}
+
+    .arrow-btn.enabled {
+        color: #08A6A8;
+        cursor: pointer;
+    }
+
 
 .modal-terms input {
     margin-right: 8px;
@@ -466,6 +504,7 @@ header {
     display: flex;
     gap: 1rem;
     padding: 1rem 2rem;
+    background-color: #F5F5F5;
 }
 
 .products {
@@ -479,9 +518,45 @@ header {
     align-items: center;
 }
 
-    .sort label {
-        margin-right: 0.5rem;
+.sort-dropdown {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 1rem;
+    padding: 0 1rem;
+    position: relative;
+}
+
+    .sort-dropdown select {
+        border: none;
+        background: transparent;
+        font-weight: normal;
+        color: #555;
+        font-size: 1rem;
+        cursor: pointer;
+        appearance: none;
+        padding: 0.4rem 2rem 0.4rem 0.8rem;
+        border-radius: 5px;
+        background-image: url("data:image/svg+xml;utf8,<svg fill='%2308A6A8' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+        background-repeat: no-repeat;
+        background-position: right 0.5rem center;
+        background-size: 1.4rem;
     }
+
+        .sort-dropdown select:focus {
+            outline: none;
+            box-shadow: none;
+        }
+
+
+
+
+.sort label {
+    margin-right: 0.5rem;
+}
 
 .grid {
     display: grid;
@@ -559,3 +634,18 @@ header {
     text-decoration: none;
     cursor: pointer;
 }
+
+.btn-filtrar {
+    margin-top: 0.8rem;
+    padding: 8px 16px;
+    background-color: #08A6A8;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+    .btn-filtrar:hover {
+        background-color: #066b6c;
+    }
