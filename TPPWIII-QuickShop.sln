@@ -8,9 +8,12 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Elementos de la solución", "Elementos de la solución", "{D107F4C8-89CC-BEA8-D3D7-CA6B7733353D}"
 	ProjectSection(SolutionItems) = preProject
 		docker-compose.yml = docker-compose.yml
+		registros-productosdb.sql = registros-productosdb.sql
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Autenticacion", "Autenticacion\Autenticacion.csproj", "{86D90A1E-0374-4A93-81CC-A2EB823F8DDE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Productos", "Productos\Productos.csproj", "{E804CF04-F4EB-4650-AC11-6AA387CE2E96}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickShop.MVC", "QuickShop.MVC\QuickShop.MVC.csproj", "{F22C9CB1-1F41-B66A-AAF9-ED57FA89031B}"
 EndProject
@@ -30,6 +33,10 @@ Global
 		{86D90A1E-0374-4A93-81CC-A2EB823F8DDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{86D90A1E-0374-4A93-81CC-A2EB823F8DDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{86D90A1E-0374-4A93-81CC-A2EB823F8DDE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E804CF04-F4EB-4650-AC11-6AA387CE2E96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E804CF04-F4EB-4650-AC11-6AA387CE2E96}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E804CF04-F4EB-4650-AC11-6AA387CE2E96}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E804CF04-F4EB-4650-AC11-6AA387CE2E96}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F22C9CB1-1F41-B66A-AAF9-ED57FA89031B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F22C9CB1-1F41-B66A-AAF9-ED57FA89031B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F22C9CB1-1F41-B66A-AAF9-ED57FA89031B}.Release|Any CPU.ActiveCfg = Release|Any CPU

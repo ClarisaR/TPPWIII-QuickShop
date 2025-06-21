@@ -6,7 +6,7 @@ services:
       SA_PASSWORD: "usuarios123!"
       ACCEPT_EULA: "Y"
     ports:
-      - "1433:1433"
+      - "1435:1433"
     volumes:
       - usuarios_data:/var/opt/mssql
     networks:
@@ -61,6 +61,38 @@ services:
     command: sh -c "dotnet restore && dotnet watch run --no-launch-profile"
     networks:
       - usuarios-net
+    
+  productos-db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: productos-db
+    environment:
+      SA_PASSWORD: "productos123!"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1434:1433"
+    volumes:
+      - productos_data:/var/opt/mssql
+    networks:
+      - usuarios-net
+
+  productos-api:
+    build:
+      context: ./Productos
+      dockerfile: Dockerfile
+    container_name: productos-api
+    depends_on:
+      - productos-db
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__DefaultConnection: Server=productos-db;Database=ProductosDb;User Id=sa;Password=productos123!;TrustServerCertificate=True;Encrypt=True;
+    ports:
+      - "5003:8080"
+    volumes:
+      - ./Productos:/app
+    networks:
+      - usuarios-net  
+
+volumes:
  
   pedidos-db:
     image: mcr.microsoft.com/mssql/server:2022-latest
@@ -94,6 +126,7 @@ services:
 
 volumes:
   usuarios_data:
+  productos_data:
   pedidos_data:
 
 networks:

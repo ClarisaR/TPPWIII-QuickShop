@@ -1,0 +1,43 @@
+﻿@{
+	ViewData["Title"] ??= "Productos";
+}
+@model ProductosViewModel
+
+@section Styles {
+	<link rel="stylesheet" href="~/css/productoCard.css" asp-append-version="true" />
+}
+<body>
+	<div class="container">
+		<aside class="sidebar">
+			@await Html.PartialAsync("_FormularioFiltro", Model.Filtro)
+		</aside>
+
+		<main class="products">
+			<div class="sort">
+				<label>Ordenar por:</label>
+				<select>
+					<option>Más relevantes</option>
+					<option>Menor precio</option>
+					<option>Mayor precio</option>
+				</select>
+			</div>
+
+			<div class="grid">
+				@if (Model.Productos == null || !Model.Productos.Any())
+				{
+					<p>No hay productos disponibles.</p>
+				}else @if (Model.Productos == null || !Model.Productos.Any() && Model.Filtro != null)
+				{
+					<p>No se encontraron productos que coincidan con los filtros aplicados.</p>
+				}
+				else
+				{
+					@foreach (var p in Model.Productos)
+					{
+						@await Html.PartialAsync("_ProductoCard", p)
+					}
+				}
+			</div>
+		</main>
+	</div>
+</body>
