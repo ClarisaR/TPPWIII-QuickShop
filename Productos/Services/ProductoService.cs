@@ -57,14 +57,14 @@ namespace Productos.Services
                             .Where(p => p.Nombre.Contains(nombre))
                             .ToListAsync();
 
-            productos.ForEach(p =>
-            {
-                p.Variantes = _context.Variantes
-                            .Include(v => v.Color)
-                            .Include(v => v.Talle)
-                            .Where(v => v.ProductoId == p.Id)
-                            .ToList();
-            });
+            //productos.ForEach(p =>
+            //{
+            //    p.Variantes = _context.Variantes
+            //                .Include(v => v.Color)
+            //                .Include(v => v.Talle)
+            //                .Where(v => v.ProductoId == p.Id)
+            //                .ToList();
+            //});
 
             return productos;
         }

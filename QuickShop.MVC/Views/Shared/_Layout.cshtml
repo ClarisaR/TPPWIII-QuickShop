@@ -30,12 +30,15 @@
             </div>
 
             <div class="search-container">
-                <input type="text" placeholder="Buscar tienda o producto" />
-                <div class="search-icon">
-                    <a href="/buscar">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                    </a>
-                </div>
+                <form asp-action="MostrarProductosPorNombre" method="get" >
+
+                    <input type="text" name="nombre" placeholder="Buscar tienda o producto" />
+                    <div class="search-icon">
+                        <button class="btn-nav" type="submit">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </div>
+                </form>
             </div>
 
             <div class="top-right">

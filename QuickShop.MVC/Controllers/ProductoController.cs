@@ -68,7 +68,6 @@ namespace QuickShop.MVC.Controllers
         }
 
         [HttpGet]
-        [Route("Producto/Nombre/{nombre}")]
         public IActionResult MostrarProductosPorNombre(string nombre, FiltroDTO? filtro)
         {
             var productos = _productoServicio.ObtenerProductosPorNombre(nombre).Result;

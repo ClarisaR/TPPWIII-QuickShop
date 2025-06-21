@@ -9,29 +9,6 @@
 <body>
 	<div class="container">
 		<aside class="sidebar">
-			@* <h3>Filtros</h3>
-            <div class="filter-group"><span>Buzos</span><button class="badge">×</button></div>
-            <div class="filter-group"><span>Invierno</span><button class="badge">×</button></div>
-            <div class="filter-group"><span>Hombre</span><button class="badge">×</button></div>
-
-            <h4>Precio</h4>
-            <input type="range" min="0" max="1000000" />
-
-            <h4>Color</h4>
-            <label><input type="checkbox"> Blanco</label>
-            <label><input type="checkbox"> Azul</label>
-            <label><input type="checkbox"> Rojo</label>
-
-            <h4>Talle</h4>
-            <label><input type="checkbox"> S</label>
-            <label><input type="checkbox"> M</label>
-            <label><input type="checkbox"> L</label>
-            <label><input type="checkbox"> XL</label>
-
-            <h4>Tienda</h4>
-            <label><input type="checkbox"> Antonio’s</label>
-
-            <a class="show-more">Mostrar más</a> *@
 			@await Html.PartialAsync("_FormularioFiltro", Model.Filtro)
 		</aside>
 

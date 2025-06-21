@@ -87,6 +87,17 @@ header {
     align-items: center;
     justify-content: center;
 }
+    .search-container form {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+    }
+.btn-nav {
+    border: 0;
+    background-color: transparent;
+    color: #08A6A8;
+}
 
     .search-container input {
         padding: 10px 40px 10px 16px;
