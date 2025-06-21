@@ -1,4 +1,9 @@
-﻿let cart = [
+﻿
+//let cart = JSON.parse(localStorage.getItem('cart')) || [];
+//SOMEWHERE->    localStorage.setItem('cart', JSON.stringify(cart));
+
+/* MOCKEO TEMPORAL PARA PRUEBAS*/
+cart = [
     {
         nombre: 'Camisa de Jean',
         color: 'blue',
@@ -40,6 +45,7 @@
         imagen: 'https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Vertical/13a.webp'
     }
 ];
+/* FIN MOCKEO TEMPORAL PARA PRUEBAS*/
 
 function renderCart() {
     const cartItems = document.getElementById('cart-items');
@@ -137,4 +143,9 @@ document.getElementById('cart-icon').addEventListener('click', () => {
 
 document.getElementById('close-cart').addEventListener('click', () => {
     document.getElementById('cart-slide').classList.remove('open');
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    const initialCount = cart.reduce((total, item) => total + item.cantidad, 0);
+    updateCartCount(initialCount);
 });
