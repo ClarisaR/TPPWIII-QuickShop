@@ -18,7 +18,7 @@ builder.Services.AddDbContext<UsuarioDbContext>(options =>
 var app = builder.Build();
 
 
-// Ejecuta el seeding después de construir la app
+// Ejecuta el seeding despuï¿½s de construir la app
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
