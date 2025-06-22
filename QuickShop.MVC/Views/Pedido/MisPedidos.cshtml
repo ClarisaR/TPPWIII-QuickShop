@@ -3,13 +3,15 @@
 }
 @model List<PedidoDTO>
 
+	<div class="pedidos-container">
+
 <h2 class="mb-4"> Mis Pedidos</h2>
 
 @if (Model.Any())
 {
 	<div class="table-responsive">
 		<table class="table table-hover table-bordered align-middle shadow-sm rounded bg-white">
-			<thead class="table-dark">
+			<thead class="tbl-head">
 				<tr>
 					<th scope="col">#</th>
 					<th scope="col">Fecha</th>
@@ -54,5 +56,7 @@ else
 		No se encontraron pedidos registrados 🛒
 	</div>
 }
+
+</div>
 
 <partial name="_ValidationScriptsPartial" />
