@@ -130,5 +130,20 @@ namespace Productos.Controllers
             }
             return Ok(productos);
         }
+
+        [HttpPost("ids")]
+        public async Task<ActionResult<List<Producto>>> GetProductosPorIds([FromBody] List<int> ids)
+        {
+            if (ids == null || !ids.Any())
+            {
+                return BadRequest("La lista de IDs no puede estar vacía.");
+            }
+            var productos = await _productoService.GetProductosPorIds(ids);
+            if (productos == null || !productos.Any())
+            {
+                return NotFound("No se encontraron productos con los IDs proporcionados.");
+            }
+            return Ok(productos);
+        }
     }
 }

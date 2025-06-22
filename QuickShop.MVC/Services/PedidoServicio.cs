@@ -9,7 +9,7 @@ namespace QuickShop.MVC.Services
         Task<PedidoDTO> ObtenerPedido(int id);
         Task<bool> CrearPedido(CrearPedidoDTO pedido);
         Task<List<PedidoDTO>> ObtenerTodosLosPedidos();
-
+        Task<List<PedidoProductoDTO>> ObtenerDetallesPedido(int id);
     }
     public class PedidoServicio : IPedidoServicio
     {
@@ -72,6 +72,21 @@ namespace QuickShop.MVC.Services
                 var json = await response.Content.ReadAsStringAsync();
                 var pedidos = JsonSerializer.Deserialize<List<PedidoDTO>>(json, opcionesSerializacion);
                 return pedidos;
+            }
+        }
+
+        public async Task<List<PedidoProductoDTO>> ObtenerDetallesPedido(int id)
+        {
+            var response = await httpClient.GetAsync($"{url}/detalles/{id}");
+            if (!response.IsSuccessStatusCode)
+            {
+                return null;
+            }
+            else
+            {
+                var json = await response.Content.ReadAsStringAsync();
+                var detalles = JsonSerializer.Deserialize<List<PedidoProductoDTO>>(json, opcionesSerializacion);
+                return detalles;
             }
         }
 

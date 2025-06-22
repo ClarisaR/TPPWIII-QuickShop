@@ -10,25 +10,43 @@ namespace QuickShop.MVC.Controllers
         private readonly IPedidoServicio _pedidoServicio;
 
         private readonly IHttpContextAccessor httpContext;
-        public PedidoController(IPedidoServicio pedidoServicio, IHttpContextAccessor httpContext)
+        private readonly IProductoServicio _productoServicio;
+        public PedidoController(IPedidoServicio pedidoServicio, IProductoServicio productoServicio, IHttpContextAccessor httpContext)
         {
             _pedidoServicio = pedidoServicio;
-
+            _productoServicio = productoServicio;
             this.httpContext = httpContext;
         }
 
-        [HttpGet("{id}")]
+        [HttpGet]
         public IActionResult VerPedido(int id)
         {
-            
             var pedido = _pedidoServicio.ObtenerPedido(id).Result;
+            var detallesPedido = _pedidoServicio.ObtenerDetallesPedido(id).Result;
 
             if (pedido == null)
             {
-                ModelState.AddModelError("", "Pedido no encontrado o no tienes permiso para verlo.");
+                ModelState.AddModelError("", "Pedido no encontrado.");
                 return RedirectToAction("MisPedidos");
             }
-            return View(pedido);
+
+            var idProductos = detallesPedido.Select(pp => pp.IdProducto).ToList();
+            var productos = _productoServicio.ObtenerProductosPorIds(idProductos).Result;
+
+            var detallesViewModel = detallesPedido.Select(dp =>
+            {
+                var prod = productos.First(p => p.Id == dp.IdProducto);
+                return new DetallePedidoViewModel
+                {
+                    NombreProducto = prod.Nombre,
+                    ImagenProducto = prod.Imagen,
+                    PrecioUnitario = dp.PrecioUnitario,
+                    Cantidad = dp.CantidadProductos
+                };
+            }).ToList();
+
+            ViewBag.Pedido = pedido;
+            return View(detallesViewModel);
         }
 
         [HttpGet]
@@ -49,10 +67,7 @@ namespace QuickShop.MVC.Controllers
                 return RedirectToAction("Login", "Usuario");
             }
             var idUsuario = Int32.Parse(jwtToken.Claims.FirstOrDefault(c => c.Type == "id")?.Value);
-            if (idUsuario == null)
-            {
-                return RedirectToAction("Login", "Usuario");
-            }
+            
             var pedidos = _pedidoServicio.ObtenerPedidosDeUsuario(idUsuario).Result;
             return View(pedidos);
         }

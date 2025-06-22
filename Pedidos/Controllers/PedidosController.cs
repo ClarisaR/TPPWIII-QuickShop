@@ -21,7 +21,7 @@ namespace Pedidos.Controllers
         [HttpPost]
         public async Task<IActionResult> PostPedido([FromBody] CrearPedido pedidoDTO)
         {
-            
+
             var total = pedidoDTO.PedidoProductos.Sum(pp => pp.CantidadProductos * pp.PrecioUnitario);
             var pedido = new Pedido
             {
@@ -85,6 +85,19 @@ namespace Pedidos.Controllers
                 return NotFound($"No se encontraron pedidos para el usuario con ID {idUsuario}.");
             }
             return pedidos;
+        }
+
+        [HttpGet("detalles/{id}")]
+        public async Task<ActionResult<IEnumerable<PedidoProducto>>> GetDetallesPedido(int id)
+        {
+            var detalles = await _context.PedidoProductos
+                .Where(pp => pp.IdPedido == id)
+                .ToListAsync();
+            if (detalles == null || !detalles.Any())
+            {
+                return NotFound($"No se encontraron detalles para el pedido con ID {id}.");
+            }
+            return detalles;
         }
     }
 }

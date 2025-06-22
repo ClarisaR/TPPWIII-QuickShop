@@ -20,7 +20,7 @@ namespace Productos.Services
         Task<List<Producto>> FiltrarProductos(FiltroDTO filtro);
 
         Task<List<Producto>> GetProductosPorCategoria(string categoria);
-
+        Task<List<Producto>> GetProductosPorIds(List<int> ids);
     }
 
     public class ProductoService : IProductoService
@@ -238,6 +238,18 @@ namespace Productos.Services
 
 
             return productosPorCategoria;
+        }
+
+        public async Task<List<Producto>> GetProductosPorIds(List<int> ids)
+        {
+            var productos = await _context.Productos
+                                    .Include(p => p.Variantes)
+                                    .Include(p => p.Local)
+                                    .Include(p => p.Categoria)
+                                    .Where(p => ids.Contains(p.Id))
+                                    .ToListAsync();
+            
+            return productos;
         }
     }
 }
