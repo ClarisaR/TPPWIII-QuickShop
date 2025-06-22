@@ -1,7 +1,7 @@
 ﻿@model List<LocalDTO>
 
 @{
-    ViewData["Title"] = "Inicio";
+    ViewData["Title"] = "Home";
 }
 
 @section Styles {
@@ -83,6 +83,52 @@
                     }
                 </div>
                 <button class="arrow right tres"><i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+        </div>
+        <!-- CARRUSEL ACCESORIOS -->
+        <div class="section-category">
+            <div class="section-header">
+                <h2>Accesorios</h2>
+            </div>
+            <div class="cards-wrapper">
+                <button class="arrow left cuatro"><i class="fa-solid fa-chevron-left"></i></button>
+                <div class="cards-container carruselCuatro">
+                    @foreach (var local in Model)
+                    {
+                        if (local.Rubro?.Nombre == "Accesorios")
+                        {
+                            <div class="card">
+                                <img src="~/img/tiendas/@local.Imagen">
+                                <h3>@local.Nombre</h3>
+                                <p>@local.Direccion?.Descripcion</p>
+                            </div>
+                        }
+                    }
+                </div>
+                <button class="arrow right cuatro"><i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+        </div>
+        <!-- CARRUSEL DEPORTIVO -->
+        <div class="section-category-2" style="padding-bottom: 100px;">
+            <div class="section-header">
+                <h2>Ropa deportiva</h2>
+            </div>
+            <div class="cards-wrapper">
+                <button class="arrow left cinco"><i class="fa-solid fa-chevron-left"></i></button>
+                <div class="cards-container carruselCinco">
+                    @foreach (var local in Model)
+                    {
+                        if (local.Rubro?.Nombre == "Deportiva")
+                        {
+                            <div class="card">
+                                <img src="~/img/tiendas/@local.Imagen">
+                                <h3>@local.Nombre</h3>
+                                <p>@local.Direccion?.Descripcion</p>
+                            </div>
+                        }
+                    }
+                </div>
+                <button class="arrow right cinco"><i class="fa-solid fa-chevron-right"></i></button>
             </div>
         </div>
     </div>
