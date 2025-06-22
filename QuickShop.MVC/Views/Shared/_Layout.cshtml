@@ -46,7 +46,11 @@
                 <i class="fa-solid fa-cart-shopping"></i>
                 @if (User.Identity?.IsAuthenticated ?? false)
                 {
+                    <a asp-action="MisPedidos" asp-controller="Pedido" class="pedidos-icon">
+                        <i class="fa-solid fa-truck-fast"></i>
+                    </a>
                     <span>Hola, @User.FindFirst("nombre")?.Value</span>
+
                     <a href="/Usuario/Logout" class="btn-login">Cerrar sesión</a>
                 }
                 else

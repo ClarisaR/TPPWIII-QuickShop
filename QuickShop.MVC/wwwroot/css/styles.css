@@ -131,26 +131,38 @@ header {
             color: #F0297B;
         }
 
-.fa-cart-shopping {
+.fa-cart-shopping, .fa-truck-fast {
     font-size: 22px;
     color: #F0297B;
 }
 
-    .fa-cart-shopping:hover {
+    .fa-cart-shopping:hover, .fa-truck-fast:hover {
         cursor: pointer;
         font-size: 25px;
         transition: all 0.1s ease;
     }
 
-.btn-login,
-.btn-register {
-    padding: 10px 15px;
-    font-size: 15px;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
+.pedidos-icon {
+    font-size: 22px !important;
+    color: #F0297B !important;
     text-decoration: none;
 }
+
+    .pedidos-icon:hover {
+        cursor: pointer;
+        font-size: 25px !important;
+        transition: all 0.1s ease;
+    }
+
+    .btn-login,
+    .btn-register {
+        padding: 10px 15px;
+        font-size: 15px;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        text-decoration: none;
+    }
 
 .btn-login {
     background-color: white;
@@ -727,7 +739,19 @@ td a {
     gap: 1rem;
 }
 
-.table-responsive {
+    .pedido-estado-container p {
+        font-size: 1.2rem;
+        color: #333;
+    }
+
+    .pedido-estado-container span {
+        font-size: 1rem;
+        font-weight: bold;
+        color: #08A6A8;
+    }
+
+
+.tabla-pedido-container {
     max-width: 90%;
     margin: 0 auto;
 }
