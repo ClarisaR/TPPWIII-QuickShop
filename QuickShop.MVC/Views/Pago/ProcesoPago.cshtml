@@ -7,52 +7,54 @@
     <link rel="stylesheet" href="~/css/procesoPago.css" />
 }
 
-<div class="container">
+<div class="contenedor-pago">
     <form asp-action="ConfirmarCompra" method="post">
-        <div class="left-section">
-            <div class="title">Elegí la <strong>forma de entrega</strong></div>
-            <div class="card selected">
-                <label>
-                    <div class="radio">
-                        <input type="radio" name="FormaEntrega" value="domicilio" checked>
-                        <div>
-                            <strong>Enviar a domicilio</strong>
-                            <div class="address">Avenida Siempre Viva 742, Morón - CP 1756</div>
+        <div class="forma-entrega-resumen">
+            <div class="left-section">
+                <div class="title">Elegí la <strong>forma de entrega</strong></div>
+                <div class="card selected">
+                    <label>
+                        <div class="radio">
+                            <input type="radio" name="FormaEntrega" value="domicilio" checked>
+                            <div>
+                                <strong>Enviar a domicilio</strong>
+                                <div class="address">Avenida Siempre Viva 742, Morón - CP 1756</div>
+                            </div>
+                            <div class="precioEntrega" data-precio="8000">$ 8.000</div>
                         </div>
-                        <div class="precioEntrega" data-precio="8000">$ 8.000</div>
-                    </div>
-                </label>
-                <div class="link">Modificar información de domicilio</div>
-            </div>
-            <div class="card">
-                <label>
-                    <div class="radio">
-                        <input type="radio" name="FormaEntrega" value="tienda">
-                        <div>
-                            <strong>Retirar en tienda</strong>
-                            <div class="address">Avenida Siempre Viva 742, Morón - CP 1756</div>
+                    </label>
+                    <div class="link">Modificar información de domicilio</div>
+                </div>
+                <div class="card">
+                    <label>
+                        <div class="radio">
+                            <input type="radio" name="FormaEntrega" value="tienda">
+                            <div>
+                                <strong>Retirar en tienda</strong>
+                                <div class="address">Avenida Siempre Viva 742, Morón - CP 1756</div>
+                            </div>
+                            <div class="precioEntrega" data-precio="4000">$ 4.000</div>
                         </div>
-                        <div class="precioEntrega" data-precio="4000">$ 4.000</div>
-                    </div>
-                </label>
-                <div class="link">Ver punto en el mapa</div>
+                    </label>
+                    <div class="link">Ver punto en el mapa</div>
+                </div>
             </div>
-        </div>
-        <div class="right-section">
-            <div class="summary">
-                <strong>Resumen de compra</strong>
-                <div class="summary-row">
-                    <span>Producto</span>
-                    <span id="precioProducto">$ @precioProducto.ToString("N0")</span>
-                </div>
-                <div class="summary-row">
-                    <span>Envío</span>
-                    <span id="precioEnvio">$ 8.000</span>
-                </div>
-                <hr>
-                <div class="summary-row summary-total">
-                    <span>Total</span>
-                    <span id="total">$ @(precioProducto + 8000).ToString("N0")</span>
+            <div class="right-section">
+                <div class="summary">
+                    <strong>Resumen de compra</strong>
+                    <div class="summary-row">
+                        <span>Producto</span>
+                        <span id="precioProducto">$ @precioProducto.ToString("N0")</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Envío</span>
+                        <span id="precioEnvio">$ 8.000</span>
+                    </div>
+                    <hr>
+                    <div class="summary-row summary-total">
+                        <span>Total</span>
+                        <span id="total">$ @(precioProducto + 8000).ToString("N0")</span>
+                    </div>
                 </div>
             </div>
         </div>

@@ -1,9 +1,17 @@
-﻿.container {
-    display: flex;
-    justify-content: space-between;
+﻿main {
+    background-color: #F5F5F5;
+}
+
+.contenedor-pago {
     max-width: 1000px;
     margin: auto;
-    margin-top: 100px;
+    padding-top: 60px;
+    padding-bottom: 60px;
+}
+
+.forma-entrega-resumen {
+    display: flex;
+    justify-content: space-between;
 }
 
 .left-section {
@@ -16,7 +24,7 @@
     padding: 35px;
     width: 25%;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
-    height: 150px;
+    height: 215px;
     margin-top: 48px;
 }
 
