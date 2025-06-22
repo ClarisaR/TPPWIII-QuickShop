@@ -10,6 +10,7 @@ namespace Productos.Services
         Task<Local?> ObtenerLocalPorId(int id);
         Task<Local> CrearLocal(Local local);
         Task<bool> EliminarLocal(int id);
+        Task<List<Local>> ObtenerLocalesPorNombre(string nombre);
     }
 
     public class LocalService : ILocalService
@@ -66,6 +67,15 @@ namespace Productos.Services
             _context.Locales.Remove(local);
             await _context.SaveChangesAsync();
             return true;
+        }
+
+        public async Task<List<Local>> ObtenerLocalesPorNombre(string nombre)
+        {
+            var locales = await _context.Locales
+                            .Include(l => l.Rubro)
+                            .Where(l => l.Nombre.Contains(nombre))
+                            .ToListAsync();
+            return locales;
         }
     }
 }

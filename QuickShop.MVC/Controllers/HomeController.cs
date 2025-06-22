@@ -30,15 +30,6 @@ namespace QuickShop.MVC.Controllers
             return View(locales);
         }
 
-        [HttpGet]
-        [Route("Home/LocalConProductos/{id}")]
-        public IActionResult LocalConProductos(int id)
-        {
-            LocalDTO local = _localServicio.ObtenerLocalConProductos(id).Result;
-            List<ProductoDTO> productos = local?.Productos?.ToList() ?? new List<ProductoDTO>();
-            return View("~/Views/Producto/MostrarProductos.cshtml", productos);
-        }
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

@@ -39,5 +39,25 @@ namespace QuickShop.MVC.Controllers
             }
             return View(tienda);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> VerTiendasPorNombre(string nombre)
+        {
+            List<LocalDTO> locales;
+            if (string.IsNullOrEmpty(nombre))
+            {
+                return RedirectToAction("VerTiendas");
+            }
+            try
+            {
+                locales = await _localServicio.ObtenerLocalesPorNombre(nombre);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", "No se pudieron cargar los locales.");
+                locales = new List<LocalDTO>();
+            }
+            return View("VerTiendas", locales);
+        }
     }
 }

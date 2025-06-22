@@ -14,9 +14,19 @@
 }
 
 <div class="cont-tiendas">
+    <!--PRESENTACION-->
     <div class="main-tiendas">
         <h1>Tiendas</h1>
         <p>Encuentra las mejores tiendas de ropa cerca de ti.</p>
+    </div>
+    <!--BUSCADOR-->
+    <div class="search-cont">
+        <form asp-action="VerTiendasPorNombre" asp-controller="Tienda" method="GET">
+            <input class="search-input" type="text" name="nombre" placeholder="Buscar tiendas" />
+            <button class="search-button" type="submit">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+        </form>
     </div>
     <!--TIENDAS DE MUJER-->
     @if (tiendasMujer.Any())

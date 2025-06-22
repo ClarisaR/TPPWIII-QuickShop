@@ -58,5 +58,14 @@ namespace Productos.Controllers
             if (!result) return NotFound();
             return Ok();
         }
+
+        // GET: api/Locales/nombre/{nombre}
+        [HttpGet("nombre/{nombre}")]
+        public async Task<ActionResult<List<Local>>> GetLocalesPorNombre(string nombre)
+        {
+            var locales = await _localService.ObtenerLocalesPorNombre(nombre);
+            if (locales == null) return NotFound($"No se encontraron locales con el nombre '{nombre}'.");
+            return Ok(locales);
+        }
     }
 }
