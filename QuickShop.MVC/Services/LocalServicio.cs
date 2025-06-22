@@ -1,5 +1,6 @@
 ﻿using QuickShop.MVC.Models;
 using System.Text.Json;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace QuickShop.MVC.Services
 {
@@ -7,6 +8,7 @@ namespace QuickShop.MVC.Services
     {
         Task<List<LocalDTO>> ObtenerLocales();
         Task<LocalDTO> ObtenerLocalConProductos(int id);
+        Task<List<LocalDTO>> ObtenerLocalesPorNombre(string nombre);
     }
 
     public class LocalServicio : ILocalServicio
@@ -44,6 +46,16 @@ namespace QuickShop.MVC.Services
             var json = await response.Content.ReadAsStringAsync();
             var local = JsonSerializer.Deserialize<LocalDTO>(json, _jsonOptions);
             return local;
+        }
+
+        public async Task<List<LocalDTO>> ObtenerLocalesPorNombre(string nombre)
+        {
+            var response = await _httpClient.GetAsync($"{_url}/nombre/{nombre}");
+            if (!response.IsSuccessStatusCode) return null;
+
+            var json = await response.Content.ReadAsStringAsync();
+            var locales = JsonSerializer.Deserialize<List<LocalDTO>>(json, _jsonOptions);
+            return locales;
         }
     }
 }

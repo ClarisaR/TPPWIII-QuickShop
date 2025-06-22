@@ -1,0 +1,49 @@
+﻿@model LocalDTO
+
+@{
+    ViewData["Title"] = "Productos de tienda";
+    var productosDeLocal = Model.Productos?.ToList();
+}
+
+@section Styles {
+	<link rel="stylesheet" href="~/css/productoCard.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/css/tiendaProductos.css" asp-append-version="true" />
+}
+<div class="header-tienda">
+	<div class="logo-section">
+		<img src="~/img/tiendas/almaira.png" alt="Logo Astra" class="logo-img" />
+		<span class="brand-name">Astra</span>
+	</div>
+</div>
+<div class="navbar-tienda">
+	<a href="#">Inicio</a>
+	<a href="#">Ubicación</a>
+	<a href="#">Todos los productos</a>
+</div>
+<div class="cont-tienda-productos">
+	<div class="container">
+		<main class="products">
+			<div class="sort">
+				<label>Ordenar por:</label>
+				<select>
+					<option>Más relevantes</option>
+					<option>Menor precio</option>
+					<option>Mayor precio</option>
+				</select>
+			</div>
+			<div class="grid">
+				@if (productosDeLocal == null || !productosDeLocal.Any())
+				{
+					<p>No hay productos disponibles.</p>
+				}
+				else
+				{
+					@foreach (var p in productosDeLocal)
+					{
+						@await Html.PartialAsync("_ProductoCard", p)
+					}
+				}
+			</div>
+		</main>
+	</div>
+</div>

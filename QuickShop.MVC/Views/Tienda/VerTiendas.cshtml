@@ -14,9 +14,19 @@
 }
 
 <div class="cont-tiendas">
+    <!--PRESENTACION-->
     <div class="main-tiendas">
         <h1>Tiendas</h1>
         <p>Encuentra las mejores tiendas de ropa cerca de ti.</p>
+    </div>
+    <!--BUSCADOR-->
+    <div class="search-cont">
+        <form asp-action="VerTiendasPorNombre" asp-controller="Tienda" method="GET">
+            <input class="search-input" type="text" name="nombre" placeholder="Buscar tiendas" />
+            <button class="search-button" type="submit">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+        </form>
     </div>
     <!--TIENDAS DE MUJER-->
     @if (tiendasMujer.Any())
@@ -28,7 +38,7 @@
             <div class="grid-container">
                 @foreach (var tienda in tiendasMujer)
                 {
-                    <div class="grid-item">
+                    <div class="grid-item" onclick="window.location.href='@Url.Action("TiendaProductos", "Tienda", new { id = tienda.Id })'">
                         <img src="~/img/tiendas/@tienda.Imagen" alt="@tienda.Nombre" />
                     </div>
                 }
@@ -45,7 +55,7 @@
             <div class="grid-container">
                 @foreach (var tienda in tiendasHombre)
                 {
-                    <div class="grid-item">
+                    <div class="grid-item" onclick="window.location.href='@Url.Action("TiendaProductos", "Tienda", new { id = tienda.Id })'">
                         <img src="~/img/tiendas/@tienda.Imagen" alt="@tienda.Nombre" />
                     </div>
                 }
@@ -62,7 +72,7 @@
             <div class="grid-container">
                 @foreach (var tienda in tiendasInfantil)
                 {
-                    <div class="grid-item">
+                    <div class="grid-item" onclick="window.location.href='@Url.Action("TiendaProductos", "Tienda", new { id = tienda.Id })'">
                         <img src="~/img/tiendas/@tienda.Imagen" alt="@tienda.Nombre" />
                     </div>
                 }
@@ -79,7 +89,7 @@
             <div class="grid-container">
                 @foreach (var tienda in tiendasAccesorios)
                 {
-                    <div class="grid-item">
+                    <div class="grid-item" onclick="window.location.href='@Url.Action("TiendaProductos", "Tienda", new { id = tienda.Id })'">
                         <img src="~/img/tiendas/@tienda.Imagen" alt="@tienda.Nombre" />
                     </div>
                 }
@@ -96,7 +106,7 @@
             <div class="grid-container">
                 @foreach (var tienda in tiendasDeportiva)
                 {
-                    <div class="grid-item">
+                    <div class="grid-item" onclick="window.location.href='@Url.Action("TiendaProductos", "Tienda", new { id = tienda.Id })'">
                         <img src="~/img/tiendas/@tienda.Imagen" alt="@tienda.Nombre" />
                     </div>
                 }
