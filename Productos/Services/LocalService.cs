@@ -49,6 +49,7 @@ namespace Productos.Services
         {
             return await _context.Locales
                 .Include(l => l.Productos)
+                .Include(l => l.Direccion)
                 .FirstOrDefaultAsync(l => l.Id == id);
         }
 

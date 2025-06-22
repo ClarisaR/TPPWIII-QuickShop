@@ -1,9 +1,30 @@
 ﻿@model LocalDTO
 
 @{
-    ViewData["Title"] = "Productos de tienda";
-    var productosDeLocal = Model.Productos?.ToList();
+	ViewData["Title"] = "Productos de tienda";
+	var productosDeLocal = Model.Productos?.ToList();
 }
+
+<script>
+	const direccionLat = @Model.Direccion.Latitud;
+	const direccionLng = @Model.Direccion.Longitud;
+	const direccionNombre = "@Model.Direccion.Descripcion";
+</script>
+
+<!-- Modal  de google maps -->
+<div class="modal fade" id="mapModal" tabindex="-1" aria-labelledby="mapModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg modal-dialog-centered">
+		<div class="modal-content" style="max-width: 100%;">
+			<div class="modal-header">
+				<h5 class="modal-title">@Model.Direccion.Descripcion</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+			</div>
+			<div class="modal-body">
+				<div id="map" style="height: 600px; width: 100%;"></div>
+			</div>
+		</div>
+	</div>
+</div>
 
 @section Styles {
 	<link rel="stylesheet" href="~/css/productoCard.css" asp-append-version="true" />
@@ -16,9 +37,9 @@
 	</div>
 </div>
 <div class="navbar-tienda">
-	<a href="#">Inicio</a>
-	<a href="#">Ubicación</a>
-	<a href="#">Todos los productos</a>
+	<a asp-controller="Home" asp-action="Index">Inicio</a>
+	<a href="" data-bs-toggle="modal" data-bs-target="#mapModal">Ubicación</a>
+	<a href="">Todos los productos</a>
 </div>
 <div class="cont-tienda-productos">
 	<div class="container">
@@ -47,3 +68,12 @@
 		</main>
 	</div>
 </div>
+
+
+
+@section Scripts {
+	<script src="~/js/api-google.js" asp-append-version="true"></script>
+	<script async defer
+			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCzsck1K4D4Em2I4g4Adp9I99cf4xIP5Qc">
+	</script>
+}
