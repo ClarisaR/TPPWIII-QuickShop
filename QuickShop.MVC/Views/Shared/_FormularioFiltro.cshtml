@@ -1,0 +1,81 @@
+﻿@model FiltroDTO
+
+<form asp-action="MostrarProductos" method="get" class="filtro-form">
+
+    <h3>Filtros</h3>
+
+    @if (ViewBag.PrecioMin != null || ViewBag.PrecioMax != null)
+    {
+        <div class="filter-group">
+            <span>$@ViewBag.PrecioMin – $@ViewBag.PrecioMax</span>
+            <form method="get" action="/Producto/MostrarProductos">
+                <button type="submit" class="badge">×</button>
+            </form>
+        </div>
+    }
+
+    <h4>Precio</h4>
+    <div class="price-filter">
+        <input type="number" name="PrecioMinimo" id="precio-min" placeholder="Mínimo" min="0" value="@Model?.PrecioMinimo" />
+        <span class="price-dash">–</span>
+        <input type="number" name="PrecioMaximo" id="precio-max" placeholder="Máximo" min="0" value="@Model?.PrecioMaximo" />
+    </div>
+
+    @if (ViewBag.Categorias != null)
+    {
+        <h4>Categorías</h4>
+        @foreach (var categoria in ViewBag.Categorias as List<string>)
+        {
+            <label class="custom-checkbox">
+                @categoria
+                <input type="checkbox" name="Categorias" value="@categoria"
+                       @(Model?.Categorias?.Contains(categoria) == true ? "checked" : "") />
+                <span class="checkmark"></span>
+            </label>
+        }
+    }
+
+    @if (ViewBag.Colores != null)
+    {
+        <h4>Colores</h4>
+        @foreach (var color in ViewBag.Colores as List<string>)
+        {
+            <label class="custom-checkbox">
+                @color
+                <input type="checkbox" name="Colores" value="@color"
+                       @(Model?.Colores?.Contains(color) == true ? "checked" : "") />
+                <span class="checkmark"></span>
+            </label>
+        }
+    }
+
+    @if (ViewBag.Talles != null)
+    {
+        <h4>Talles</h4>
+        @foreach (var talle in ViewBag.Talles as List<string>)
+        {
+            <label class="custom-checkbox">
+                @talle
+                <input type="checkbox" name="Talles" value="@talle"
+                       @(Model?.Talles?.Contains(talle) == true ? "checked" : "") />
+                <span class="checkmark"></span>
+            </label>
+        }
+    }
+
+    @if (ViewBag.Rubros != null)
+    {
+        <h4>Rubros</h4>
+        @foreach (var rubro in ViewBag.Rubros as List<string>)
+        {
+            <label class="custom-checkbox">
+                @rubro
+                <input type="checkbox" name="Rubros" value="@rubro"
+                       @(Model?.Rubros?.Contains(rubro) == true ? "checked" : "") />
+                <span class="checkmark"></span>
+            </label>
+        }
+    }
+
+    <button type="submit" class="btn-filtrar">Filtrar</button>
+</form> 

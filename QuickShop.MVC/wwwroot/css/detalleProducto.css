@@ -1,0 +1,152 @@
+﻿.product-detail {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 1rem;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+
+.main-info {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    align-items: flex-start;
+}
+
+.detail-image {
+    position: relative;
+}
+
+    .detail-image img {
+        width: 100%;
+        max-width: 350px;
+        border-radius: 8px;
+        background: #f5f5f5;
+    }
+
+.fav-btn {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: white;
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+    cursor: pointer;
+    color: #f06292;
+}
+
+    .fav-btn i {
+        font-size: 1rem;
+    }
+
+.detail-title {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.detail-price {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #111;
+    margin-bottom: 1.5rem;
+}
+
+.detail-options {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+    .detail-options div {
+        flex: 1;
+    }
+
+    .detail-options select {
+        width: 100%;
+        padding: 0.5rem;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+    }
+
+.detail-buttons {
+    display: flex;
+    gap: 1rem;
+    margin: 1rem 0;
+}
+
+    .detail-buttons .btn {
+        flex: 1;
+        padding: 0.75rem 1.5rem;
+        font-weight: bold;
+        border-radius: 6px;
+        border: none;
+        cursor: pointer;
+        transition: background 0.2s ease;
+    }
+
+.btn.primary {
+    background-color: #a0e3ea;
+    color: #015d68;
+}
+
+.btn.secondary {
+    background-color: #ff4081;
+    color: white;
+}
+
+.detail-description {
+    background: #f8f8f8;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-top: 2rem;
+    font-size: 0.9rem;
+}
+
+    .detail-description h4 {
+        margin-bottom: 0.5rem;
+    }
+
+.cards-wrapper {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    margin: 1rem 0;
+}
+
+.cards-container {
+    display: flex;
+    gap: 1rem;
+    transition: transform 0.3s ease-in-out;
+    will-change: transform;
+}
+
+.card {
+    flex: 0 0 auto;
+    width: 250px;
+}
+
+.arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: white;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    z-index: 1;
+    padding: 0.5rem;
+    border-radius: 50%;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+    .arrow.left {
+        left: 0;
+    }
+
+    .arrow.right {
+        right: 0;
+    }

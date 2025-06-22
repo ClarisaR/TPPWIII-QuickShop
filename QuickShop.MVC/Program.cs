@@ -17,7 +17,10 @@ builder.Services.AddSession();
 builder.Services.AddHttpClient<IUsuarioServicio, UsuarioServicio>();
 builder.Services.AddScoped<IPedidoServicio, PedidoServicio>();
 builder.Services.AddHttpClient<PedidoController>();
-
+builder.Services.AddHttpClient<IProductoServicio, ProductoServicio>();
+builder.Services.AddHttpClient<ILocalServicio, LocalServicio>();
+builder.Services.AddScoped<IProductoServicio, ProductoServicio>();
+builder.Services.AddScoped<ILocalServicio, LocalServicio>();
 
 builder.Services
     .AddAuthentication(options =>

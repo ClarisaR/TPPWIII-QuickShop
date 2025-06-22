@@ -1,0 +1,74 @@
+﻿.cont-tiendas {
+    background-color: #F5F5F5;
+    padding-bottom: 100px;
+}
+
+h2 {
+    margin-top: 40px;
+    font-size: 24px;
+    position: relative;
+    display: inline-block;
+}
+
+    h2::after {
+        content: '';
+        display: block;
+        width: 100%;
+        height: 3px;
+        background-color: #e14a7b;
+        margin-top: 5px;
+        border-radius: 2px;
+    }
+
+.main-tiendas {
+    background-image: linear-gradient( rgba(0, 0, 0, 0.2),rgba(0, 0, 0, 0.2)),
+        url('/img/tiendas/tiendas-fondo.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 260px;
+}
+
+.main-tiendas h1 {
+    font-size: 36px;
+    margin-top: 20px;
+    text-align: center;
+    color: white;
+    margin-top: 0px;
+    padding-top: 60px;
+}
+
+.main-tiendas p {
+    font-size: 18px;
+    text-align: center;
+    color: white;
+    margin-top: 10px;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin: 30px auto;
+    margin-bottom: 0px;
+    max-width: 650px;
+}
+
+.grid-item {
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+    border: 1px solid #ddd;
+}
+
+    .grid-item img {
+        max-height: 150px;
+        max-width: 150px;
+        object-fit: contain;
+    }
+
+.tit-tienda {
+    text-align: center;
+    margin-top: 40px;
+}

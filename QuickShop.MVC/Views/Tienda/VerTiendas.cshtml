@@ -1,0 +1,106 @@
+﻿@model List<LocalDTO>
+
+@{
+    ViewData["Title"] = "Tiendas";
+    var tiendasMujer = Model.Where(l => l.Rubro?.Nombre == "Mujer").ToList();
+    var tiendasHombre = Model.Where(l => l.Rubro?.Nombre == "Hombre").ToList();
+    var tiendasInfantil = Model.Where(l => l.Rubro?.Nombre == "Infantil").ToList();
+    var tiendasAccesorios = Model.Where(l => l.Rubro?.Nombre == "Accesorios").ToList();
+    var tiendasDeportiva = Model.Where(l => l.Rubro?.Nombre == "Deportiva").ToList();
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/tiendas.css" asp-append-version="true" />
+}
+
+<div class="cont-tiendas">
+    <div class="main-tiendas">
+        <h1>Tiendas</h1>
+        <p>Encuentra las mejores tiendas de ropa cerca de ti.</p>
+    </div>
+    <!--TIENDAS DE MUJER-->
+    @if (tiendasMujer.Any())
+    {
+        <div>
+            <div class="tit-tienda">
+                <h2>Tiendas de ropa de mujer</h2>
+            </div>
+            <div class="grid-container">
+                @foreach (var tienda in tiendasMujer)
+                {
+                    <div class="grid-item">
+                        <img src="~/img/tiendas/@tienda.Imagen" alt="@tienda.Nombre" />
+                    </div>
+                }
+            </div>
+        </div>
+    }
+    <!--TIENDAS DE HOMBRE-->
+    @if (tiendasHombre.Any())
+    {
+        <div>
+            <div class="tit-tienda">
+                <h2>Tiendas de ropa de hombre</h2>
+            </div>
+            <div class="grid-container">
+                @foreach (var tienda in tiendasHombre)
+                {
+                    <div class="grid-item">
+                        <img src="~/img/tiendas/@tienda.Imagen" alt="@tienda.Nombre" />
+                    </div>
+                }
+            </div>
+        </div>
+    }
+    <!--TIENDAS INFANTILES-->
+    @if (tiendasInfantil.Any())
+    {
+        <div>
+            <div class="tit-tienda">
+                <h2>Tiendas de ropa infantil</h2>
+            </div>
+            <div class="grid-container">
+                @foreach (var tienda in tiendasInfantil)
+                {
+                    <div class="grid-item">
+                        <img src="~/img/tiendas/@tienda.Imagen" alt="@tienda.Nombre" />
+                    </div>
+                }
+            </div>
+        </div>
+    }
+    <!--TIENDAS DE ACCESORIOS-->
+    @if (tiendasAccesorios.Any())
+    {
+        <div>
+            <div class="tit-tienda">
+                <h2>Tiendas de accesorios</h2>
+            </div>
+            <div class="grid-container">
+                @foreach (var tienda in tiendasAccesorios)
+                {
+                    <div class="grid-item">
+                        <img src="~/img/tiendas/@tienda.Imagen" alt="@tienda.Nombre" />
+                    </div>
+                }
+            </div>
+        </div>
+    }
+    <!--TIENDAS DEPORTIVAS-->
+    @if (tiendasDeportiva.Any())
+    {
+        <div>
+            <div class="tit-tienda">
+                <h2>Tiendas de ropa deportiva</h2>
+            </div>
+            <div class="grid-container">
+                @foreach (var tienda in tiendasDeportiva)
+                {
+                    <div class="grid-item">
+                        <img src="~/img/tiendas/@tienda.Imagen" alt="@tienda.Nombre" />
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</div>
