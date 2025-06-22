@@ -28,7 +28,7 @@
                     {
                         if (local.Rubro?.Nombre == "Mujer")
                         {
-                            <div class="card">
+                            <div class="card" onclick="window.location.href='@Url.Action("TiendaProductos", "Tienda", new { id = local.Id })'">
                                 <img src="~/img/tiendas/@local.Imagen">
                                 <h3>@local.Nombre</h3>
                                 <p>@local.Direccion?.Descripcion</p>
@@ -51,7 +51,7 @@
                     {
                         if (local.Rubro?.Nombre == "Hombre")
                         {
-                            <div class="card">
+                            <div class="card" onclick="window.location.href='@Url.Action("TiendaProductos", "Tienda", new { id = local.Id })'">
                                 <img src="~/img/tiendas/@local.Imagen">
                                 <h3>@local.Nombre</h3>
                                 <p>@local.Direccion?.Descripcion</p>
@@ -74,7 +74,7 @@
                     {
                         if (local.Rubro?.Nombre == "Infantil")
                         {
-                            <div class="card">
+                            <div class="card" onclick="window.location.href='@Url.Action("TiendaProductos", "Tienda", new { id = local.Id })'">
                                 <img src="~/img/tiendas/@local.Imagen">
                                 <h3>@local.Nombre</h3>
                                 <p>@local.Direccion?.Descripcion</p>
@@ -97,7 +97,7 @@
                     {
                         if (local.Rubro?.Nombre == "Accesorios")
                         {
-                            <div class="card">
+                            <div class="card" onclick="window.location.href='@Url.Action("TiendaProductos", "Tienda", new { id = local.Id })'">
                                 <img src="~/img/tiendas/@local.Imagen">
                                 <h3>@local.Nombre</h3>
                                 <p>@local.Direccion?.Descripcion</p>
@@ -120,7 +120,7 @@
                     {
                         if (local.Rubro?.Nombre == "Deportiva")
                         {
-                            <div class="card">
+                            <div class="card" onclick="window.location.href='@Url.Action("TiendaProductos", "Tienda", new { id = local.Id })'">
                                 <img src="~/img/tiendas/@local.Imagen">
                                 <h3>@local.Nombre</h3>
                                 <p>@local.Direccion?.Descripcion</p>

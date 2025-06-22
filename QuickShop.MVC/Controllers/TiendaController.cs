@@ -28,5 +28,16 @@ namespace QuickShop.MVC.Controllers
             }
             return View(locales);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> TiendaProductos(int id)
+        {
+            LocalDTO tienda = await _localServicio.ObtenerLocalConProductos(id);
+            if (tienda == null)
+            {
+                return NotFound();
+            }
+            return View(tienda);
+        }
     }
 }
