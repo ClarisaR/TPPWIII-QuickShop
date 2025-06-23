@@ -22,7 +22,7 @@ namespace Pedidos.Controllers
         public async Task<IActionResult> PostPedido([FromBody] CrearPedido pedidoDTO)
         {
 
-            var total = pedidoDTO.PedidoProductos.Sum(pp => pp.CantidadProductos * pp.PrecioUnitario);
+            var total = pedidoDTO.PedidoVariantes.Sum(pp => pp.CantidadVariantes * pp.PrecioUnitario);
             var pedido = new Pedido
             {
                 IdUsuario = pedidoDTO.IdUsuario,
@@ -31,24 +31,24 @@ namespace Pedidos.Controllers
                 Total = total,
                 DireccionHasta = pedidoDTO.DireccionHasta,
                 DireccionDesde = pedidoDTO.DireccionDesde,
-                PedidoProductos = new List<PedidoProducto>() // Inicializamos
+                PedidoVariantes = new List<PedidoVariante>() // Inicializamos
             };
 
             // Primero guardamos el pedido para que tenga IdPedido
             _context.Pedidos.Add(pedido);
             await _context.SaveChangesAsync();
 
-            // Ahora agregamos los productos con el IdPedido ya generado
-            foreach (var pp in pedidoDTO.PedidoProductos)
+            // Ahora agregamos los Variantes con el IdVariante ya generado
+            foreach (var pp in pedidoDTO.PedidoVariantes)
             {
-                var pedidoProducto = new PedidoProducto
+                var pedidoVariante = new PedidoVariante
                 {
                     IdPedido = pedido.IdPedido, // Se asigna el ID generado
-                    IdProducto = pp.IdProducto,
-                    CantidadProductos = pp.CantidadProductos,
+                    IdVariante = pp.IdVariante,
+                    CantidadVariantes = pp.CantidadVariantes,
                     PrecioUnitario = pp.PrecioUnitario
                 };
-                _context.PedidoProductos.Add(pedidoProducto);
+                _context.PedidoVariantes.Add(pedidoVariante);
             }
 
             await _context.SaveChangesAsync();
@@ -88,9 +88,9 @@ namespace Pedidos.Controllers
         }
 
         [HttpGet("detalles/{id}")]
-        public async Task<ActionResult<IEnumerable<PedidoProducto>>> GetDetallesPedido(int id)
+        public async Task<ActionResult<IEnumerable<PedidoVariante>>> GetDetallesPedido(int id)
         {
-            var detalles = await _context.PedidoProductos
+            var detalles = await _context.PedidoVariantes
                 .Where(pp => pp.IdPedido == id)
                 .ToListAsync();
             if (detalles == null || !detalles.Any())

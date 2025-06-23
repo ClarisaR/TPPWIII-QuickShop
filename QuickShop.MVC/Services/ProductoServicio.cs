@@ -6,21 +6,17 @@ namespace QuickShop.MVC.Services
     public interface IProductoServicio
     {
         Task<List<ProductoDTO>> ObtenerProductos();
-
         Task<ProductoDTO> ObtenerProducto(int id);
-
         Task<List<ProductoDTO>> ObtenerProductosPorNombre(string nombre);
-
         Task<List<ProductoDTO>> ObtenerProductosPorRubro(string rubro);
         Task<List<ProductoDTO>> ObtenerProductosPorColor(string color);
         Task<List<ProductoDTO>> ObtenerProductosPorTalle(string talle);
         Task<List<ProductoDTO>> ObtenerProductosSimilares(int id);
         Task<List<ProductoDTO>> ObtenerProductosPorLocal(int? localId);
         Task<List<ProductoDTO>> FiltrarProductos(FiltroDTO? filtro);
-
         Task<List<ProductoDTO>> ObtenerProductosPorCategoria(string categoria);
-
         Task<List<ProductoDTO>> ObtenerProductosPorIds(List<int> ids);
+        Task<List<ProductoDTO>> FiltrarProductosDesdeLista(FiltroDTO filtro, List<ProductoDTO> productosBase);
     }
     public class ProductoServicio : IProductoServicio
     {
@@ -143,5 +139,31 @@ namespace QuickShop.MVC.Services
             var productosPorIds = JsonSerializer.Deserialize<List<ProductoDTO>>(json, opcionesSerializacion);
             return productosPorIds;
         }
+
+        public async Task<List<ProductoDTO>> FiltrarProductosDesdeLista(FiltroDTO filtro, List<ProductoDTO> productosBase)
+        {
+            var resultado = productosBase.AsEnumerable();
+
+            if (filtro.Categorias?.Any() == true)
+                resultado = resultado.Where(p => filtro.Categorias.Contains(p.Categoria?.Nombre));
+
+            if (filtro.Colores?.Any() == true)
+                resultado = resultado.Where(p => p.Variantes.Any(v => filtro.Colores.Contains(v.Color?.Nombre)));
+
+            if (filtro.Talles?.Any() == true)
+                resultado = resultado.Where(p => p.Variantes.Any(v => filtro.Talles.Contains(v.Talle?.Nombre)));
+
+            if (filtro.Rubros?.Any() == true)
+                resultado = resultado.Where(p => filtro.Rubros.Contains(p.Local?.Rubro?.ToString()));
+
+            if (filtro.PrecioMinimo > 0)
+                resultado = resultado.Where(p => p.Precio >= filtro.PrecioMinimo);
+
+            if (filtro.PrecioMaximo < double.MaxValue)
+                resultado = resultado.Where(p => p.Precio <= filtro.PrecioMaximo);
+
+            return await Task.FromResult(resultado.ToList());
+        }
+
     }
 }

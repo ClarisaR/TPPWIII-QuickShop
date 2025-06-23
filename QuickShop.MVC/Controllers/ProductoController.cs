@@ -40,22 +40,53 @@ namespace QuickShop.MVC.Controllers
         {
             CargarEnumsEnViewBag();
 
-            bool filtroVacio = filtro == null
-                || (!filtro.Categorias.Any() && !filtro.Colores.Any() && !filtro.Talles.Any()
-                    && filtro.PrecioMinimo == 0 && filtro.PrecioMaximo == double.MaxValue);
-
-            var productos = filtroVacio
-                ? _productoServicio.ObtenerProductos().Result
-                : _productoServicio.FiltrarProductos(filtro).Result;
-
-            var viewModel = new ProductosViewModel
+            // Si se pidió limpiar precio desde el botón ×
+            if (Request.Query["clearPrice"] == "true" && filtro != null)
             {
-                Productos = productos,
-                Filtro = filtro ?? new FiltroDTO()
-            };
+                filtro.PrecioMinimo = 0;
+                filtro.PrecioMaximo = double.MaxValue;
+            }
 
-            return View(viewModel);
+            // Obtener base de productos según contexto
+            List<ProductoDTO> productosBase;
+
+            if (!string.IsNullOrEmpty(filtro?.RubroSeleccionado))
+            {
+                productosBase = _productoServicio.ObtenerProductosPorRubro(filtro.RubroSeleccionado).Result;
+            }
+            else
+            {
+                productosBase = _productoServicio.ObtenerProductos().Result;
+            }
+
+            // Aplicar filtros
+            bool tieneFiltros = filtro != null && (
+                (filtro.Categorias?.Any() == true) ||
+                (filtro.Colores?.Any() == true) ||
+                (filtro.Talles?.Any() == true) ||
+                (filtro.Rubros?.Any() == true) ||
+                (filtro.PrecioMinimo > 0) ||
+                (filtro.PrecioMaximo < double.MaxValue)
+            );
+
+            var productos = tieneFiltros
+                ? _productoServicio.FiltrarProductosDesdeLista(filtro, productosBase).Result
+                : productosBase;
+
+            // Aplicar orden si corresponde
+            if (filtro != null && !string.IsNullOrEmpty(filtro.Orden))
+            {
+                productos = filtro.Orden switch
+                {
+                    "precioAsc" => productos.OrderBy(p => p.Precio).ToList(),
+                    "precioDesc" => productos.OrderByDescending(p => p.Precio).ToList(),
+                    _ => productos
+                };
+            }
+
+            return RetornarVistaConProductos(productos, filtro);
         }
+
 
         [HttpGet]
         [Route("Producto/Detalle/{id}")]
@@ -79,8 +110,15 @@ namespace QuickShop.MVC.Controllers
         public IActionResult MostrarProductosPorRubro(string rubro)
         {
             var productos = _productoServicio.ObtenerProductosPorRubro(rubro).Result;
-            return RetornarVistaConProductos(productos);
+
+            var filtro = new FiltroDTO
+            {
+                RubroSeleccionado = rubro
+            };
+
+            return RetornarVistaConProductos(productos, filtro);
         }
+
 
         [HttpGet]
         [Route("Producto/Color/{color}")]

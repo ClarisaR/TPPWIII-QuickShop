@@ -42,12 +42,16 @@
             </div>
 
             <div class="top-right">
-                <i class="fa-solid fa-cart-shopping"></i>
+                <!--carrito -->
+                <button id="cart-icon" class="cart-icon-btn">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <span id="cart-count-badge" class="cart-count"></span>
+                </button> 
                 @if (User.Identity?.IsAuthenticated ?? false)
                 {
                     <a asp-action="MisPedidos" asp-controller="Pedido" class="pedidos-icon">
                         <i class="fa-solid fa-truck-fast"></i>
-                    </a>
+                    </a> 
                     <span>Hola, @User.FindFirst("nombre")?.Value</span>
 
                     <a href="/Usuario/Logout" class="btn-login">Cerrar sesión</a>
@@ -59,8 +63,31 @@
                         <a href="/Usuario/Registrar" id="openRegisterModal" class="btn-register">Registrarse</a>
                     </div>
                 }
-            </div>
 
+            </div>
+             <!--slide carrito -->
+            <div id="cart-slide" class="cart-slide hidden">
+                <div class="cart-header">
+                    <h2>Carrito - <span id="cart-count"></span> Items</h2>
+                    <button id="close-cart">✖</button>
+                </div>
+
+                <div class="cart-body">
+                    <div id="cart-items" class="cart-items">
+                        <!-- Los productos van aquí -->
+                        <!-- Los pushea el carrito.js -->
+                    </div>
+
+                    <div class="cart-summary">
+                        <h3>Resumen</h3>
+                        <p>Subtotal: $<span id="subtotal">0.00</span></p>
+                        <p>Envio: Gratis</p>
+                        <p><strong>Total: $<span id="total">0.00</span></strong></p>
+                        <button id="checkout-btn" disabled>CONFIRMAR COMPRA</button>
+                    </div>
+                </div>
+            </div>
+            <!--fin slide carrito -->
         </div>
     </header>
 
@@ -147,6 +174,23 @@
             </div>
         </div>
     </footer>
+    <!-- logica slide carrito -->
+    <script src="~/js/carrito.js" asp-append-version="true"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Intentar parsear el carrito de localStorage
+        const cartFromStorage = localStorage.getItem("cart");
+        if (cartFromStorage) {
+            try {
+                cart = JSON.parse(cartFromStorage);
+                renderCart();
+            } catch (e) {
+                console.error("Error al cargar el carrito del localStorage:", e);
+            }
+        }
+    });
+</script>
 </body>
 </html>
 

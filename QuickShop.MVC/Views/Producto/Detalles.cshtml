@@ -23,26 +23,26 @@
             <div class="detail-options">
                 <div>
                     <label for="size">Talle</label>
-                    <select id="size">
+                    <select id="size" name="talle">
                         @foreach (var v in Model.Variantes.Select(v => v.Talle.Nombre).Distinct())
                         {
-                            <option>@v</option>
+                            <option value="@v">@v</option>
                         }
                     </select>
                 </div>
                 <div>
                     <label for="color">Color</label>
-                    <select id="color">
+                    <select id="color" name="color">
                         @foreach (var v in Model.Variantes.Select(v => v.Color.Nombre).Distinct())
                         {
-                            <option>@v</option>
+                            <option value="@v">@v</option>
                         }
                     </select>
                 </div>
             </div>
 
             <div class="detail-buttons">
-                <button class="btn primary">Agregar al carrito</button>
+                <button class="btn primary" id="add-to-cart">Agregar al carrito</button>
                 <button class="btn secondary">Comprar ahora</button>
             </div>
 
@@ -113,28 +113,51 @@
         </div>
     </div>
 </div>
-</div>
-@section Scripts {
-    <script>
-        function initCarruselSimilares() {
-            const container = document.querySelector(".carruselSimilares");
-            const card = container.querySelector(".card");
-            const btnLeft = document.querySelector(".arrow.left.similares");
-            const btnRight = document.querySelector(".arrow.right.similares");
+<script>
+    const variantes = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.Variantes));
+    console.log("VARIANTES DISPONIBLES", variantes);
 
-            if (!card || !container) return;
+    function obtenerVarianteId(talle, color) {
+        return variantes.find(v =>
+            v.Talle?.Nombre.toLowerCase() === talle.toLowerCase() &&
+            v.Color?.Nombre.toLowerCase() === color.toLowerCase()
+        )?.Id ?? null;
+    }
 
-            const scrollAmount = card.offsetWidth + 16; // card + gap
+    document.getElementById('add-to-cart').addEventListener('click', () => {
+        const selectedTalle = document.getElementById("size").value;
+        const selectedColor = document.getElementById("color").value;
 
-            btnLeft?.addEventListener("click", () => {
-                container.scrollBy({ left: -scrollAmount, behavior: "smooth" });
-            });
+        const varianteId = obtenerVarianteId(selectedTalle, selectedColor);
 
-            btnRight?.addEventListener("click", () => {
-                container.scrollBy({ left: scrollAmount, behavior: "smooth" });
-            });
+        if (!varianteId) {
+            alert("La variante seleccionada no es válida.");
+            return;
         }
 
-        document.addEventListener("DOMContentLoaded", initCarruselSimilares);
-    </script>
-}
+        const item = {
+            idVariante: varianteId,
+            productoId: @Model.Id,
+            nombre: "@Model.Nombre",
+            imagen: "@Model.Imagen",
+            color: selectedColor,
+            talle: selectedTalle,
+            precio: @Model.Precio,
+            cantidad: 1
+        };
+
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        const existing = cart.find(p => p.idVariante === item.idVariante);
+        if (existing) {
+            existing.cantidad++;
+        } else {
+            cart.push(item);
+        }
+
+        localStorage.setItem('cart', JSON.stringify(cart));
+        updateCartCount(cart.reduce((acc, i) => acc + i.cantidad, 0));
+        renderCart();
+    });
+</script>
+

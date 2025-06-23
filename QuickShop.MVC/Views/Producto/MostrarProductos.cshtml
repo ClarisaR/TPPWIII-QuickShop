@@ -1,43 +1,102 @@
 ﻿@{
-	ViewData["Title"] ??= "Productos";
+    ViewData["Title"] ??= "Productos";
 }
 @model ProductosViewModel
 
 @section Styles {
-	<link rel="stylesheet" href="~/css/productoCard.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/productoCard.css" asp-append-version="true" />
 }
 <body>
-	<div class="container">
-		<aside class="sidebar">
-			@await Html.PartialAsync("_FormularioFiltro", Model.Filtro)
-		</aside>
+    <div class="container">
+        <aside class="sidebar">
+            @await Html.PartialAsync("_FormularioFiltro", Model.Filtro)
+        </aside>
 
-		<main class="products">
-			<div class="sort">
-				<label>Ordenar por:</label>
-				<select>
-					<option>Más relevantes</option>
-					<option>Menor precio</option>
-					<option>Mayor precio</option>
-				</select>
-			</div>
+        <main class="products">
+            <div class="sort">
+                <form id="form-orden" method="get" action="/Producto/MostrarProductos">
+                    <label>Ordenar por:</label>
+                    <select name="Orden" id="orden-select">
+                        @if (string.IsNullOrEmpty(Model.Filtro.Orden))
+                        {
+                            <option value="" selected>Más relevantes</option>
+                        }
+                        else
+                        {
+                            <option value="">Más relevantes</option>
+                        }
 
-			<div class="grid">
-				@if (Model.Productos == null || !Model.Productos.Any())
-				{
-					<p>No hay productos disponibles.</p>
-				}else @if (Model.Productos == null || !Model.Productos.Any() && Model.Filtro != null)
-				{
-					<p>No se encontraron productos que coincidan con los filtros aplicados.</p>
-				}
-				else
-				{
-					@foreach (var p in Model.Productos)
-					{
-						@await Html.PartialAsync("_ProductoCard", p)
-					}
-				}
-			</div>
-		</main>
-	</div>
+                        @if (Model.Filtro.Orden == "precioAsc")
+                        {
+                            <option value="precioAsc" selected>Menor precio</option>
+                        }
+                        else
+                        {
+                            <option value="precioAsc">Menor precio</option>
+                        }
+
+                        @if (Model.Filtro.Orden == "precioDesc")
+                        {
+                            <option value="precioDesc" selected>Mayor precio</option>
+                        }
+                        else
+                        {
+                            <option value="precioDesc">Mayor precio</option>
+                        }
+                    </select>
+                </form>
+
+            </div>
+
+            <div class="grid">
+                @if (Model.Productos == null || !Model.Productos.Any())
+                {
+                    <p>No hay productos disponibles.</p>
+                }
+                else
+                @if (Model.Productos == null || !Model.Productos.Any() && Model.Filtro != null)
+                {
+                    <p>No se encontraron productos que coincidan con los filtros aplicados.</p>
+                }
+                else
+                {
+                    @foreach (var p in Model.Productos)
+                    {
+                        @await Html.PartialAsync("_ProductoCard", p)
+                    }
+                }
+            </div>
+        </main>
+    </div>
 </body>
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const ordenSelect = document.getElementById("orden-select");
+            const formOrden = document.getElementById("form-orden");
+
+            ordenSelect.addEventListener("change", function () {
+                // Limpiamos inputs ocultos anteriores
+                formOrden.querySelectorAll("input[type=hidden]").forEach(e => e.remove());
+
+                // Tomamos los parámetros actuales de la URL
+                const params = new URLSearchParams(window.location.search);
+
+                // Agregamos cada uno como hidden input, excepto Orden
+                for (const [key, value] of params.entries()) {
+                    if (key !== "Orden") {
+                        const hidden = document.createElement("input");
+                        hidden.type = "hidden";
+                        hidden.name = key;
+                        hidden.value = value;
+                        formOrden.appendChild(hidden);
+                    }
+                }
+
+                // Enviamos el formulario
+                formOrden.submit();
+            });
+        });
+    </script>
+}
+

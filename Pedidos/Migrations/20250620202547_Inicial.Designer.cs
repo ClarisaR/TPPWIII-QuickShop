@@ -62,31 +62,31 @@ namespace Pedidos.Migrations
                     b.ToTable("Pedidos");
                 });
 
-            modelBuilder.Entity("Pedidos.Models.PedidoProducto", b =>
+            modelBuilder.Entity("Pedidos.Models.PedidoVariante", b =>
                 {
                     b.Property<int>("IdPedido")
                         .HasColumnType("int")
                         .HasColumnOrder(0);
 
-                    b.Property<int>("IdProducto")
+                    b.Property<int>("IdVariante")
                         .HasColumnType("int")
                         .HasColumnOrder(1);
 
-                    b.Property<int>("CantidadProductos")
+                    b.Property<int>("CantidadVariantes")
                         .HasColumnType("int");
 
                     b.Property<decimal>("PrecioUnitario")
                         .HasColumnType("decimal(18,2)");
 
-                    b.HasKey("IdPedido", "IdProducto");
+                    b.HasKey("IdPedido", "IdVariante");
 
-                    b.ToTable("PedidoProductos");
+                    b.ToTable("PedidoVariantes");
                 });
 
-            modelBuilder.Entity("Pedidos.Models.PedidoProducto", b =>
+            modelBuilder.Entity("Pedidos.Models.PedidoVariante", b =>
                 {
                     b.HasOne("Pedidos.Models.Pedido", null)
-                        .WithMany("PedidoProductos")
+                        .WithMany("PedidoVariantes")
                         .HasForeignKey("IdPedido")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -94,7 +94,7 @@ namespace Pedidos.Migrations
 
             modelBuilder.Entity("Pedidos.Models.Pedido", b =>
                 {
-                    b.Navigation("PedidoProductos");
+                    b.Navigation("PedidoVariantes");
                 });
 #pragma warning restore 612, 618
         }
