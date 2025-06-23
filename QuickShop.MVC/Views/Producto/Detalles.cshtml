@@ -113,51 +113,64 @@
         </div>
     </div>
 </div>
-<script>
-    const variantes = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.Variantes));
-    console.log("VARIANTES DISPONIBLES", variantes);
+@section Scripts {
+    <script>
+        const variantes = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.Variantes));
 
-    function obtenerVarianteId(talle, color) {
-        return variantes.find(v =>
-            v.Talle?.Nombre.toLowerCase() === talle.toLowerCase() &&
-            v.Color?.Nombre.toLowerCase() === color.toLowerCase()
-        )?.Id ?? null;
-    }
-
-    document.getElementById('add-to-cart').addEventListener('click', () => {
-        const selectedTalle = document.getElementById("size").value;
-        const selectedColor = document.getElementById("color").value;
-
-        const varianteId = obtenerVarianteId(selectedTalle, selectedColor);
-
-        if (!varianteId) {
-            alert("La variante seleccionada no es válida.");
-            return;
-        }
-
-        const item = {
-            idVariante: varianteId,
-            productoId: @Model.Id,
+        const producto = {
+            id: @Model.Id,
             nombre: "@Model.Nombre",
             imagen: "@Model.Imagen",
-            color: selectedColor,
-            talle: selectedTalle,
-            precio: @Model.Precio,
-            cantidad: 1
+            precio: @Model.Precio
         };
 
-        let cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-        const existing = cart.find(p => p.idVariante === item.idVariante);
-        if (existing) {
-            existing.cantidad++;
-        } else {
-            cart.push(item);
+        function obtenerVarianteId(talle, color) {
+            return variantes.find(v =>
+                v.Talle?.Nombre.toLowerCase() === talle.toLowerCase() &&
+                v.Color?.Nombre.toLowerCase() === color.toLowerCase()
+            )?.Id ?? null;
         }
 
-        localStorage.setItem('cart', JSON.stringify(cart));
-        updateCartCount(cart.reduce((acc, i) => acc + i.cantidad, 0));
-        renderCart();
-    });
-</script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const btnAgregar = document.getElementById("add-to-cart");
+            if (!btnAgregar) return;
+
+            btnAgregar.addEventListener("click", () => {
+                const talla = document.getElementById("size").value;
+                const color = document.getElementById("color").value;
+
+                if (!talla || !color) {
+                    alert("Seleccioná talle y color");
+                    return;
+                }
+
+                const varianteId = obtenerVarianteId(talla, color);
+                if (!varianteId) {
+                    alert("La variante seleccionada no es válida.");
+                    return;
+                }
+
+                const existente = cart.find(p => p.idVariante === varianteId);
+                if (existente) {
+                    existente.cantidad++;
+                } else {
+                    cart.push({
+                        idVariante: varianteId,
+                        productoId: producto.id,
+                        nombre: producto.nombre,
+                        imagen: producto.imagen,
+                        color,
+                        talla,
+                        precio: producto.precio,
+                        cantidad: 1
+                    });
+                }
+
+                guardarCarrito();
+                renderCart();
+            });
+        });
+    </script>
+}
+
 

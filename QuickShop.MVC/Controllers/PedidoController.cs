@@ -73,38 +73,33 @@ namespace QuickShop.MVC.Controllers
         }
 
         [HttpPost]
-        public IActionResult CrearPedido(CrearPedidoDTO pedido)
+        public async Task<IActionResult> CrearPedido([FromBody] CrearPedidoDTO pedido)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var token = Request.Cookies["jwt"];
+            if (string.IsNullOrEmpty(token))
+                return Unauthorized("Debes iniciar sesión para crear un pedido.");
+
+            var handler = new JwtSecurityTokenHandler();
+            var jwtToken = handler.ReadJwtToken(token);
+            if (jwtToken == null)
+                return Unauthorized("Token JWT inválido.");
+
+            pedido.IdUsuario = int.Parse(jwtToken.Claims.FirstOrDefault(c => c.Type == "id")?.Value);
+
+            var idPedido = await _pedidoServicio.CrearPedido(pedido);
+
+            if (idPedido != null && idPedido > 0)
             {
-                var token = Request.Cookies["jwt"];
-                if (string.IsNullOrEmpty(token))
-                {
-                    ModelState.AddModelError("", "Debes iniciar sesión para crear un pedido.");
-                    return RedirectToAction("Login", "Usuario");
-                }
-                var handler = new JwtSecurityTokenHandler();
-
-                var jwtToken = handler.ReadJwtToken(token);
-                if (jwtToken == null)
-                {
-                    ModelState.AddModelError("", "Token JWT inválido.");
-                    return RedirectToAction("Login", "Usuario");
-                }
-                pedido.IdUsuario = Int32.Parse(jwtToken.Claims.FirstOrDefault(c => c.Type == "id")?.Value);
-
-                var resultado = _pedidoServicio.CrearPedido(pedido).Result;
-                if (resultado)
-                {
-                    return RedirectToAction("MisPedidos");
-                }
-                else
-                {
-                    ModelState.AddModelError("", "Error al crear el pedido. Inténtalo de nuevo.");
-                }
+                return Json(new { success = true, pedidoId = idPedido });
             }
-            return View(pedido);
+
+            return StatusCode(500, new { success = false, message = "No se pudo crear el pedido." });
         }
+
+
 
         [HttpGet]
         public IActionResult VerPedidos()

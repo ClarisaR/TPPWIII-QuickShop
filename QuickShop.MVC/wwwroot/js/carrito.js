@@ -157,9 +157,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
 
                 if (res.ok) {
-                    localStorage.removeItem('cart');
-                    window.location.href = '/Pedido/MisPedidos';
-                } else {
+                    const data = await res.json();
+                    if (data.success && data.pedidoId) {
+                        localStorage.removeItem('cart');
+                        window.location.href = `/Pedido/VerPedido/${data.pedidoId}`;
+                    } else {
+                        alert("El pedido fue creado, pero no se pudo obtener el ID.");
+                    }
+                }
+                else {
                     alert("Error al confirmar el pedido.");
                     checkoutBtn.disabled = false;
                     checkoutBtn.innerText = "CONFIRMAR COMPRA";

@@ -40,7 +40,6 @@ namespace QuickShop.MVC.Controllers
         {
             CargarEnumsEnViewBag();
 
-            // Si se pidió limpiar precio desde el botón ×
             if (Request.Query["clearPrice"] == "true" && filtro != null)
             {
                 filtro.PrecioMinimo = 0;
@@ -58,6 +57,10 @@ namespace QuickShop.MVC.Controllers
             {
                 productosBase = _productoServicio.ObtenerProductos().Result;
             }
+
+            if (productosBase == null)
+                productosBase = new List<ProductoDTO>();
+
 
             // Aplicar filtros
             bool tieneFiltros = filtro != null && (
@@ -101,29 +104,36 @@ namespace QuickShop.MVC.Controllers
         [HttpGet]
         public IActionResult MostrarProductosPorNombre(string nombre, FiltroDTO? filtro)
         {
+            CargarEnumsEnViewBag();
             var productos = _productoServicio.ObtenerProductosPorNombre(nombre).Result;
             return RetornarVistaConProductos(productos, filtro);
         }
 
         [HttpGet]
         [Route("Producto/Rubro/{rubro}")]
-        public IActionResult MostrarProductosPorRubro(string rubro)
+        public async Task<IActionResult> MostrarProductosPorRubro(string rubro)
         {
-            var productos = _productoServicio.ObtenerProductosPorRubro(rubro).Result;
-
+            CargarEnumsEnViewBag();
+            var productos = await _productoServicio.ObtenerProductosPorRubro(rubro);
             var filtro = new FiltroDTO
             {
                 RubroSeleccionado = rubro
             };
 
-            return RetornarVistaConProductos(productos, filtro);
-        }
+            var viewModel = new ProductosViewModel
+            {
+                Productos = productos,
+                Filtro = filtro
+            };
 
+            return View("MostrarProductos", viewModel);
+        }
 
         [HttpGet]
         [Route("Producto/Color/{color}")]
         public IActionResult MostrarProductosPorColor(string color)
         {
+            CargarEnumsEnViewBag();
             var productos = _productoServicio.ObtenerProductosPorColor(color).Result;
             return RetornarVistaConProductos(productos);
         }
@@ -132,6 +142,7 @@ namespace QuickShop.MVC.Controllers
         [Route("Producto/Categoria/{categoria}")]
         public IActionResult MostrarProductosPorCategoria(string categoria)
         {
+            CargarEnumsEnViewBag();
             var productos = _productoServicio.ObtenerProductosPorCategoria(categoria).Result;
             return RetornarVistaConProductos(productos);
         }

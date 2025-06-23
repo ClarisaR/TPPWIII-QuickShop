@@ -17,7 +17,7 @@
             existente.cantidad++;
         } else {
             cart.push({
-                idVariante: producto.idVariante, // este dato lo necesitás en el objeto producto
+                idVariante: producto.idVariante,
                 nombre: producto.nombre,
                 imagen: producto.imagen,
                 precio: producto.precio,
