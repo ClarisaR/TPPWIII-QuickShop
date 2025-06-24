@@ -22,6 +22,7 @@ header {
     width: 40px;
     height: auto;
     padding-right: 20px;
+    box-sizing: content-box
 }
 
 
@@ -523,7 +524,7 @@ header {
     }
 
 /* === PRODUCTOS: LAYOUT === */
-.container {
+.container-product {
     display: flex;
     gap: 1rem;
     padding: 1rem 2rem;

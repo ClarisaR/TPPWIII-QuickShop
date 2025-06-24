@@ -1,23 +1,23 @@
 ﻿@model FiltroDTO
 
 <form asp-action="MostrarProductos" method="get" class="filtro-form">
-    <input type="hidden" name="RubroSeleccionado" value="@Model.RubroSeleccionado" />
 
     <h3>Filtros</h3>
-
-    @if ((Model?.PrecioMinimo > 0) || (Model?.PrecioMaximo < 1000000))
+    @if (ViewBag.PrecioMin != null || ViewBag.PrecioMax != null)
     {
         <div class="filter-group">
-            <span>$@Model.PrecioMinimo – $@Model.PrecioMaximo</span>
-            <button type="submit" name="clearPrice" value="true" class="badge">×</button>
+            <span>$@ViewBag.PrecioMin – $@ViewBag.PrecioMax</span>
+            <form method="get" action="/Producto/MostrarProductos">
+                <button type="submit" class="badge">×</button>
+            </form>
         </div>
     }
 
     <h4>Precio</h4>
     <div class="price-filter">
-        <input type="number" name="PrecioMinimo" id="precio-min" placeholder="Mínimo" min="0" />
-
-        <input type="number" name="PrecioMaximo" id="precio-max" placeholder="Máximo" min="0" />
+        <input type="number" name="PrecioMinimo" id="precio-min" placeholder="Mínimo" min="0" value="@Model?.PrecioMinimo" />
+        <span class="price-dash">–</span>
+        <input type="number" name="PrecioMaximo" id="precio-max" placeholder="Máximo" min="0" value="@Model?.PrecioMaximo" />
     </div>
 
     @if (ViewBag.Categorias != null)
@@ -76,6 +76,5 @@
         }
     }
 
-
     <button type="submit" class="btn-filtrar">Filtrar</button>
-</form> 
+</form>

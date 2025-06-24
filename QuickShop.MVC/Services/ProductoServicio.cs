@@ -6,8 +6,11 @@ namespace QuickShop.MVC.Services
     public interface IProductoServicio
     {
         Task<List<ProductoDTO>> ObtenerProductos();
+
         Task<ProductoDTO> ObtenerProducto(int id);
+
         Task<List<ProductoDTO>> ObtenerProductosPorNombre(string nombre);
+
         Task<List<ProductoDTO>> ObtenerProductosPorRubro(string rubro);
         Task<List<ProductoDTO>> ObtenerProductosPorColor(string color);
         Task<List<ProductoDTO>> ObtenerProductosPorTalle(string talle);
@@ -27,6 +30,7 @@ namespace QuickShop.MVC.Services
         {
             this._httpClient = httpClient;
         }
+
 
         public async Task<ProductoDTO> ObtenerProducto(int id)
         {
@@ -130,7 +134,6 @@ namespace QuickShop.MVC.Services
             var productosPorCategoria = JsonSerializer.Deserialize<List<ProductoDTO>>(json, opcionesSerializacion);
             return productosPorCategoria;
         }
-
         public async Task<List<ProductoDTO>> ObtenerProductosPorIds(List<int> ids)
         {
             var response = await _httpClient.PostAsJsonAsync($"{_url}/ids", ids);
@@ -164,6 +167,5 @@ namespace QuickShop.MVC.Services
 
             return await Task.FromResult(resultado.ToList());
         }
-
     }
 }
