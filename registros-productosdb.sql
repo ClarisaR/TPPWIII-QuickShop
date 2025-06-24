@@ -439,32 +439,28 @@ VALUES
  'https://http2.mlstatic.com/D_NQ_NP_615059-MLA76881581145_062024-O.webp',
  'Zapatillas de tela livianas, transpirables y versátiles para combinar con cualquier outfit deportivo.',
  49999.99, 6, 20);
- 
- 
- -- PEDIDOS
- INSERT INTO Pedidos (IdPedido, IdUsuario, FechaPedido, Estado, Total, DireccionHasta, DireccionDesde) 
-VALUES (1, 1, '2025-06-12', 'Pendiente', 55758.40, 'Calle Falsa 1', 'Sucursal 1');
 
-INSERT INTO Pedidos (IdPedido, IdUsuario, FechaPedido, Estado, Total, DireccionHasta, DireccionDesde) 
-VALUES (2, 1, '2025-06-13', 'Pendiente', 129240.00, 'Calle Falsa 2', 'Sucursal 2');
-
-INSERT INTO Pedidos (IdPedido, IdUsuario, FechaPedido, Estado, Total, DireccionHasta, DireccionDesde) 
-VALUES (3, 1, '2025-06-14', 'Pendiente', 51297.15, 'Calle Falsa 3', 'Sucursal 3');
-
-
--- PEDIDOPRODUCTOS
-INSERT INTO PedidoProductos (IdPedido, IdProducto, CantidadProductos, PrecioUnitario) 
-VALUES (1, 1, 1, 42000);
-
-INSERT INTO PedidosProductos (IdPedido, IdProducto, CantidadProductos, PrecioUnitario) 
-VALUES (1, 2, 2, 6879.2);
-
-INSERT INTO PedidosProductos (IdPedido, IdProducto, CantidadProductos, PrecioUnitario) 
-VALUES (2, 3, 1, 59040);
-
-INSERT INTO PedidosProductos (IdPedido, IdProducto, CantidadProductos, PrecioUnitario) 
-VALUES (2, 4, 1, 70200);
-
-INSERT INTO PedidosProductos (IdPedido, IdProducto, CantidadProductos, PrecioUnitario) 
-VALUES (3, 5, 3, 17099.05);
-
+-- VARIANTES
+INSERT INTO Variantes (ProductoId, ColorId, TalleId, Stock)
+VALUES
+(1, 9, 6, 18),
+(1, 5, 4, 35),
+(1, 6, 2, 10),
+(2, 8, 3, 40),
+(2, 8, 5, 36),
+(2, 3, 3, 10),
+(3, 8, 3, 4),
+(3, 7, 6, 11),
+(3, 8, 1, 35),
+(4, 1, 1, 50),
+(4, 8, 1, 31),
+(4, 7, 5, 29),
+(5, 5, 6, 14),
+(5, 1, 3, 28),
+(5, 1, 6, 42),
+(6, 3, 4, 27),
+(6, 5, 1, 3),
+(6, 4, 5, 2),
+(7, 5, 6, 50),
+(7, 4, 5, 28),
+(7, 1, 1, 44);

@@ -8,6 +8,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Elementos de la solución", "Elementos de la solución", "{D107F4C8-89CC-BEA8-D3D7-CA6B7733353D}"
 	ProjectSection(SolutionItems) = preProject
 		docker-compose.yml = docker-compose.yml
+		registros-pedidosdb.sql = registros-pedidosdb.sql
 		registros-productosdb.sql = registros-productosdb.sql
 	EndProjectSection
 EndProject
