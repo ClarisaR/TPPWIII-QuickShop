@@ -44,7 +44,7 @@
                     <strong>Resumen de compra</strong>
                     <div class="summary-row">
                         <span>Producto</span>
-                        <span id="precioProducto">$ @precioProducto.ToString("N0")</span>
+                        <span id="precioProducto">$ @precioProducto</span>
                     </div>
                     <div class="summary-row">
                         <span>Envío</span>
@@ -53,7 +53,7 @@
                     <hr>
                     <div class="summary-row summary-total">
                         <span>Total</span>
-                        <span id="total">$ @(precioProducto + 8000).ToString("N0")</span>
+                        <span id="total">$ @(precioProducto + 8000)</span>
                     </div>
                 </div>
             </div>
@@ -62,7 +62,7 @@
             <label class="title" for="payment">Elegí <strong>cómo pagar</strong></label>
             <input class="payment-option" type="text" placeholder="Número de tarjeta" name="payment" id="payment" required />
         </div>
-        <button class="btn" type="submit">Realizar compra</button>
+        <button class="btn btn-primary" type="button">Realizar compra</button>
     </form>
 </div>
 
