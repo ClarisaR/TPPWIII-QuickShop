@@ -32,8 +32,8 @@
 }
 <div class="header-tienda">
 	<div class="logo-section">
-		<img src="~/img/tiendas/almaira.png" alt="Logo Astra" class="logo-img" />
-		<span class="brand-name">Astra</span>
+		<img src="~/img/tiendas/@Model.Imagen" alt="@Model.Nombre" class="logo-img" />
+		<span class="brand-name">@Model.Nombre</span>
 	</div>
 </div>
 <div class="navbar-tienda">
@@ -42,7 +42,7 @@
 	<a href="">Todos los productos</a>
 </div>
 <div class="cont-tienda-productos">
-	<div class="container">
+	<div class="container pt-4">
 		<main class="products">
 			<div class="sort">
 				<label>Ordenar por:</label>
